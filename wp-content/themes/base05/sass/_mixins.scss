@@ -1,0 +1,141 @@
+@import "variables";
+
+// POSITIONS
+// ---------------------------------------------------------------
+@mixin left { margin-right: auto; }
+@mixin right { margin-left: auto; }
+@mixin center { margin-left: auto; margin-right: auto; }
+@mixin left-abs($left) { left: $left; }
+@mixin right-abs($right) { right: $right; }
+@mixin center-abs($lwidth) { margin-left: 50%; margin-right: auto; left:-($lwidth/2); }
+
+// MAKE LOGO
+// ---------------------------------------------------------------
+@mixin make-logo{
+  position:absolute;
+  display:block;
+  z-index:200;
+  width:$logo-width;
+  height:$logo-height;
+  @if ($logo-position=="topleft"){ top:$logo-y; left:$logo-x; }
+  @if ($logo-position=="topcenter"){ top:$logo-y; @include center-abs($logo-width);  }
+  @if ($logo-position=="topright"){ top:$logo-y; right:$logo-x; }
+  @if ($logo-position=="bottomleft"){ bottom:calc(#{-100vh} + #{$logo-y}); left:$logo-x; }
+  @if ($logo-position=="bottomcenter"){ bottom:calc(#{-100vh} + #{$logo-y}); @include center-abs($logo-width);  }
+  @if ($logo-position=="bottomright"){ bottom:calc(#{-100vh} + #{$logo-y}); right:$logo-x; }
+}
+// MAKE NAV
+// ---------------------------------------------------------------
+@mixin make-nav($bg,$width,$pos){
+  list-style:none;
+  padding-left:0;
+  background:$bg;
+  width:$width;
+  @if ($pos=="topcenter"){ text-align:center; }
+}
+@mixin make-nav-position($pos, $x, $y){
+  @if ($pos=="topleft"){ display:block; float:left; margin-top:$y; margin-left:$x;  }
+  @if ($pos=="topcenter"){ margin-top:$y; display:inline-block; }
+  @if ($pos=="topright"){ display:block; float:right; margin-top:$y; margin-right:$x; }
+}
+
+@mixin make-nav-item($fsize, $fweigth, $fcap, $funderline, $bg, $color, $padx, $pady){
+  display:block;
+  // float:left;
+  width:100%;
+  height:100%;
+  font-size:$fsize;
+	font-weight:$fweigth;
+	@if ($fcap == 'true'){ text-transform:uppercase; }
+  @if ($fcap == 'false'){ text-transform:lowercase; }
+  @if ($funderline == 'true'){ text-decoration:underline; }
+  @if ($funderline == 'false'){ text-decoration:none; }
+	background:$bg;
+	color:$color;
+	padding: $pady $padx;
+}
+@mixin make-nav-item_H($bg,$color){
+  background:$bg;
+  color:$color;
+}
+@mixin make-nav-item_A($bg,$color){
+  background:$bg;
+  color:$color;
+}
+
+// MAKE CONTAINER
+// ---------------------------------------------------------------
+@mixin make-container{
+    //position:relative;
+    @if ($container-position == 'center'){ @include center(); }
+    @if ($container-position == 'left'){ @include left(); }
+    @if ($container-position == 'right'){ @include right(); }
+
+    width:$container;
+
+    @media screen and (min-width: 1280px) {
+    width:$container;
+    }
+    @media screen and (max-width: 1280px){
+      @if($container >= 1280){ width:100%;}
+      @else{ width:#{$container}px; }
+      padding:$padding-screen;
+    }
+
+    @media screen and (max-width: 980px) {
+      @if($container >= 980){ width:100%; }
+      @else{ width:#{$container}px; }
+      padding:$padding-screen;
+    }
+    @media screen and (max-width: 840px) {
+      @if($container >= 840){ width:100%; }
+      @else{ width:#{$container}px; }
+      padding:$padding-screen;
+    }
+    @media screen and (max-width: 736px){
+      @if($container >= 736){ width:100%; }
+      @else{ width:#{$container}px; }
+      padding:$padding-mobile;
+    }
+    @media screen and (max-width: 480px) {
+      @if($container >= 480){ width:100%; }
+      @else{ width:#{$container}px; }
+      padding:$padding-mobile;
+    }
+}
+
+
+// MAKE GRID
+// ---------------------------------------------------------------
+@mixin make-grid($col, $gutter, $line-space) {
+  position: relative;
+  // Prevent columns from collapsing when empty
+  min-height: 1px;
+  // Inner gutter via padding
+  padding-left:  ($gutter/2);
+  padding-right: ($gutter/2);
+  margin-top: ($line-space/2);
+  margin-bottom: ($line-space/2);
+  float: left;
+  width: percentage((1/ $col));
+
+  @media screen and (max-width: $small-screen ){
+    width: percentage(1);
+  }
+
+}
+
+
+// TRANSFORM
+// ---------------------------------------------------------------
+
+@mixin scale($ratio) {
+  -webkit-transform: scale($ratio);
+      -ms-transform: scale($ratio); // IE9+
+          transform: scale($ratio);
+}
+
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+          transition: $transition;
+}

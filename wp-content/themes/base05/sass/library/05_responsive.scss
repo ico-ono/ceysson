@@ -1,0 +1,39 @@
+/* ==========================================================================
+  _____  ______  _____ _____   ____  _   _  _____ _______      ________
+ |  __ \|  ____|/ ____|  __ \ / __ \| \ | |/ ____|_   _\ \    / /  ____|
+ | |__) | |__  | (___ | |__) | |  | |  \| | (___   | |  \ \  / /| |__
+ |  _  /|  __|  \___ \|  ___/| |  | | . ` |\___ \  | |   \ \/ / |  __|
+ | | \ \| |____ ____) | |    | |__| | |\  |____) |_| |_   \  /  | |____
+ |_|  \_\______|_____/|_|     \____/|_| \_|_____/|_____|   \/   |______|
+
+   ========================================================================== */
+
+figure img{ width:100%; height:auto; }
+
+/*==========================================================================
+  _____    ______    _____   _____     ____    _   _    _____   _____  __      __  ______     __  __   ______   _   _   _    _
+ |  __ \  |  ____|  / ____| |  __ \   / __ \  | \ | |  / ____| |_   _| \ \    / / |  ____|   |  \/  | |  ____| | \ | | | |  | |
+ | |__) | | |__    | (___   | |__) | | |  | | |  \| | | (___     | |    \ \  / /  | |__      | \  / | | |__    |  \| | | |  | |
+ |  _  /  |  __|    \___ \  |  ___/  | |  | | | . ` |  \___ \    | |     \ \/ /   |  __|     | |\/| | |  __|   | . ` | | |  | |
+ | | \ \  | |____   ____) | | |      | |__| | | |\  |  ____) |  _| |_     \  /    | |____    | |  | | | |____  | |\  | | |__| |
+ |_|  \_\ |______| |_____/  |_|       \____/  |_| \_| |_____/  |_____|     \/     |______|   |_|  |_| |______| |_| \_|  \____/
+
+ ========================================================================== */
+#navPanel, #titleBar { display: none; }
+// #nav-main2{ display:none!important; }
+
+@media screen and (max-width: 840px) {
+
+#nav-main, #nav-produits{ display:none!important; }
+#page-wrapper{ -moz-backface-visibility:hidden; -webkit-backface-visibility:hidden; -ms-backface-visibility:hidden; backface-visibility:hidden; -moz-transition:0 .5s ease; -webkit-transition:0 .5s ease; -ms-transition:0 .5s ease; transition:transform .5s ease; padding-bottom:1px; }
+
+#navButton{ -moz-backface-visibility:hidden; -webkit-backface-visibility:hidden; -ms-backface-visibility:hidden; backface-visibility:hidden; -moz-transition:0 .5s ease; -webkit-transition:0 .5s ease; -ms-transition:0 .5s ease; transition:transform .5s ease; display:block; left:0; position:fixed; top:0; width:100%; z-index:10001;}
+#navButton .toggle{ position:absolute; top:0; width:100%; border:0; outline:0; }
+#navButton .toggle:before{ text-decoration:none; -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; display:block; position:absolute; border-top:0; }
+
+#navPanel{ -moz-backface-visibility:hidden; -webkit-backface-visibility:hidden; -ms-backface-visibility:hidden; backface-visibility:hidden; -moz-transition:0 .5s ease; -webkit-transition:0 .5s ease; -ms-transition:0 .5s ease; transition:transform .5s ease; display:block; left:0; overflow-y:auto; position:fixed; top:0; z-index:10002; }
+#navPanel:before{ content:''; display:block; position:absolute; left:0; top:0; width:100%; height:100%; }
+#navPanel .link{ position:relative; z-index:1; display:block; text-decoration:none; color:#ddd; border:0; border-top:dotted 1px rgba(255,255,255,0.05); padding:.5em; }
+#navPanel .indent-1, #navPanel .indent-2, #navPanel .indent-3, #navPanel .indent-4, #navPanel .indent-5{ display:inline-block; }
+
+}
