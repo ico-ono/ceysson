@@ -33,9 +33,10 @@ var uglify = require('gulp-uglify');
 //
 // });
 gulp.task('sass', function () {
-  return gulp.src('./sass/*.scss')
+  return gulp.src(["./sass/*.scss","./sass/**/*.scss"])
         .pipe(sass().on('error', sass.logError))
         .pipe(autoprefixer())
+        .pipe(concat('global.css'))
         .pipe(gulp.dest('./css/'))
         .pipe(rename({
            suffix: '.min'

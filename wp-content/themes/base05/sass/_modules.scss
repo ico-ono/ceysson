@@ -2,7 +2,16 @@
 //@import "modules/header/header_top.scss";
 
 // Common
-@import "library/common.scss";
+@import "modules/common.scss";
+
+// Nav-main
+@import "modules/nav.scss";
+
+// Nav-lang
+@import "modules/navlang.scss";
+
+// Slider
+@import "modules/slider.scss";
 
 // Loader
 //@import "modules/loader/loader.scss";
@@ -15,8 +24,7 @@
 // @import "modules/parallax/parallax_fullscreen.scss";
 // @import "modules/parallax/parallax_block.scss";
 
-// Slider
-// @import "modules/masterslider/masterslider_carroussel.scss";
+
 
 // Bloc img
 // @import "modules/block_img/block_img_4col.scss";

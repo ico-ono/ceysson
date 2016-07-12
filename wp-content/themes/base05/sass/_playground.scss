@@ -25,7 +25,7 @@
 // }
 // @media screen and (max-width: 480px) {
 //     h3{ font-size:1.8rem; line-height:2.8rem;  }
-//     p{ font-size:1.4rem; } 
+//     p{ font-size:1.4rem; }
 // }
 // /* ==========================================================================
 //   ____    _    _   _______   _______    ____    _   _                _        _____   _   _   _  __   _____
@@ -95,22 +95,22 @@
     @media screen and (max-width: 680px) {
         // header #logo, .page_produits header #logo{ height:54px!important; width:230px!important; left:-115px; top:50px!important;  }
     }
-//
-//    /* Menu divider
-//    ========================================================================== */
-//    header nav ul li.nav-main_sep{ width:7px; height:inherit; line-height:1.2rem; background: url('../images/menu-main_sep.png') no-repeat center center; overflow:hidden; text-indent:-1000px; }
-//    header nav ul li.nav-main_sep:last-child{ display: none !important; }
-//
-//    // /* ==========================================================================
-//    //   ____    _         ____     _____    _____
-//    //  |  _ \  | |       / __ \   / ____|  / ____|
-//    //  | |_) | | |      | |  | | | |      | (___
-//    //  |  _ <  | |      | |  | | | |       \___ \
-//    //  | |_) | | |____  | |__| | | |____   ____) |
-//    //  |____/  |______|  \____/   \_____| |_____/    specifiques au thème
-//    //
-//    //    ========================================================================== */
-//
+
+
+ /* ==========================================================================
+   ____    _         ____     _____    _____
+  |  _ \  | |       / __ \   / ____|  / ____|
+  | |_) | | |      | |  | | | |      | (___
+  |  _ <  | |      | |  | | | |       \___ \
+  | |_) | | |____  | |__| | | |____   ____) |
+  |____/  |______|  \____/   \_____| |_____/    specifiques au thème
+
+    ========================================================================== */
+
+  /* footer */
+  footer{ margin-top:35px; padding-top:10px; border-top:1px solid $vert; font-size:1.2rem; color:$vert; }
+  footer a{ text-decoration:none; color:$vert; }
+  footer a:hover{ color:$rouge; }
 // .page #page-wrapper section:nth-child(2), .category #page-wrapper section:nth-child(2){ margin-top:300px; }
 // .page #produits-01{ margin-top:250px; }
 // .page #batistou-01{ margin-top:0px!important; padding-top:300px; }

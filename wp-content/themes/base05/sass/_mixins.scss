@@ -24,44 +24,87 @@
   @if ($logo-position=="bottomcenter"){ bottom:calc(#{-100vh} + #{$logo-y}); @include center-abs($logo-width);  }
   @if ($logo-position=="bottomright"){ bottom:calc(#{-100vh} + #{$logo-y}); right:$logo-x; }
 }
+
 // MAKE NAV
 // ---------------------------------------------------------------
-@mixin make-nav($bg,$width,$pos){
+@mixin make-nav($bg,$width,$pos, $x, $y, $fsize, $fweigth, $fcap, $funderline, $bg-item, $color, $padx, $pady, $bg-item_H, $color_H, $bg-item_A, $color_A){
   list-style:none;
   padding-left:0;
   background:$bg;
   width:$width;
   @if ($pos=="topcenter"){ text-align:center; }
+
+  > li {
+    position:relative;
+    @if ($pos=="topleft"){ display:block; float:left; margin-top:$y; margin-left:$x; }
+    @if ($pos=="topcenter"){ margin-top:$y; display:inline-block; }
+    @if ($pos=="topright"){ display:block; float:right; margin-top:$y; margin-right:$x; }
+
+  }
+  > li a{
+    display:block;
+    position:relative;
+    width:100%;
+    height:100%;
+    font-size:$fsize;
+  	font-weight:$fweigth;
+  	@if ($fcap == 'true'){ text-transform:uppercase; }
+    @if ($fcap == 'false'){ text-transform:lowercase; }
+    @if ($funderline == 'true'){ text-decoration:underline; }
+    @if ($funderline == 'false'){ text-decoration:none; }
+  	background:$bg-item;
+  	color:$color;
+  	padding: $pady $padx;
+  }
+  > li a:hover{
+    background:$bg-item_H;
+    color:$color_H;
+  }
+  > li.current-menu-item a, > li.current-menu-parent a{
+    background:$bg-item_A;
+    color:$color_A;
+  }
+
+  li:hover ul.sub-menu{
+    display:block;
+  }
+
 }
-@mixin make-nav-position($pos, $x, $y){
-  @if ($pos=="topleft"){ display:block; float:left; margin-top:$y; margin-left:$x;  }
-  @if ($pos=="topcenter"){ margin-top:$y; display:inline-block; }
-  @if ($pos=="topright"){ display:block; float:right; margin-top:$y; margin-right:$x; }
+@mixin make-nav-sub($bg,$width,$pos, $x, $y, $fsize, $fweigth, $fcap, $funderline, $bg-item, $color, $padx, $pady, $bg-item_H, $color_H, $bg-item_A, $color_A){
+  display:none;
+  position:absolute;
+  width:auto;
+
+  li{
+    clear:both;
+    white-space: nowrap;
+  }
+  > li a{
+    display:block;
+    position:relative;
+    width:100%;
+    height:100%;
+    font-size:$fsize;
+    font-weight:$fweigth;
+    @if ($fcap == 'true'){ text-transform:uppercase; }
+    @if ($fcap == 'false'){ text-transform:lowercase; }
+    @if ($funderline == 'true'){ text-decoration:underline; }
+    @if ($funderline == 'false'){ text-decoration:none; }
+    background:$bg-item;
+    color:$color;
+    padding: $pady $padx;
+  }
+  > li a:hover{
+    background:$bg-item_H;
+    color:$color_H;
+  }
+  > li.current-menu-item a, > li.current-menu-parent a{
+    background:$bg-item_A;
+    color:$color_A;
+  }
+
 }
 
-@mixin make-nav-item($fsize, $fweigth, $fcap, $funderline, $bg, $color, $padx, $pady){
-  display:block;
-  // float:left;
-  width:100%;
-  height:100%;
-  font-size:$fsize;
-	font-weight:$fweigth;
-	@if ($fcap == 'true'){ text-transform:uppercase; }
-  @if ($fcap == 'false'){ text-transform:lowercase; }
-  @if ($funderline == 'true'){ text-decoration:underline; }
-  @if ($funderline == 'false'){ text-decoration:none; }
-	background:$bg;
-	color:$color;
-	padding: $pady $padx;
-}
-@mixin make-nav-item_H($bg,$color){
-  background:$bg;
-  color:$color;
-}
-@mixin make-nav-item_A($bg,$color){
-  background:$bg;
-  color:$color;
-}
 
 // MAKE CONTAINER
 // ---------------------------------------------------------------

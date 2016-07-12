@@ -11,12 +11,13 @@
 			 © Ceysson Éditions d’Art 2016
 		</div>
 		<div class="size-2 size-12-mobile">
-			<?php wp_nav_menu( array( 'menu' => 'nav-lang', 'container' => '', 'menu_id' => 'nav-lang','after'=> '<li class="nav-main_sep">|</li>', 'class' => '', 'depth' => '2' ) ); ?>
+			<?php echo qtranxf_generateLanguageSelectCode('text'); ?>
 		</div>
 		<div class="size-5 size-12-mobile txtright">
-				mentions legales
+				  <?php if(get_locale() == "fr_FR"){ echo '<a href="'.site_url('/mentions-legales/').'">mentions légales</a>'; }
+					else{ echo '<a href="'.site_url('/en/mentions-legales/').'">legal notices</a>'; } ?>
 		</div>
-			<?php wp_footer(); ?>
+			<?php wp_footer();?>
         <!-- Script -->
 				<!-- <script type="text/javascript" src="<?php //echo get_template_directory_uri(); ?>/js/all.min.js"></script> -->
         <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/modernizr-2.6.2.min.js"></script>
@@ -28,7 +29,7 @@
 				<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/skrollr.js"></script>
 				<!-- <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/init.js"></script> -->
 				<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/smooth_scroll.js"></script>
-			
+
 	</footer>
   </div>
 

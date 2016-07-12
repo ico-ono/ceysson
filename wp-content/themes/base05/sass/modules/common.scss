@@ -1,4 +1,5 @@
-
+@import "../variables";
+@import "../mixins";
 /* ==========================================================================
    _____    ____    _   _   _______              _____   _   _   ______   _____
   / ____|  / __ \  | \ | | |__   __|     /\     |_   _| | \ | | |  ____| |  __ \
@@ -36,11 +37,9 @@ header #logo{ @include make-logo(); }
 
 /* Menu
 ========================================================================== */
-header nav ul { @include make-nav($nav-bg, $nav-width, $nav-position);  }
-header nav ul li{  @include make-nav-position($nav-position, $nav-x, $nav-y);  }
-header nav ul li a{ @include make-nav-item($navitems-font-size, $navitems-font-weight, $navitems-cap, $navitems-underline, $navitems-bg, $navitems-color, $navitems-padding-x, $navitems-padding-y); }
-header nav ul li a:hover{ @include make-nav-item_H($navitems-bg_H, $navitems-color_H); }
-header nav ul li.current-menu-item a, header nav ul li.current-menu-parent a{ @include make-nav-item_A($navitems-bg_A, $navitems-color_A); }
+header nav ul { @include make-nav($nav-bg, $nav-width, $nav-position, $nav-x, $nav-y, $navitems-font-size, $navitems-font-weight, $navitems-cap, $navitems-underline, $navitems-bg, $navitems-color, $navitems-padding-x, $navitems-padding-y, $navitems-bg_H, $navitems-color_H, $navitems-bg_A, $navitems-color_A);  }
+header nav ul.sub-menu{ @include make-nav-sub($nav-bg-n2, $nav-width-n2, $nav-position-n2, $nav-x-n2, $nav-y-n2, $navitems-font-size-n2, $navitems-font-weight-n2, $navitems-cap-n2, $navitems-underline-n2, $navitems-bg-n2, $navitems-color-n2, $navitems-padding-x-n2, $navitems-padding-y-n2, $navitems-bg-n2_H, $navitems-color-n2_H, $navitems-bg-n2_A, $navitems-color-n2_A);  }
+
 @media screen and (max-width: 1000px) {
   header nav ul li a{ font-size:1.4rem; padding:20px 4px; }
 }
@@ -51,6 +50,7 @@ header #navigation ul li{ vertical-align:top; }
 header #navigation .menu-item-has-children:hover .sub-menu{ display:block; transition: height 0.2s ease 0s;  }
 header #navigation .menu-item-has-children:hover .sub-menu li{ clear:both; float:left; width:100%!important; }
 header #navigation .menu-item-has-children:hover .sub-menu li a{ display:block; width:100%; height:100%; padding:0!important;  }
+
 
 /*==========================================================================
   _____    ______    _____   _____     ____    _   _    _____   _____  __      __  ______     __  __   ______   _   _   _    _
@@ -124,42 +124,3 @@ textarea, input { outline: none; } /* remove glow chrome / safari */
 .icon-ios-search-strong:before { content: "\f4a4"; }
 .icon-search:before { content: "\f21f"; }
 .iconehome a:before{ content: "\f144"; }
-
-/* lang depliable
-========================================================================== */
-// #nav-lang { text-align: left; display: inline; margin: 0; padding: 15px 4px 17px 0; list-style: none; }
-// #nav-lang li { display: inline-block; margin-right: -4px; position: relative; padding: 15px 20px; background: #fff; cursor: pointer; -webkit-transition: all 0.2s; -moz-transition: all 0.2s; -ms-transition: all 0.2s; -o-transition: all 0.2s; transition: all 0.2s; }
-// #nav-lang li:hover { /*background: #555; color: #fff;*/ }
-// #nav-lang li ul { padding: 0; position: absolute; top: 48px; left: 0; width: 150px; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; display: none; opacity: 0; visibility: hidden; -webkit-transiton: opacity 0.2s; -moz-transition: opacity 0.2s; -ms-transition: opacity 0.2s; -o-transition: opacity 0.2s; -transition: opacity 0.2s; }
-// #nav-lang li ul li {  background: #555;  display: block;  color: #fff; text-shadow: 0 -1px 0 #000; }
-// #nav-lang li ul li:hover { /*background: #666;*/ }
-// #nav-lang li:hover ul { display: block; opacity: 1; visibility: visible; }
-
-/* lang une ligne
-========================================================================== */
-#nav-lang { list-style: none; }
-#nav-lang #menu-item-248 a:first-child, #nav-lang .sub-menu img{ display:none; }
-#nav-lang {  text-transform:uppercase; position:absolute; top:8px; right:20px; @include make-nav($nav-bg, "auto", "topright");  }
-#nav-lang .sub-menu{ padding-left:0; }
-#nav-lang .sub-menu li{ display:inline-block; }
-#nav-lang .sub-menu a{ display:block!important; font-size:1.3rem; color:$rouge; text-decoration:none; }
-#nav-lang .sub-menu li.current-menu-item a{ color:$rouge;  }
-.qtranxs-lang-menu-fr .qtranxs-lang-menu-item-fr a{ color:$rouge!important; }
-
-#nav-lang2 { display:none; }
-
-@media screen and (max-width: 1100px) {
-  #nav-lang { display:none; }
-  #nav-lang2 { display:block!important; list-style: none; }
-  #nav-lang2 .menu-item-248 a:first-child, #nav-lang2 .sub-menu img{ display:none; }
-  #nav-lang2 {  text-transform:uppercase; position:absolute; top:8px; right:20px; @include make-nav($nav-bg, 120px, "bottomright");  }
-  #nav-lang2 .sub-menu{ padding-left:0; }
-  #nav-lang2 .sub-menu li{ display:inline-block; }
-  #nav-lang2 .sub-menu a{ display:block!important; font-size:1.3rem; color:$rouge; text-decoration:none; }
-  #nav-lang2 .sub-menu li.current-menu-item a{ color:$rouge;  }
-}
-
-
-
-// #nav-lang li.nav-main_sep{ width:7px; height:inherit; line-height:1.2rem; background: url('../images/menu-main_sep.png') no-repeat center center; overflow:hidden; text-indent:-1000px; }
-// #nav-lang li.nav-main_sep:first-child, #nav-lang li.nav-main_sep:last-child{ display: none !important; }
