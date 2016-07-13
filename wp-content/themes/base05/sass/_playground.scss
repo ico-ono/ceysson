@@ -1,12 +1,14 @@
-// /* ==========================================================================
-//   ______    ____    _   _   _______    _____
-//  |  ____|  / __ \  | \ | | |__   __|  / ____|
-//  | |__    | |  | | |  \| |    | |    | (___
-//  |  __|   | |  | | | . ` |    | |     \___ \
-//  | |      | |__| | | |\  |    | |     ____) |
-//  |_|       \____/  |_| \_|    |_|    |_____/
-//
-//    ========================================================================== */
+/* ==========================================================================
+  ______    ____    _   _   _______    _____
+ |  ____|  / __ \  | \ | | |__   __|  / ____|
+ | |__    | |  | | |  \| |    | |    | (___
+ |  __|   | |  | | | . ` |    | |     \___ \
+ | |      | |__| | | |\  |    | |     ____) |
+ |_|       \____/  |_| \_|    |_|    |_____/
+
+   ========================================================================== */
+   h1{ width:100%; text-align:center; color:$vert; font-size:1.8rem; font-weight:500; letter-spacing: 0.1rem; margin-bottom:30px; }
+   p{ font-size:1.4rem; line-height:2rem; letter-spacing:0.1rem; color:$vert; text-align:justify; font-weight:100; }
 // h2{ display:inline-block; position:relative; width:157px; height:173px; background-size:cover; color:	$beige; text-transform:uppercase; text-align:center; font-size:1.4rem; }
 // h2 strong{ position:absolute; top:50%; left:0; transform: translateY(-50%); width:100%; }
 // .home #home-01 h2, #batistou #batistou-01 h2, #batistou #batistou-02 h2, #ou-nous-trouver #ounoustrouver-01 h2, #contact #contact-01 h2, #faq h2, #mentions-legales h2, .page_produits #produits-02 h2, #batistou #batistou-03 h2{ background:url('../images/titre_bg_rouge.svg') no-repeat;  background-size:cover;}
@@ -107,10 +109,28 @@
 
     ========================================================================== */
 
-  /* footer */
+  /* reccurent */
+  .block-center{ width:66%; }
+  .page section{  min-height:70vh; }
   footer{ margin-top:35px; padding-top:10px; border-top:1px solid $vert; font-size:1.2rem; color:$vert; }
   footer a{ text-decoration:none; color:$vert; }
   footer a:hover{ color:$rouge; }
+
+
+  /* editions */
+  #les-editions section{ padding:40px 0 65px 0; }
+  #les-editions section a{ display:inline-block; width:100%; margin-top:40px; font-weight:500; text-decoration:underline; text-align:center; color:$rouge; }
+  #les-editions section a:hover{ color:$vert; }
+
+  /* l'equipe */
+  #lequipe section{ padding:80px 0 65px 0; }
+  #lequipe section *{ color:$rouge!important; }
+
+  /* contact */
+  #contact section{ padding:80px 0 65px 0; }
+  #contact section *{ color:$rouge!important; }
+
+
 // .page #page-wrapper section:nth-child(2), .category #page-wrapper section:nth-child(2){ margin-top:300px; }
 // .page #produits-01{ margin-top:250px; }
 // .page #batistou-01{ margin-top:0px!important; padding-top:300px; }

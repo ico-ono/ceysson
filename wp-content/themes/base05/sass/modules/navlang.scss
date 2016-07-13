@@ -42,7 +42,7 @@
 ========================================================================== */
 #nav-lang, #qtranslate-chooser{ text-align: center; }
 #nav-lang li, #qtranslate-chooser li{ display: inline-block; }
-#nav-lang li a, #qtranslate-chooser li a{ text-decoration:none; color:$rouge; font-size:1.4rem; padding:5px;  }
+#nav-lang li a, #qtranslate-chooser li a{ text-decoration:none; color:$rouge; font-size:1.6rem; padding:5px;  }
 #nav-lang li.active a, #qtranslate-chooser li.active a{ text-decoration:none; color:$vert;  }
 #nav-lang li:first-child a, #qtranslate-chooser li:first-child a{ border-right:1px solid $rouge; }
 

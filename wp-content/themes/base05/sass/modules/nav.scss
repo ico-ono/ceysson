@@ -11,4 +11,5 @@
 
 /* Styles specifiques
 ========================================================================== */
-#nav-main2{ float:right; }
+#nav-main2, #nav-main2 li{ float:right; }
+#nav-main2 ul{ right:0; }

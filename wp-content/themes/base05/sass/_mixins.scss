@@ -60,10 +60,11 @@
     background:$bg-item_H;
     color:$color_H;
   }
-  > li.current-menu-item a, > li.current-menu-parent a{
-    background:$bg-item_A;
-    color:$color_A;
-  }
+  // > li.current_page_item a{
+  // // > li.current-menu-item a, > li.current-menu-parent a{
+  //   background:$bg-item_A;
+  //   color:$color_A;
+  // }
 
   li:hover ul.sub-menu{
     display:block;

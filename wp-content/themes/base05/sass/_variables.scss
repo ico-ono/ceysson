@@ -41,7 +41,7 @@ $font-size : 1.4rem !default;				// 1rem equiv "10px" en gardant 1.4rem comme ba
 
 // NAV-MAIN
 //--------------------------------------------------------
-	$nav-bg: $site-bg;
+	$nav-bg:;
 	$nav-width: 300px;
 	$nav-position:"topleft";				// topcenter, topright, topleft
 	$nav-x:0px;
@@ -67,7 +67,7 @@ $font-size : 1.4rem !default;				// 1rem equiv "10px" en gardant 1.4rem comme ba
 
 	// NAV-MAIN niveau2
 	//--------------------------------------------------------
-		$nav-bg-n2: $site-bg;
+		$nav-bg-n2:;
 		$nav-width-n2: 300px;
 		$nav-position-n2:"topleft";				// topcenter, topright, topleft
 		$nav-x-n2:0px;
