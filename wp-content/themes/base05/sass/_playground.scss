@@ -111,11 +111,10 @@
 
   /* reccurent */
   .block-center{ width:66%; }
-  .page section{  min-height:70vh; }
+  section{ min-height:70vh; } 
   footer{ margin-top:35px; padding-top:10px; border-top:1px solid $vert; font-size:1.2rem; color:$vert; }
   footer a{ text-decoration:none; color:$vert; }
   footer a:hover{ color:$rouge; }
-
 
   /* editions */
   #les-editions section{ padding:40px 0 65px 0; }
