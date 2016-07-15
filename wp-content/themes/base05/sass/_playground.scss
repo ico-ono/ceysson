@@ -110,8 +110,9 @@
     ========================================================================== */
 
   /* reccurent */
-  .block-center{ width:66%; }
-  section{ min-height:70vh; } 
+  .page .block-center, .category .block-center{ width:66%; }
+  .single .block-center{ width:100%; }
+  section{ min-height:70vh; }
   footer{ margin-top:35px; padding-top:10px; border-top:1px solid $vert; font-size:1.2rem; color:$vert; }
   footer a{ text-decoration:none; color:$vert; }
   footer a:hover{ color:$rouge; }
