@@ -39,15 +39,14 @@ function header_class() {
    Clean ups and enhancements, uncomment to use
    ========================================================================== */
 
-// require_once('functions/wordpress_cleanup.php'); 		   	//admin cleanups
-// require_once('functions/script_style_cleanups.php'); 		// javascript cleanups
+// require_once('functions/wordpress_cleanup.php'); 		   																//admin cleanups
+// require_once('functions/script_style_cleanups.php'); 																	// javascript cleanups
 // require_once ( 'functions/theme-options.php' );
-// require_once('functions/custom_post_types.php'); 		    // boiler template for CPT
-// require_once('functions/remove-comments-absolute.php'); 	//to remove comments completely
-// remove emoji
-remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
-remove_action( 'wp_print_styles', 'print_emoji_styles' );
-
+// require_once('functions/custom_post_types.php'); 		    															// boiler template for CPT
+// require_once('functions/remove-comments-absolute.php'); 																//to remove comments completely
+remove_action( 'wp_head', 'print_emoji_detection_script', 7 ); 														// remove emoji
+remove_action( 'wp_print_styles', 'print_emoji_styles' );																	// remove emoji
+// remove_filter( 'the_content', 'wpautop' );																								// remove p auto dans tiny
 
 /* ==========================================================================
    Permet de localiser le dossier de langue pour la trad. des plugins.
@@ -63,12 +62,10 @@ remove_action( 'wp_print_styles', 'print_emoji_styles' );
 /* ==========================================================================
    Personnaliser les onglets dans l'admin
    ========================================================================== */
-// rajoute le menu dans apparence
-add_theme_support( 'menus' );
-// supprime le menu commentaires
-function remove_menus(){ remove_menu_page( 'edit-comments.php' ); }
-// supprime la barre d'admin quand on est loggé
-add_action( 'admin_menu', 'remove_menus' );
+
+add_theme_support( 'menus' );																															// rajoute le menu dans apparence
+function remove_menus(){ remove_menu_page( 'edit-comments.php' ); }												// supprime le menu commentaires
+add_action( 'admin_menu', 'remove_menus' );																								// supprime la barre d'admin quand on est loggé
 
 
 /* ==========================================================================
@@ -98,11 +95,11 @@ add_action('init', 'register_menu');
 if (function_exists('add_theme_support')) {
  add_theme_support('post-thumbnails');
 }
+
 /* ==========================================================================
    Images sizes
    ========================================================================== */
-add_image_size( 'actu', 750, 620, true, array( 'center', 'center' ));
-
+// add_image_size( 'actu', 750, 620, true, array( 'center', 'center' ));
 
 
 /* ==========================================================================
@@ -114,7 +111,7 @@ $post_id = $_GET['post'] ? $_GET['post'] : $_POST['post_ID'] ;
   // check for a template type
 	// $template_file = get_post_meta($post_id,'_wp_page_template',TRUE);
   // if ($template_file == 'page_livre.php') {
-	  add_filter( 'rwmb_meta_boxes', 'OneBlocMore_register_meta_boxes' );
+	  add_filter( 'rwmb_meta_boxes', 'TwoBlocMore_register_meta_boxes' );
 	// }
 
 function OneBlocMore_register_meta_boxes( $meta_boxes )
@@ -143,8 +140,8 @@ function TwoBlocMore_register_meta_boxes( $meta_boxes )
     // Home
     $meta_boxes[] = array(
         'id'			=> 'bloc1',
-        'title'		=> 'bloc1',
-        'post_types'	=> array('page'),
+        'title'		=> 'texte en vert',
+        'post_types'	=> array('post'),
         'context'		=> 'normal',
         'priority'	=> 'high',
         'fields' => array(
@@ -156,14 +153,14 @@ function TwoBlocMore_register_meta_boxes( $meta_boxes )
     );
 		$meta_boxes[] = array(
 				'id'			=> 'bloc2',
-				'title'		=> 'bloc2',
-				'post_types'	=> array('page'),
+				'title'		=> 'gallerie',
+				'post_types'	=> array('post'),
 				'context'		=> 'normal',
 				'priority'	=> 'high',
 				'fields' => array(
 						array(
 								'id'    => $prefix . 'bloc2',
-								'type'  => 'wysiwyg'
+								'type'  => 'text'
 						),
 				)
 		);

@@ -17,6 +17,7 @@
 				  <?php if(get_locale() == "fr_FR"){ echo '<a href="'.site_url('/mentions-legales/').'">mentions légales</a>'; }
 					else{ echo '<a href="'.site_url('/en/mentions-legales/').'">legal notices</a>'; } ?>
 		</div>
+		</footer>
 			<?php wp_footer();?>
         <!-- Script -->
 				<!-- <script type="text/javascript" src="<?php //echo get_template_directory_uri(); ?>/js/all.min.js"></script> -->
@@ -30,8 +31,7 @@
 				<!-- <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/init.js"></script> -->
 				<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/smooth_scroll.js"></script>
 
-	</footer>
-  </div>
+
 
 
 </body>

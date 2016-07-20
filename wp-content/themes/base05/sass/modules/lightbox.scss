@@ -1,0 +1,25 @@
+@import "../variables";
+
+/* Easy FancyBox */
+/* a faire: deconnecter la feuille de style pour avoir tout ici  */
+/* c'est possible en décochant imprimer les css et coller tout ici  */
+
+/* custom controler : easy-fancybox/fancybox/fancybox.png  */
+#fancybox-close{ top:10px!important; right:10px!important; }
+
+/* viewport */
+.metaslider .flexslider{ margin-bottom:0!important; }
+/* centrage de certaines images */
+.flex-viewport li a img{ transform: translateY(50%); }
+.flex-viewport li:nth-child(2) a img{ transform: none!important; }
+
+
+
+/* thumb */
+.metaslider .flex-control-thumbs{ margin-top:11px; }
+.metaslider .flex-control-thumbs li { border:1px solid #bcbcbc; margin-right:4px; }
+.metaslider .flex-control-thumbs li:last-child { margin-right:0px; }
+.metaslider ol.flex-control-thumbs img, #content .metaslider ol.flex-control-thumbs img{ margin:0!important; }
+
+/* no shadow */
+.fancybox-bg{ display:none; }
