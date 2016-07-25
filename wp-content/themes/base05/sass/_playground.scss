@@ -7,16 +7,21 @@
  |_|       \____/  |_| \_|    |_|    |_____/
 
    ========================================================================== */
-   .page h1{ width:100%; text-align:center; color:$vert; font-size:1.8rem; font-weight:500; letter-spacing: 0.1rem; margin-bottom:30px; }
-   .single .size-6 h1{ text-align:left; color:$rouge; font-size:3rem; font-weight:100; letter-spacing: 0.15rem; margin:0 0 20px 0 }
-   .single h2{ font-size:1rem; line-height:1.2rem; color:$vert; text-transform:uppercase; margin:30px 0 5px 0; }
 
-   p{ font-size:1.4rem; line-height:2rem; letter-spacing:0.1rem; color:$vert; text-align:justify; font-weight:100; }
+
+   .page h1{ width:100%; font-family: $font-custom2;  text-align:center; color:$vert; font-size:1.8rem; letter-spacing: 0.1rem; margin-bottom:35px; }
+   .single .size-6 h1{ text-align:left; color:$rouge; font-size:3rem; font-weight:100; letter-spacing: 0.15rem; margin:0 0 15px 0 }
+   .single h2{ font-size:1rem; line-height:1.2rem; color:$vert; text-transform:uppercase; margin:30px 0 0px 0; font-weight:400; }
+
+   .page p{ font-size:1.3rem; line-height:1.8rem; letter-spacing:0.07rem; color:$vert; text-align:justify; font-weight:100; margin-bottom:18px; }
    .single .size-6 .bloc1 p{ color:$rouge; font-size:1rem; line-height:1.2rem; }
-   .single .size-6 .bloc2 p{ color:$vert; }
+   .single .size-6 .bloc2 p{ color:$vert; font-size:1.2rem; line-height:1.8rem; text-align:justify; }
 
-   .single .size-6 ul{ padding-left: 0.5em; }
+   .single .size-6 ul{ padding-left: 0.5em; margin-top:0; }
    .single .size-6 ul li{ font-size:1rem; line-height:1.2rem; color:$vert; }
+
+    .page p strong{ font-family: $font-custom2; }
+    .single em{ font-family:$font-custom2-italic; }
 // h2{ display:inline-block; position:relative; width:157px; height:173px; background-size:cover; color:	$beige; text-transform:uppercase; text-align:center; font-size:1.4rem; }
 // h2 strong{ position:absolute; top:50%; left:0; transform: translateY(-50%); width:100%; }
 // .home #home-01 h2, #batistou #batistou-01 h2, #batistou #batistou-02 h2, #ou-nous-trouver #ounoustrouver-01 h2, #contact #contact-01 h2, #faq h2, #mentions-legales h2, .page_produits #produits-02 h2, #batistou #batistou-03 h2{ background:url('../images/titre_bg_rouge.svg') no-repeat;  background-size:cover;}
@@ -120,14 +125,15 @@
   /* reccurent */
   .page .block-center, .category .block-center{ width:66%; }
   .single .block-center{ width:100%; }
+  header{ padding-top:6px; }
   section{ min-height:70vh; }
-  footer{ margin-top:35px; padding-top:10px; border-top:1px solid $vert; font-size:1.2rem; color:$vert; }
+  footer{ margin-top:35px; padding-top:10px; border-top:1px solid $vert; font-size:1.2rem; color:$vert; letter-spacing: 0.03rem; font-weight:100; }
   footer a{ text-decoration:none; color:$vert; }
   footer a:hover{ color:$rouge; }
 
   /* editions */
-  #les-editions section{ padding:40px 0 65px 0; }
-  #les-editions section a{ display:inline-block; width:100%; margin-top:40px; font-weight:500; text-decoration:underline; text-align:center; color:$rouge; }
+  #les-editions section{ padding:45px 0 0px 0; }
+  #les-editions section a{ display:inline-block; width:100%; font-size:1.4rem; margin-top:55px; font-weight:500; text-decoration:underline; text-align:center; color:$rouge; }
   #les-editions section a:hover{ color:$vert; }
 
   /* l'equipe */
@@ -137,13 +143,17 @@
   /* contact */
   #contact section{ padding:80px 0 65px 0; }
   #contact section *{ color:$rouge!important; }
+  #contact section a{ text-decoration: none;}
+
+  /* mentions legales */
+  #mentions-legales section{ padding:45px 0 0px 0; }
 
   /* category */
   .category section div{ @include make-grid(5, 10px, 10px); }
 
   /* single */
   .single section .size-6{ padding-left:40px; }
-  .single section .size-6 .bloc1{ margin-bottom:30px;}
+  .single section .size-6 .bloc1{ margin-bottom:25px;}
 
 
 // .page #page-wrapper section:nth-child(2), .category #page-wrapper section:nth-child(2){ margin-top:300px; }

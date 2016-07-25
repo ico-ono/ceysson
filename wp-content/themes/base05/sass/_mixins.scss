@@ -27,7 +27,7 @@
 
 // MAKE NAV
 // ---------------------------------------------------------------
-@mixin make-nav($bg,$width,$pos, $x, $y, $fsize, $fweigth, $fcap, $funderline, $bg-item, $color, $padx, $pady, $bg-item_H, $color_H, $bg-item_A, $color_A){
+@mixin make-nav($bg,$width,$pos, $x, $y, $fsize, $fweigth, $fcap, $funderline, $bg-item, $color, $padx, $pady, $bg-item_H, $color_H, $bg-item_A, $color_A, $navitems-font-family){
   list-style:none;
   padding-left:0;
   background:$bg;
@@ -48,6 +48,7 @@
     height:100%;
     font-size:$fsize;
   	font-weight:$fweigth;
+    font-family: $navitems-font-family;
   	@if ($fcap == 'true'){ text-transform:uppercase; }
     @if ($fcap == 'false'){ text-transform:lowercase; }
     @if ($funderline == 'true'){ text-decoration:underline; }
@@ -71,7 +72,7 @@
   }
 
 }
-@mixin make-nav-sub($bg,$width,$pos, $x, $y, $fsize, $fweigth, $fcap, $funderline, $bg-item, $color, $padx, $pady, $bg-item_H, $color_H, $bg-item_A, $color_A){
+@mixin make-nav-sub($bg,$width,$pos, $x, $y, $fsize, $fweigth, $fcap, $funderline, $bg-item, $color, $padx, $pady, $bg-item_H, $color_H, $bg-item_A, $color_A, $navitems-font-family){
   display:none;
   position:absolute;
   width:auto;
@@ -87,6 +88,7 @@
     height:100%;
     font-size:$fsize;
     font-weight:$fweigth;
+    font-family: $navitems-font-family;
     @if ($fcap == 'true'){ text-transform:uppercase; }
     @if ($fcap == 'false'){ text-transform:lowercase; }
     @if ($funderline == 'true'){ text-decoration:underline; }

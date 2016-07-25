@@ -2,9 +2,14 @@
 	Config file and project variables
   Modified : ico-ono (JUIN 2016)
 */
+
+
 // FONT FAMILY
 //--------------------------------------------------------
 $font-custom : "museo_sans100", "sans-serif";
+$font-custom2 : "museo_sans300", "sans-serif";
+$font-custom2-italic : "museo_sans300", "sans-serif";
+$font-custom3 : "museo_sans700", "sans-serif";
 $font-icon : "FontAwesome";
 $font-size : 1.4rem !default;				// 1rem equiv "10px" en gardant 1.4rem comme base
 
@@ -49,6 +54,7 @@ $font-size : 1.4rem !default;				// 1rem equiv "10px" en gardant 1.4rem comme ba
 
 	//NAV-MAIN items
 	$navitems-bg:;
+	$navitems-font-family:$font-custom2;
 	$navitems-font-size:1.8rem;
 	$navitems-font-weight:500;
 	$navitems-cap:"false";
@@ -75,7 +81,8 @@ $font-size : 1.4rem !default;				// 1rem equiv "10px" en gardant 1.4rem comme ba
 
 		//NAV-MAIN items
 		$navitems-bg-n2:;
-		$navitems-font-size-n2:1.2rem;
+		$navitems-font-family-n2:$font-custom2;
+		$navitems-font-size-n2:1.1rem;
 		$navitems-font-weight-n2:100;
 		$navitems-cap-n2:"false";
 		$navitems-underline-n2:"false";

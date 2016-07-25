@@ -8,6 +8,14 @@
 // header nav ul li.nav-main_sep{ width:7px; height:inherit; line-height:1.2rem; background: url('../images/menu-main_sep.png') no-repeat center center; overflow:hidden; text-indent:-1000px; }
 // header nav ul li.nav-main_sep:last-child{ display: none !important; }
 
+/* Top nivo2
+========================================================================== */
+header nav li  ul{ padding-top:2px; } 
+
+/* Letter spacing
+========================================================================== */
+header nav li a{ letter-spacing: 0.12rem;}
+header nav li  ul li a{ letter-spacing: 0.08rem;}
 
 /* Styles specifiques
 ========================================================================== */
