@@ -1169,8 +1169,9 @@ header nav ul.sub-menu {
     font-family: "museo_sans300", "sans-serif";
     text-transform: lowercase;
     text-decoration: none;
+    background: #ffffff;
     color: #fe2c22;
-    padding: 3px 0px; }
+    padding: 3px 3px; }
   header nav ul.sub-menu > li a:hover {
     color: #00b6ad; }
   header nav ul.sub-menu > li.current-menu-item a, header nav ul.sub-menu > li.current-menu-parent a {
@@ -3015,8 +3016,9 @@ header nav ul.sub-menu {
     font-family: "museo_sans300", "sans-serif";
     text-transform: lowercase;
     text-decoration: none;
+    background: #ffffff;
     color: #fe2c22;
-    padding: 3px 0px; }
+    padding: 3px 3px; }
   header nav ul.sub-menu > li a:hover {
     color: #00b6ad; }
   header nav ul.sub-menu > li.current-menu-item a, header nav ul.sub-menu > li.current-menu-parent a {
