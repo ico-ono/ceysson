@@ -16,9 +16,11 @@
 <section class="block-center center">
     <?php if(have_posts()) : ?>
       <?php $i=1; while(have_posts()) : the_post(); ?>
-
-        <div id="actu-0<?php echo ($i++); ?>">
-          <a href="<?php the_permalink(); ?> "><?php the_post_thumbnail('thumbnail'); ?></a>
+        <div id="actu-0<?php echo ($i++); ?>" class="thumb-wrapper">
+          <a href="<?php the_permalink(); ?> ">
+            <div class="titre"><?php the_title(); ?> </div>
+            <div class="bg"></div>
+            <div class="thumb"><?php the_post_thumbnail('thumbnail'); ?></div></a>
         </div>
 
      <?php endwhile; ?>

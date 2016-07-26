@@ -127,7 +127,7 @@
   .single .block-center{ width:100%; }
   header{ padding-top:6px; }
   section{ min-height:70vh; }
-  footer{ margin-top:35px; padding-top:10px; border-top:1px solid $vert; font-size:1.2rem; color:$vert; letter-spacing: 0.03rem; font-weight:100; }
+  footer{ float:left; margin-top:35px; padding-top:10px; border-top:1px solid $vert; font-size:1.2rem; color:$vert; letter-spacing: 0.03rem; font-weight:100; }
   footer a{ text-decoration:none; color:$vert; }
   footer a:hover{ color:$rouge; }
 
@@ -147,9 +147,6 @@
 
   /* mentions legales */
   #mentions-legales section{ padding:45px 0 0px 0; }
-
-  /* category */
-  .category section div{ @include make-grid(5, 10px, 10px); }
 
   /* single */
   .single section .size-6{ padding-left:40px; }
