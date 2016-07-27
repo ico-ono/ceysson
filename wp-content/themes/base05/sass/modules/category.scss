@@ -4,7 +4,7 @@
 
 /* category grille */
 .category section{ height:auto; min-height:100%; margin-bottom:25px; }
-.category section .thumb-wrapper{ @include make-grid(5, 10px, 10px); }
+.category section .thumb-wrapper{ @include make-grid(5, 2%, 2%); }
 
 /* thumb a */
 .category section .thumb-wrapper a{ display:block; position:relative; width:100%; height:100%; margin:0 10px 0 0;}

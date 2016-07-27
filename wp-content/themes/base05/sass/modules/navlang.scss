@@ -40,10 +40,10 @@
 
 /* langues en ligne <?php echo qtranxf_generateLanguageSelectCode('text'); ?>
 ========================================================================== */
-#nav-lang, #qtranslate-chooser{height:12px}
+// #nav-lang, #qtranslate-chooser{height:12px}
 #nav-lang, #qtranslate-chooser{ text-align: center; }
 #nav-lang li, #qtranslate-chooser li{ height:12px; display: inline-block; overflow: hidden;}
-#nav-lang li a, #qtranslate-chooser li a{ height:12px; text-decoration:none; color:$rouge; font-size:1.4rem; padding:0 7px; line-height:1rem;  }
+#nav-lang li a, #qtranslate-chooser li a{ text-decoration:none; color:$rouge; font-size:1.4rem; padding:0 7px; line-height:1rem;  }
 // #nav-lang li.active a, #qtranslate-chooser li.active a{ text-decoration:none; color:$vert;  }
 #nav-lang li:first-child a, #qtranslate-chooser li:first-child a{ border-right:1px solid $rouge; }
 #nav-lang li a:hover, #qtranslate-chooser li a:hover{ text-decoration:none; color:$vert;  }

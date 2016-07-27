@@ -958,91 +958,6 @@ figure img {
   width: 100%;
   height: auto; }
 
-/*==========================================================================
-  _____    ______    _____   _____     ____    _   _    _____   _____  __      __  ______     __  __   ______   _   _   _    _
- |  __ \  |  ____|  / ____| |  __ \   / __ \  | \ | |  / ____| |_   _| \ \    / / |  ____|   |  \/  | |  ____| | \ | | | |  | |
- | |__) | | |__    | (___   | |__) | | |  | | |  \| | | (___     | |    \ \  / /  | |__      | \  / | | |__    |  \| | | |  | |
- |  _  /  |  __|    \___ \  |  ___/  | |  | | | . ` |  \___ \    | |     \ \/ /   |  __|     | |\/| | |  __|   | . ` | | |  | |
- | | \ \  | |____   ____) | | |      | |__| | | |\  |  ____) |  _| |_     \  /    | |____    | |  | | | |____  | |\  | | |__| |
- |_|  \_\ |______| |_____/  |_|       \____/  |_| \_| |_____/  |_____|     \/     |______|   |_|  |_| |______| |_| \_|  \____/
-
- ========================================================================== */
-#navPanel, #titleBar {
-  display: none; }
-
-@media screen and (max-width: 840px) {
-  #nav-main, #nav-produits {
-    display: none !important; }
-  #page-wrapper {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: 0 .5s ease;
-    -webkit-transition: -webkit-transform .5s ease;
-    transition: -webkit-transform .5s ease;
-    transition: transform .5s ease;
-    transition: transform .5s ease, -webkit-transform .5s ease;
-    padding-bottom: 1px; }
-  #navButton {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: 0 .5s ease;
-    -webkit-transition: -webkit-transform .5s ease;
-    transition: -webkit-transform .5s ease;
-    transition: transform .5s ease;
-    transition: transform .5s ease, -webkit-transform .5s ease;
-    display: block;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10001; }
-  #navButton .toggle {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    border: 0;
-    outline: 0; }
-  #navButton .toggle:before {
-    text-decoration: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: block;
-    position: absolute;
-    border-top: 0; }
-  #navPanel {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: 0 .5s ease;
-    -webkit-transition: -webkit-transform .5s ease;
-    transition: -webkit-transform .5s ease;
-    transition: transform .5s ease;
-    transition: transform .5s ease, -webkit-transform .5s ease;
-    display: block;
-    left: 0;
-    overflow-y: auto;
-    position: fixed;
-    top: 0;
-    z-index: 10002; }
-  #navPanel:before {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%; }
-  #navPanel .link {
-    position: relative;
-    z-index: 1;
-    display: block;
-    text-decoration: none;
-    color: #ddd;
-    border: 0;
-    border-top: dotted 1px rgba(255, 255, 255, 0.05);
-    padding: .5em; }
-  #navPanel .indent-1, #navPanel .indent-2, #navPanel .indent-3, #navPanel .indent-4, #navPanel .indent-5 {
-    display: inline-block; } }
-
 /*
 	Config file and project variables
   Modified : ico-ono (JUIN 2016)
@@ -1424,9 +1339,6 @@ header nav li ul li a {
 /* langues en ligne <?php echo qtranxf_generateLanguageSelectCode('text'); ?>
 ========================================================================== */
 #nav-lang, #qtranslate-chooser {
-  height: 12px; }
-
-#nav-lang, #qtranslate-chooser {
   text-align: center; }
 
 #nav-lang li, #qtranslate-chooser li {
@@ -1435,7 +1347,6 @@ header nav li ul li a {
   overflow: hidden; }
 
 #nav-lang li a, #qtranslate-chooser li a {
-  height: 12px;
   text-decoration: none;
   color: #fe2c22;
   font-size: 1.4rem;
@@ -1461,6 +1372,93 @@ header nav li ul li a {
 	Config file and project variables
   Modified : ico-ono (JUIN 2016)
 */
+/*==========================================================================
+  _____    ______    _____   _____     ____    _   _    _____   _____  __      __  ______     __  __   ______   _   _   _    _
+ |  __ \  |  ____|  / ____| |  __ \   / __ \  | \ | |  / ____| |_   _| \ \    / / |  ____|   |  \/  | |  ____| | \ | | | |  | |
+ | |__) | | |__    | (___   | |__) | | |  | | |  \| | | (___     | |    \ \  / /  | |__      | \  / | | |__    |  \| | | |  | |
+ |  _  /  |  __|    \___ \  |  ___/  | |  | | | . ` |  \___ \    | |     \ \/ /   |  __|     | |\/| | |  __|   | . ` | | |  | |
+ | | \ \  | |____   ____) | | |      | |__| | | |\  |  ____) |  _| |_     \  /    | |____    | |  | | | |____  | |\  | | |__| |
+ |_|  \_\ |______| |_____/  |_|       \____/  |_| \_| |_____/  |_____|     \/     |______|   |_|  |_| |______| |_| \_|  \____/
+
+ ========================================================================== */
+@media screen and (max-width: 840px) {
+  /* taille */
+  #nav-main, #nav-main2 {
+    display: none !important; }
+  /* taille */
+  #navButton {
+    height: 45px; }
+  /*#navButton .toggle:before{ width:80px; height:30px; left:50%; margin-left:-40px; font-size:14px; line-height:30px; font-family:FontAwesome; font-style:normal; font-weight:400; content:'\f0c9'; color:#FFF; background:#09C; border-radius:0 0 .35em .35em; }*/
+  /* position : margin-top + background-position */
+  #navButton .toggle {
+    display: block;
+    height: 20px;
+    margin-top: 20px;
+    background-color: transparent;
+    background-image: -webkit-gradient(linear, left top, right top, from(#000), to(#000)), -webkit-gradient(linear, left top, right top, from(#000), to(#000)), -webkit-gradient(linear, left top, right top, from(#333), to(#000));
+    background-image: -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(left, #000, #000);
+    background-image: linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000);
+    background-position: 95% top, 95% center, 95% bottom;
+    background-repeat: no-repeat;
+    background-size: 20px 2px;
+    padding: 0;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-transition: .2s;
+    transition: .2s; }
+  /* font */
+  #navPanel .depth-0 {
+    font-size: 1.8rem;
+    text-transform: uppercase; }
+  #navPanel .depth-1 {
+    font-size: 1.3rem !important;
+    text-transform: uppercase;
+    color: #fff !important; }
+  #navPanel .depth-0:hover, #navPanel .depth-1:hover {
+    background: #00b6ad; }
+  /* color */
+  #navPanel .link {
+    color: #fff; }
+  /* style */
+  #navPanel .link {
+    position: relative;
+    z-index: 1;
+    display: block;
+    text-decoration: none;
+    border: 0;
+    border-top: dotted 1px rgba(255, 255, 255, 0.05);
+    padding: .5em; }
+  #navPanel .link:first-child {
+    border-top: 0; }
+  #navPanel .link.depth-0, #navPanel .link.depth-1 {
+    text-align: center;
+    font-weight: 300; }
+  /* animation */
+  #navPanel {
+    height: 50vh;
+    width: 100%; }
+  #navPanel {
+    -webkit-transform: translateY(-50vh);
+    transform: translateY(-50vh);
+    background: #222;
+    box-shadow: inset 0 -2px 8px 0 rgba(0, 0, 0, 0.25); }
+  body.navPanel-visible #navPanel {
+    -webkit-transform: translateY(0);
+    transform: translateY(0); }
+  body.navPanel-visible #page-wrapper, body.navPanel-visible #navButton {
+    -webkit-transform: translateY(50vh);
+    transform: translateY(50vh); } }
+
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
 /* category grille */
 .category section {
   height: auto;
@@ -1469,14 +1467,17 @@ header nav li ul li a {
 
 .category section .thumb-wrapper {
   position: relative;
-  min-height: 1px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
   float: left;
-  width: 20%;
-  height: auto; }
+  width: 18.4%;
+  height: auto;
+  min-height: 1px; }
+  .category section .thumb-wrapper:nth-child(n) {
+    margin-right: 2%;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 2%; }
+  .category section .thumb-wrapper:nth-child(5n) {
+    margin-right: 0; }
   @media screen and (max-width: 480px) {
     .category section .thumb-wrapper {
       width: 100%; } }
@@ -1576,6 +1577,10 @@ header nav li ul li a {
 .metaslider ol.flex-control-thumbs img, #content .metaslider ol.flex-control-thumbs img {
   margin: 0 !important; }
 
+@media screen and (max-width: 1200px) {
+  .metaslider .flex-control-thumbs li {
+    width: 18% !important; } }
+
 /*
 	Config file and project variables
   Modified : ico-ono (JUIN 2016)
@@ -1668,6 +1673,14 @@ header nav li ul li a {
   font-family: "museo_sans300", "sans-serif"; }
 
 /* ==========================================================================
+  ____    _    _   _______   _______    ____    _   _                _        _____   _   _   _  __   _____
+ |  _ \  | |  | | |__   __| |__   __|  / __ \  | \ | |     ___      | |      |_   _| | \ | | | |/ /  / ____|
+ | |_) | | |  | |    | |       | |    | |  | | |  \| |    ( _ )     | |        | |   |  \| | | ' /  | (___
+ |  _ <  | |  | |    | |       | |    | |  | | | . ` |    / _ \/\   | |        | |   | . ` | |  <    \___  | |_) | | |__| |    | |       | |    | |__| | | |\  |   | (_>  <   | |____   _| |_  | |\  | | . \   ____) |
+ |____/   \____/     |_|       |_|     \____/  |_| \_|    \___/\/   |______| |_____| |_| \_| |_|\_\ |_____/
+
+   ========================================================================== */
+/* ==========================================================================
   _    _   ______              _____    ______   _____
  | |  | | |  ____|     /\     |  __ \  |  ____| |  __  | |__| | | |__       /  \    | |  | | | |__    | |__) |
  |  __  | |  __|     / /\ \   | |  | | |  __|   |  _  /
@@ -1686,10 +1699,9 @@ header #logo:hover {
   |  _ \  | |       / __ \   / ____|  / ____|
   | |_) | | |      | |  | | | |      | (___
   |  _ <  | |      | |  | | | |       \___   | |_) | | |____  | |__| | | |____   ____) |
-  |____/  |______|  \____/   \_____| |_____/    specifiques au thème
+  |____/  |______|  \____/   \_____| |_____/
 
     ========================================================================== */
-/* reccurent */
 .page .block-center, .category .block-center {
   width: 66%; }
 
@@ -1701,6 +1713,10 @@ header {
 
 section {
   min-height: 70vh; }
+
+@media screen and (min-height: 650px) {
+  section {
+    min-height: 77vh; } }
 
 footer {
   float: left;
@@ -1719,7 +1735,21 @@ footer a {
 footer a:hover {
   color: #fe2c22; }
 
-/* editions */
+@media screen and (max-width: 650px) {
+  footer .size-12-mobile {
+    height: 20px;
+    text-align: center !important; } }
+
+/* ==========================================================================
+  _____                _____   ______    _____
+  |  __ \      /\      / ____| |  ____|  / ____|
+  | |__) |    /  \    | |  __  | |__    | (___
+  |  ___/    / /\ \   | | |_ | |  __|    \___   | |       / ____ \  | |__| | | |____   ____) |
+  |_|      /_/    \_\  \_____| |______| |_____/
+
+  ========================================================================== */
+/* editions
+    ========================================================================== */
 #les-editions section {
   padding: 45px 0 0px 0; }
 
@@ -1736,14 +1766,16 @@ footer a:hover {
 #les-editions section a:hover {
   color: #00b6ad; }
 
-/* l'equipe */
+/* l'equipe
+    ========================================================================== */
 #lequipe section {
   padding: 80px 0 65px 0; }
 
 #lequipe section * {
   color: #fe2c22 !important; }
 
-/* contact */
+/* contact
+    ========================================================================== */
 #contact section {
   padding: 80px 0 65px 0; }
 
@@ -1753,16 +1785,33 @@ footer a:hover {
 #contact section a {
   text-decoration: none; }
 
-/* mentions legales */
+/* mentions legales
+    ========================================================================== */
 #mentions-legales section {
   padding: 45px 0 0px 0; }
 
-/* single */
+/* single
+    ========================================================================== */
 .single section .size-6 {
   padding-left: 40px; }
 
 .single section .size-6 .bloc1 {
   margin-bottom: 25px; }
+
+@media screen and (max-width: 680px) {
+  .single section .size-6 {
+    padding-left: 0px;
+    margin-top: 40px; } }
+
+/* ==========================================================================
+  ______    ____    _____    __  __
+ |  ____|  / __ \  |  __ \  |  \/  |
+ | |__    | |  | | | |__) | | \  / |
+ |  __|   | |  | | |  _  /  | |\/| |
+ | |      | |__| | | | \ \  | |  | |
+ |_|       \____/  |_|  \_\ |_|  |_|
+
+   ========================================================================== */
 
 html {
   font-family: sans-serif;
@@ -2717,91 +2766,6 @@ figure img {
   width: 100%;
   height: auto; }
 
-/*==========================================================================
-  _____    ______    _____   _____     ____    _   _    _____   _____  __      __  ______     __  __   ______   _   _   _    _
- |  __ \  |  ____|  / ____| |  __ \   / __ \  | \ | |  / ____| |_   _| \ \    / / |  ____|   |  \/  | |  ____| | \ | | | |  | |
- | |__) | | |__    | (___   | |__) | | |  | | |  \| | | (___     | |    \ \  / /  | |__      | \  / | | |__    |  \| | | |  | |
- |  _  /  |  __|    \___ \  |  ___/  | |  | | | . ` |  \___ \    | |     \ \/ /   |  __|     | |\/| | |  __|   | . ` | | |  | |
- | | \ \  | |____   ____) | | |      | |__| | | |\  |  ____) |  _| |_     \  /    | |____    | |  | | | |____  | |\  | | |__| |
- |_|  \_\ |______| |_____/  |_|       \____/  |_| \_| |_____/  |_____|     \/     |______|   |_|  |_| |______| |_| \_|  \____/
-
- ========================================================================== */
-#navPanel, #titleBar {
-  display: none; }
-
-@media screen and (max-width: 840px) {
-  #nav-main, #nav-produits {
-    display: none !important; }
-  #page-wrapper {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: 0 .5s ease;
-    -webkit-transition: -webkit-transform .5s ease;
-    transition: -webkit-transform .5s ease;
-    transition: transform .5s ease;
-    transition: transform .5s ease, -webkit-transform .5s ease;
-    padding-bottom: 1px; }
-  #navButton {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: 0 .5s ease;
-    -webkit-transition: -webkit-transform .5s ease;
-    transition: -webkit-transform .5s ease;
-    transition: transform .5s ease;
-    transition: transform .5s ease, -webkit-transform .5s ease;
-    display: block;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10001; }
-  #navButton .toggle {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    border: 0;
-    outline: 0; }
-  #navButton .toggle:before {
-    text-decoration: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: block;
-    position: absolute;
-    border-top: 0; }
-  #navPanel {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: 0 .5s ease;
-    -webkit-transition: -webkit-transform .5s ease;
-    transition: -webkit-transform .5s ease;
-    transition: transform .5s ease;
-    transition: transform .5s ease, -webkit-transform .5s ease;
-    display: block;
-    left: 0;
-    overflow-y: auto;
-    position: fixed;
-    top: 0;
-    z-index: 10002; }
-  #navPanel:before {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%; }
-  #navPanel .link {
-    position: relative;
-    z-index: 1;
-    display: block;
-    text-decoration: none;
-    color: #ddd;
-    border: 0;
-    border-top: dotted 1px rgba(255, 255, 255, 0.05);
-    padding: .5em; }
-  #navPanel .indent-1, #navPanel .indent-2, #navPanel .indent-3, #navPanel .indent-4, #navPanel .indent-5 {
-    display: inline-block; } }
-
 
 /*
 	Config file and project variables
@@ -2819,14 +2783,17 @@ figure img {
 
 .category section .thumb-wrapper {
   position: relative;
-  min-height: 1px;
-  padding-left: 5px;
-  padding-right: 5px;
-  margin-top: 5px;
-  margin-bottom: 5px;
   float: left;
-  width: 20%;
-  height: auto; }
+  width: 18.4%;
+  height: auto;
+  min-height: 1px; }
+  .category section .thumb-wrapper:nth-child(n) {
+    margin-right: 2%;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 2%; }
+  .category section .thumb-wrapper:nth-child(5n) {
+    margin-right: 0; }
   @media screen and (max-width: 480px) {
     .category section .thumb-wrapper {
       width: 100%; } }
@@ -3301,9 +3268,6 @@ header nav li ul li a {
 /* langues en ligne <?php echo qtranxf_generateLanguageSelectCode('text'); ?>
 ========================================================================== */
 #nav-lang, #qtranslate-chooser {
-  height: 12px; }
-
-#nav-lang, #qtranslate-chooser {
   text-align: center; }
 
 #nav-lang li, #qtranslate-chooser li {
@@ -3312,7 +3276,6 @@ header nav li ul li a {
   overflow: hidden; }
 
 #nav-lang li a, #qtranslate-chooser li a {
-  height: 12px;
   text-decoration: none;
   color: #fe2c22;
   font-size: 1.4rem;
@@ -3330,6 +3293,93 @@ header nav li ul li a {
 ========================================================================== */
 /* lang une ligne haut à droite
 ========================================================================== */
+
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/*==========================================================================
+  _____    ______    _____   _____     ____    _   _    _____   _____  __      __  ______     __  __   ______   _   _   _    _
+ |  __ \  |  ____|  / ____| |  __ \   / __ \  | \ | |  / ____| |_   _| \ \    / / |  ____|   |  \/  | |  ____| | \ | | | |  | |
+ | |__) | | |__    | (___   | |__) | | |  | | |  \| | | (___     | |    \ \  / /  | |__      | \  / | | |__    |  \| | | |  | |
+ |  _  /  |  __|    \___ \  |  ___/  | |  | | | . ` |  \___ \    | |     \ \/ /   |  __|     | |\/| | |  __|   | . ` | | |  | |
+ | | \ \  | |____   ____) | | |      | |__| | | |\  |  ____) |  _| |_     \  /    | |____    | |  | | | |____  | |\  | | |__| |
+ |_|  \_\ |______| |_____/  |_|       \____/  |_| \_| |_____/  |_____|     \/     |______|   |_|  |_| |______| |_| \_|  \____/
+
+ ========================================================================== */
+@media screen and (max-width: 840px) {
+  /* taille */
+  #nav-main, #nav-main2 {
+    display: none !important; }
+  /* taille */
+  #navButton {
+    height: 45px; }
+  /*#navButton .toggle:before{ width:80px; height:30px; left:50%; margin-left:-40px; font-size:14px; line-height:30px; font-family:FontAwesome; font-style:normal; font-weight:400; content:'\f0c9'; color:#FFF; background:#09C; border-radius:0 0 .35em .35em; }*/
+  /* position : margin-top + background-position */
+  #navButton .toggle {
+    display: block;
+    height: 20px;
+    margin-top: 20px;
+    background-color: transparent;
+    background-image: -webkit-gradient(linear, left top, right top, from(#000), to(#000)), -webkit-gradient(linear, left top, right top, from(#000), to(#000)), -webkit-gradient(linear, left top, right top, from(#333), to(#000));
+    background-image: -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(left, #000, #000);
+    background-image: linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000);
+    background-position: 95% top, 95% center, 95% bottom;
+    background-repeat: no-repeat;
+    background-size: 20px 2px;
+    padding: 0;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-transition: .2s;
+    transition: .2s; }
+  /* font */
+  #navPanel .depth-0 {
+    font-size: 1.8rem;
+    text-transform: uppercase; }
+  #navPanel .depth-1 {
+    font-size: 1.3rem !important;
+    text-transform: uppercase;
+    color: #fff !important; }
+  #navPanel .depth-0:hover, #navPanel .depth-1:hover {
+    background: #00b6ad; }
+  /* color */
+  #navPanel .link {
+    color: #fff; }
+  /* style */
+  #navPanel .link {
+    position: relative;
+    z-index: 1;
+    display: block;
+    text-decoration: none;
+    border: 0;
+    border-top: dotted 1px rgba(255, 255, 255, 0.05);
+    padding: .5em; }
+  #navPanel .link:first-child {
+    border-top: 0; }
+  #navPanel .link.depth-0, #navPanel .link.depth-1 {
+    text-align: center;
+    font-weight: 300; }
+  /* animation */
+  #navPanel {
+    height: 50vh;
+    width: 100%; }
+  #navPanel {
+    -webkit-transform: translateY(-50vh);
+    transform: translateY(-50vh);
+    background: #222;
+    box-shadow: inset 0 -2px 8px 0 rgba(0, 0, 0, 0.25); }
+  body.navPanel-visible #navPanel {
+    -webkit-transform: translateY(0);
+    transform: translateY(0); }
+  body.navPanel-visible #page-wrapper, body.navPanel-visible #navButton {
+    -webkit-transform: translateY(50vh);
+    transform: translateY(50vh); } }
 
 /*
 	Config file and project variables
@@ -3366,6 +3416,10 @@ header nav li ul li a {
 
 .metaslider ol.flex-control-thumbs img, #content .metaslider ol.flex-control-thumbs img {
   margin: 0 !important; }
+
+@media screen and (max-width: 1200px) {
+  .metaslider .flex-control-thumbs li {
+    width: 18% !important; } }
 
 div.wpcf7 {
   margin: 0;

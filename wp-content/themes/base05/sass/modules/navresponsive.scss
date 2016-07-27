@@ -1,0 +1,49 @@
+@import "../variables";
+@import "../mixins";
+
+/*==========================================================================
+  _____    ______    _____   _____     ____    _   _    _____   _____  __      __  ______     __  __   ______   _   _   _    _
+ |  __ \  |  ____|  / ____| |  __ \   / __ \  | \ | |  / ____| |_   _| \ \    / / |  ____|   |  \/  | |  ____| | \ | | | |  | |
+ | |__) | | |__    | (___   | |__) | | |  | | |  \| | | (___     | |    \ \  / /  | |__      | \  / | | |__    |  \| | | |  | |
+ |  _  /  |  __|    \___ \  |  ___/  | |  | | | . ` |  \___ \    | |     \ \/ /   |  __|     | |\/| | |  __|   | . ` | | |  | |
+ | | \ \  | |____   ____) | | |      | |__| | | |\  |  ____) |  _| |_     \  /    | |____    | |  | | | |____  | |\  | | |__| |
+ |_|  \_\ |______| |_____/  |_|       \____/  |_| \_| |_____/  |_____|     \/     |______|   |_|  |_| |______| |_| \_|  \____/
+
+ ========================================================================== */
+$taille-menu : 50vh;
+
+
+@media screen and (max-width: 840px) {
+
+/* taille */
+#nav-main, #nav-main2{ display:none!important; }
+
+/* taille */
+#navButton{ height:45px; }
+/*#navButton .toggle:before{ width:80px; height:30px; left:50%; margin-left:-40px; font-size:14px; line-height:30px; font-family:FontAwesome; font-style:normal; font-weight:400; content:'\f0c9'; color:#FFF; background:#09C; border-radius:0 0 .35em .35em; }*/
+
+/* position : margin-top + background-position */
+#navButton .toggle{ display:block; height:20px; margin-top:20px; background-color: transparent; background-image: -webkit-gradient(linear, left top, right top, from(#000), to(#000)), -webkit-gradient(linear, left top, right top, from(#000), to(#000)), -webkit-gradient(linear, left top, right top, from(#333), to(#000)); background-image: -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(left, #000, #000); background-image: linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000); background-position: 95% top, 95% center, 95% bottom; background-repeat: no-repeat; -webkit-background-size: 20px 2px; background-size: 20px 2px; padding: 0; outline: 0; border: 0; cursor: pointer; -webkit-tap-highlight-color:rgba(255,255,255,0); -webkit-transition: .2s; transition: .2s; }
+
+/* font */
+#navPanel .depth-0{ font-size:1.8rem; text-transform:uppercase;  }
+#navPanel .depth-1{ font-size:1.3rem!important; text-transform:uppercase; color:#fff!important;  }
+#navPanel{
+  .depth-0:hover,.depth-1:hover{ background:$vert; }
+}
+
+/* color */
+#navPanel .link{ color:#fff; }
+
+/* style */
+#navPanel .link{ position:relative; z-index:1; display:block; text-decoration:none; border:0; border-top:dotted 1px rgba(255,255,255,0.05); padding:.5em;  }
+#navPanel .link:first-child{ border-top:0; }
+#navPanel .link.depth-0, #navPanel .link.depth-1{ text-align:center; font-weight:300; }
+
+/* animation */
+#navPanel{ height:$taille-menu; width:100%; }
+#navPanel{-moz-transform:translateY(-#{$taille-menu}); -webkit-transform:translateY(-#{$taille-menu}); -ms-transform:translateY(-#{$taille-menu}); transform:translateY(-#{$taille-menu});  background:#222; box-shadow:inset 0 -2px 8px 0 rgba(0,0,0,0.25); }
+body.navPanel-visible #navPanel{ -moz-transform:translateY(0); -webkit-transform:translateY(0); -ms-transform:translateY(0); transform:translateY(0); }
+body.navPanel-visible #page-wrapper, body.navPanel-visible #navButton{ -moz-transform:translateY($taille-menu); -webkit-transform:translateY($taille-menu); -ms-transform:translateY($taille-menu); transform:translateY($taille-menu); }
+
+}

@@ -17,3 +17,6 @@
 .metaslider .flex-control-thumbs li { border:1px solid #bcbcbc; margin-right:5px; }
 .metaslider .flex-control-thumbs li:last-child { margin-right:0px; }
 .metaslider ol.flex-control-thumbs img, #content .metaslider ol.flex-control-thumbs img{ margin:0!important; }
+@media screen and (max-width: 1200px) {
+  .metaslider .flex-control-thumbs li{ width:18%!important; }
+}

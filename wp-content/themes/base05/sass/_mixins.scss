@@ -155,17 +155,20 @@
 // ---------------------------------------------------------------
 @mixin make-grid($col, $gutter, $line-space) {
   position: relative;
-  // Prevent columns from collapsing when empty
-  min-height: 1px;
-  // Inner gutter via padding
-  padding-left:  ($gutter/2);
-  padding-right: ($gutter/2);
-  margin-top: ($line-space/2);
-  margin-bottom: ($line-space/2);
   float: left;
-  width: percentage((1/ $col));
+  width: ((100% - (($col - 1) * $gutter)) / $col);
   height:auto;
+  min-height: 1px;                                            // Prevent columns from collapsing when empty
 
+  &:nth-child(n) {
+    margin-right: $gutter;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: $line-space;
+  }
+  &:nth-child(5n) {
+    margin-right:0; 
+  }
   @media screen and (max-width: 480px ){
     width: percentage(1);
   }

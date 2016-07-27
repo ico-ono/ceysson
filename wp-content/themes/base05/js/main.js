@@ -29,7 +29,7 @@
 				'<div id="navPanel">' +
 					'<nav>' +
 						//$('#navigation').navList() + $('#menu-lang').navList() +
-            $('#nav-main2').navList() +
+            $('#nav-main').navList() + $('#nav-main2').navList() +
 					'</nav>' +
 				'</div>'
 			)

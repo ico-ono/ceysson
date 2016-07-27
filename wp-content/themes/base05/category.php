@@ -7,11 +7,13 @@
  ?>
 <? get_header(); ?>
 
-<!-- current categroy -->
-<?php //foreach((get_the_category()) as $category) { $current = $category->category_nicename; } query_posts('category_name='.$current.'&orderby=post_date&order=ASC'); ?>
-
-<!-- ordre -->
-<?php  ?>
+<!--
+tailles des thumbnail :
+the_post_thumbnail('thumbnail');
+the_post_thumbnail('medium');
+the_post_thumbnail('large');
+the_post_thumbnail( array(100,100) );
+-->
 
 <section class="block-center center">
     <?php if(have_posts()) : ?>
