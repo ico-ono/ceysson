@@ -3,7 +3,7 @@
 
 
 /* category grille */
-.category section{ height:auto; min-height:100%; margin-bottom:25px; }
+.category section{ height:auto; margin-bottom:25px; }
 .category section .thumb-wrapper{ @include make-grid(5, 2%, 2%); }
 
 /* thumb a */
@@ -13,6 +13,8 @@
 .category section .thumb-wrapper .titre{ position:absolute; vertical-align:center; width:100%; height:auto; padding:0px 10px 0 10px; top: 50%; left:0;  transform: translateY(-50%);  display:none; font-size:1.8rem; font-family: $font-custom3; text-align: center; color:#fff; z-index: 2;}
 /* thumb afficher au hover */
 .category section .thumb-wrapper:hover .titre{ display:block; }
+
+.category section .thumb-wrapper img{ width:100%; height:auto; }
 
 /* thumb bg hover */
 .category section .thumb-wrapper .bg{ position:absolute; width:100%; height:100%; top:0; left:0; display: none; z-index: 1; }

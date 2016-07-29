@@ -24,7 +24,7 @@ function header_id() {
    HEADER CLASS
    ========================================================================== */
 function header_class() {
-	if (is_front_page()){ $headerClass = 'home'; }
+	if (is_front_page()||is_page("home")){ $headerClass = 'home'; }
   elseif (is_page()||is_404()){ $headerClass = 'page'; }
   elseif (is_single()){ $headerClass = 'single'; }
   elseif (is_category()){ $headerClass = 'category'; }

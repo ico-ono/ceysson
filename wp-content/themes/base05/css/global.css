@@ -954,9 +954,10 @@ body > script {
  |_|  \_\______|_____/|_|     \____/|_| \_|_____/|_____|   \/   |______|
 
    ========================================================================== */
-figure img {
-  width: 100%;
-  height: auto; }
+@media screen and (max-width: 650px) {
+  section img {
+    width: 100%;
+    height: auto; } }
 
 /*
 	Config file and project variables
@@ -1058,7 +1059,7 @@ header nav ul {
     font-size: 1.8rem;
     font-weight: 500;
     font-family: "museo_sans300", "sans-serif";
-    text-transform: lowercase;
+    text-transform: none;
     text-decoration: none;
     color: #fe2c22;
     padding: 5px 0px; }
@@ -1082,7 +1083,7 @@ header nav ul.sub-menu {
     font-size: 1.1rem;
     font-weight: 100;
     font-family: "museo_sans300", "sans-serif";
-    text-transform: lowercase;
+    text-transform: none;
     text-decoration: none;
     background: #ffffff;
     color: #fe2c22;
@@ -1462,7 +1463,6 @@ header nav li ul li a {
 /* category grille */
 .category section {
   height: auto;
-  min-height: 100%;
   margin-bottom: 25px; }
 
 .category section .thumb-wrapper {
@@ -1512,6 +1512,10 @@ header nav li ul li a {
 .category section .thumb-wrapper:hover .titre {
   display: block; }
 
+.category section .thumb-wrapper img {
+  width: 100%;
+  height: auto; }
+
 /* thumb bg hover */
 .category section .thumb-wrapper .bg {
   position: absolute;
@@ -1545,40 +1549,40 @@ header nav li ul li a {
 	Config file and project variables
   Modified : ico-ono (JUIN 2016)
 */
-/* meta slider */
+/* meta slider  */
 /* controllers */
 #home .flex-control-paging {
   bottom: -22px !important; }
 
 /* viewport */
-.metaslider .flexslider {
+.single .metaslider .flexslider {
   margin-bottom: 0 !important; }
 
 /* centrage de certaines images */
-.flex-viewport li a img {
+.single .flex-viewport li a img {
   -webkit-transform: translateY(50%);
           transform: translateY(50%); }
 
-.flex-viewport li:nth-child(2) a img {
+.single .flex-viewport li:nth-child(2) a img {
   -webkit-transform: none !important;
           transform: none !important; }
 
 /* thumb */
-.metaslider .flex-control-thumbs {
+.single .metaslider .flex-control-thumbs {
   margin-top: 11px; }
 
-.metaslider .flex-control-thumbs li {
+.single .metaslider .flex-control-thumbs li {
   border: 1px solid #bcbcbc;
   margin-right: 5px; }
 
-.metaslider .flex-control-thumbs li:last-child {
+.single .metaslider .flex-control-thumbs li:last-child {
   margin-right: 0px; }
 
-.metaslider ol.flex-control-thumbs img, #content .metaslider ol.flex-control-thumbs img {
+.single .metaslider ol.flex-control-thumbs img, #content .metaslider ol.flex-control-thumbs img {
   margin: 0 !important; }
 
 @media screen and (max-width: 1200px) {
-  .metaslider .flex-control-thumbs li {
+  .single .metaslider .flex-control-thumbs li {
     width: 18% !important; } }
 
 /*
@@ -1714,7 +1718,7 @@ header {
 section {
   min-height: 70vh; }
 
-@media screen and (min-height: 650px) {
+@media screen and (min-height: 700px) {
   section {
     min-height: 77vh; } }
 
@@ -2762,664 +2766,11 @@ body > script {
  |_|  \_\______|_____/|_|     \____/|_| \_|_____/|_____|   \/   |______|
 
    ========================================================================== */
-figure img {
-  width: 100%;
-  height: auto; }
-
-
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-/* category grille */
-.category section {
-  height: auto;
-  min-height: 100%;
-  margin-bottom: 25px; }
-
-.category section .thumb-wrapper {
-  position: relative;
-  float: left;
-  width: 18.4%;
-  height: auto;
-  min-height: 1px; }
-  .category section .thumb-wrapper:nth-child(n) {
-    margin-right: 2%;
-    margin-left: 0;
-    margin-top: 0;
-    margin-bottom: 2%; }
-  .category section .thumb-wrapper:nth-child(5n) {
-    margin-right: 0; }
-  @media screen and (max-width: 480px) {
-    .category section .thumb-wrapper {
-      width: 100%; } }
-
-/* thumb a */
-.category section .thumb-wrapper a {
-  display: block;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  margin: 0 10px 0 0; }
-
-/* thumb infos */
-.category section .thumb-wrapper .titre {
-  position: absolute;
-  vertical-align: center;
-  width: 100%;
-  height: auto;
-  padding: 0px 10px 0 10px;
-  top: 50%;
-  left: 0;
-  -webkit-transform: translateY(-50%);
-          transform: translateY(-50%);
-  display: none;
-  font-size: 1.8rem;
-  font-family: "museo_sans700", "sans-serif";
-  text-align: center;
-  color: #fff;
-  z-index: 2; }
-
-/* thumb afficher au hover */
-.category section .thumb-wrapper:hover .titre {
-  display: block; }
-
-/* thumb bg hover */
-.category section .thumb-wrapper .bg {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  display: none;
-  z-index: 1; }
-
-.category section .thumb-wrapper:nth-child(1n) .bg {
-  background: #fe2c22;
-  opacity: 0.74; }
-
-.category section .thumb-wrapper:nth-child(2n) .bg {
-  background: #005359;
-  opacity: 0.74; }
-
-.category section .thumb-wrapper:nth-child(3n) .bg {
-  background: #00b6ad;
-  opacity: 0.74; }
-
-.category section .thumb-wrapper:nth-child(4n) .bg {
-  background: #cae300;
-  opacity: 0.74; }
-
-.category section .thumb-wrapper:hover .titre, .category section .thumb-wrapper:hover .bg {
-  display: block; }
-
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-/* ==========================================================================
-   _____    ____    _   _   _______              _____   _   _   ______   _____
-  / ____|  / __ \  | \ | | |__   __|     /\     |_   _| | \ | | |  ____| |  __  | |      | |  | | |  \| |    | |       /  \      | |   |  \| | | |__    | |__) |
- | |      | |  | | | . ` |    | |      / /\ \     | |   | . ` | |  __|   |  _  /
- | |____  | |__| | | |\  |    | |     / ____ \   _| |_  | |\  | | |____  | | \   \_____|  \____/  |_| \_|    |_|    /_/    \_\ |_____| |_| \_| |______| |_|  \_
-========================================================================== */
-#page-wrapper {
-  top: 0;
-  position: absolute;
-  width: 100%;
-  min-height: 100vh;
-  padding: 30px; }
-
-@media screen and (max-width: 640px) {
-  #page-wrapper {
-    padding: 20px !important; } }
-
-.container {
-  margin-left: auto;
-  margin-right: auto;
-  width: 100%; }
-  @media screen and (min-width: 1280px) {
-    .container {
-      width: 100%; } }
-  @media screen and (max-width: 1280px) {
-    .container {
-      width: 100%px;
-      padding: 0px; } }
-  @media screen and (max-width: 980px) {
-    .container {
-      width: 100%px;
-      padding: 0px; } }
-  @media screen and (max-width: 840px) {
-    .container {
-      width: 100%px;
-      padding: 0px; } }
-  @media screen and (max-width: 736px) {
-    .container {
-      width: 100%px;
-      padding: 10px; } }
-  @media screen and (max-width: 480px) {
-    .container {
-      width: 100%px;
-      padding: 10px; } }
-
-section {
-  width: 100%; }
-
-/* ==========================================================================
-  _    _   ______              _____    ______   _____
- | |  | | |  ____|     /\     |  __ \  |  ____| |  __  | |__| | | |__       /  \    | |  | | | |__    | |__) |
- |  __  | |  __|     / /\ \   | |  | | |  __|   |  _  /
- | |  | | | |____   / ____ \  | |__| | | |____  | | \  |_|  |_| |______| /_/    \_\ |_____/  |______| |_|  \_
-   ========================================================================== */
-header {
-  position: relative;
-  top: 0;
-  z-index: 10000;
-  height: 80px; }
-
-/* logo */
-header #logo {
-  position: absolute;
-  display: block;
-  z-index: 200;
-  width: 117px;
-  height: 40px;
-  top: 0px;
-  margin-left: 50%;
-  margin-right: auto;
-  left: -58.5px; }
-
-/* Menu
-========================================================================== */
-header nav ul {
-  list-style: none;
-  padding-left: 0;
-  width: 300px; }
-  header nav ul > li {
-    position: relative;
-    display: block;
-    float: left;
-    margin-top: 0px;
-    margin-left: 0px; }
-  header nav ul > li a {
-    display: block;
-    position: relative;
+@media screen and (max-width: 650px) {
+  section img {
     width: 100%;
-    height: 100%;
-    font-size: 1.8rem;
-    font-weight: 500;
-    font-family: "museo_sans300", "sans-serif";
-    text-transform: lowercase;
-    text-decoration: none;
-    color: #fe2c22;
-    padding: 5px 0px; }
-  header nav ul > li a:hover {
-    color: #00b6ad; }
-  header nav ul li:hover ul.sub-menu {
-    display: block; }
+    height: auto; } }
 
-header nav ul.sub-menu {
-  display: none;
-  position: absolute;
-  width: auto; }
-  header nav ul.sub-menu li {
-    clear: both;
-    white-space: nowrap; }
-  header nav ul.sub-menu > li a {
-    display: block;
-    position: relative;
-    width: 100%;
-    height: 100%;
-    font-size: 1.1rem;
-    font-weight: 100;
-    font-family: "museo_sans300", "sans-serif";
-    text-transform: lowercase;
-    text-decoration: none;
-    background: #ffffff;
-    color: #fe2c22;
-    padding: 3px 3px; }
-  header nav ul.sub-menu > li a:hover {
-    color: #00b6ad; }
-  header nav ul.sub-menu > li.current-menu-item a, header nav ul.sub-menu > li.current-menu-parent a {
-    color: #00b6ad; }
-
-@media screen and (max-width: 1000px) {
-  header nav ul li a {
-    font-size: 1.4rem;
-    padding: 20px 4px; } }
-
-/* Menu SUB
-========================================================================== */
-header #navigation .sub-menu {
-  /*display:none;*/
-  position: absolute;
-  top: auto;
-  left: auto;
-  width: 0;
-  height: 0;
-  overflow: hidden; }
-
-header #navigation ul li {
-  vertical-align: top; }
-
-header #navigation .menu-item-has-children:hover .sub-menu {
-  display: block;
-  -webkit-transition: height 0.2s ease 0s;
-  transition: height 0.2s ease 0s; }
-
-header #navigation .menu-item-has-children:hover .sub-menu li {
-  clear: both;
-  float: left;
-  width: 100% !important; }
-
-header #navigation .menu-item-has-children:hover .sub-menu li a {
-  display: block;
-  width: 100%;
-  height: 100%;
-  padding: 0 !important; }
-
-/*==========================================================================
-  _____    ______    _____   _____     ____    _   _    _____   _____  __      __  ______     __  __   ______   _   _   _    _
- |  __ \  |  ____|  / ____| |  __ \   / __ \  | \ | |  / ____| |_   _| \ \    / / |  ____|   |  \/  | |  ____| | \ | | | |  | |
- | |__) | | |__    | (___   | |__) | | |  | | |  \| | | (___     | |    \ \  / /  | |__      | \  / | | |__    |  \| | | |  | |
- |  _  /  |  __|    \___ \  |  ___/  | |  | | | . ` |  \___ \    | |     \ \/ /   |  __|     | |\/| | |  __|   | . ` | | |  | |
- | | \ \  | |____   ____) | | |      | |__| | | |\  |  ____) |  _| |_     \  /    | |____    | |  | | | |____  | |\  | | |__| |
- |_|  \_\ |______| |_____/  |_|       \____/  |_| \_| |_____/  |_____|     \/     |______|   |_|  |_| |______| |_| \_|  \____/
-
- ========================================================================== */
-#navPanel, #titleBar {
-  display: none; }
-
-@media screen and (max-width: 840px) {
-  #page-wrapper {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: 0 .5s ease;
-    -webkit-transition: -webkit-transform .5s ease;
-    transition: -webkit-transform .5s ease;
-    transition: transform .5s ease;
-    transition: transform .5s ease, -webkit-transform .5s ease;
-    padding-bottom: 1px; }
-  #navButton {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: 0 .5s ease;
-    -webkit-transition: -webkit-transform .5s ease;
-    transition: -webkit-transform .5s ease;
-    transition: transform .5s ease;
-    transition: transform .5s ease, -webkit-transform .5s ease;
-    display: block;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 10001; }
-  #navButton .toggle {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    border: 0;
-    outline: 0; }
-  #navButton .toggle:before {
-    text-decoration: none;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    display: block;
-    position: absolute;
-    border-top: 0; }
-  #navPanel {
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    -webkit-transition: 0 .5s ease;
-    -webkit-transition: -webkit-transform .5s ease;
-    transition: -webkit-transform .5s ease;
-    transition: transform .5s ease;
-    transition: transform .5s ease, -webkit-transform .5s ease;
-    display: block;
-    left: 0;
-    overflow-y: auto;
-    position: fixed;
-    top: 0;
-    z-index: 10002; }
-  #navPanel:before {
-    content: '';
-    display: block;
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%; }
-  #navPanel .link {
-    position: relative;
-    z-index: 1;
-    display: block;
-    text-decoration: none;
-    color: #ddd;
-    border: 0;
-    border-top: dotted 1px rgba(255, 255, 255, 0.05);
-    padding: .5em; }
-  #navPanel .indent-1, #navPanel .indent-2, #navPanel .indent-3, #navPanel .indent-4, #navPanel .indent-5 {
-    display: inline-block; } }
-
-/* ==========================================================================
-  _                  __     __  ______   _____     _____   _        _____   _____    ______   _____
- | |          /\     \ \   / / |  ____| |  __ \   / ____| | |      |_   _| |  __ \  |  ____| |  __  | |         /  \     \ \_/ /  | |__    | |__) | | (___   | |        | |   | |  | | | |__    | |__) |
- | |        / /\ \     \   /   |  __|   |  _  /   \___ \  | |        | |   | |  | | |  __|   |  _  /
- | |____   / ____ \     | |    | |____  | | \ \   ____) | | |____   _| |_  | |__| | | |____  | | \  |______| /_/    \_\    |_|    |______| |_|  \_\ |_____/  |______| |_____| |_____/  |______| |_|  \_
-   ========================================================================== */
-/* Fullscreen
-========================================================================== */
-/*.ls-wp-fullwidth-container, .ls-wp-fullwidth-helper, .ls-wp-container, .ls-inner{ height:100vh!important; }
-.ls-wp-fullwidth-container img{ height:100%!important; width:100%!important; }
-section.fullscreen{ position:absolute; top:0; margin-top:0; z-index:-1; }
-@media screen and (max-width: 480px){ .ls-wp-fullwidth-container, .ls-wp-fullwidth-helper, .ls-wp-container, .ls-inner{ height:50vh!important; } }
-
-*/
-/* ==========================================================================
-  ______    ____    _____    __  __
- |  ____|  / __ \  |  __ \  |  \/  |
- | |__    | |  | | | |__) | | \  / |
- |  __|   | |  | | |  _  /  | |\/| |
- | |      | |__| | | | \ \  | |  | |
- |_|       \____/  |_|  \_\ |_|  |_|
-
-   ========================================================================== */
-textarea, input {
-  outline: none; }
-
-/* remove glow chrome / safari */
-/* Icon
-========================================================================== */
-.icon-android-search:before, .icon-ios-search:before, .icon-ios-search-strong:before, .icon-search:before, .iconehome a:before {
-  display: inline-block;
-  font-family: "Ionicons";
-  speak: none;
-  font-style: normal;
-  line-height: 1; }
-
-.icon-android-search:before {
-  content: "\f2f5"; }
-
-.icon-ios-search:before {
-  content: "\f4a5"; }
-
-.icon-ios-search-strong:before {
-  content: "\f4a4"; }
-
-.icon-search:before {
-  content: "\f21f"; }
-
-.iconehome a:before {
-  content: "\f144"; }
-
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-#error p {
-  text-align: center; }
-
-@charset "UTF-8";
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-/* Easy FancyBox */
-/* a faire: deconnecter la feuille de style pour avoir tout ici  */
-/* c'est possible en décochant imprimer les css et coller tout ici  */
-/* custom controler : easy-fancybox/fancybox/fancybox.png  */
-#fancybox-close {
-  top: 10px !important;
-  right: 10px !important; }
-
-/* no shadow */
-.fancybox-bg {
-  display: none; }
-
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-/* Menu divider
-========================================================================== */
-/* Top nivo2
-========================================================================== */
-header nav li ul {
-  padding-top: 2px; }
-
-/* Letter spacing
-========================================================================== */
-header nav li a {
-  letter-spacing: 0.12rem; }
-
-header nav li ul li a {
-  letter-spacing: 0.08rem; }
-
-/* Styles specifiques
-========================================================================== */
-#nav-main2, #nav-main2 li {
-  float: right; }
-
-#nav-main2 ul {
-  right: 0; }
-
-@charset "UTF-8";
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-/* ==========================================================================
-  CONFIG DE BASE :
-
-    type=[LM|AL] – type of menu:
-    “LM” – Language Menu (default).
-    “AL” – Alternative Language: the top menu entry displays the first available language other than the current.
-
-    title=[none|Language|Current] – title text of the top item (not sub-items):
-    “Language” – word “Language” translated to current language (default).
-    “none” – no title in the top of menu, flag only.
-    “Current” – displays current language name.
-    One may also put arbitrary multilingual title in the field “Navigation Label” in the menu item editor.
-
-    colon=[shown|hidden] – whether to display colon after title.
-
-    flags=[none|all|items] – the way to display language flags:
-    “none” – no flag is shown in any item, including the top item.
-    “all” – all items show flag, including the top item.
-    “items” – only sub-items show corresponding flag, top item does not.
-
-    names=[shown|hidden] – whether to display language names in sub-items.
-
-    current=[shown|hidden] – whether to display the current language in the menu.
-    --------------------------------------------------------------------------------
-    Pour un menu avec seulement le titre de la langue avec le switch :
-    <?php echo qtranxf_generateLanguageSelectCode('text'); ?>
-    Pour changer les titres, les éditer dans la config du module.
-    --------------------------------------------------------------------------------
-    Shortcode dans les champs wordrepss [:en]texte en anglais[:fr]texte en francais
-    --------------------------------------------------------------------------------
-    Teste de langue en php
-    <?php if(get_locale() == "fr_FR"){ echo masterslider("ms-2");} ?>
-    <?php if(get_locale() == "en_US"){ echo masterslider("ms-2-1");} ?>
-
-   ========================================================================== */
-/* reset */
-#nav-lang, #nav-lang .sub-menu, #qtranslate-chooser {
-  list-style: none;
-  padding-left: 0; }
-
-/* langues en ligne <?php echo qtranxf_generateLanguageSelectCode('text'); ?>
-========================================================================== */
-#nav-lang, #qtranslate-chooser {
-  text-align: center; }
-
-#nav-lang li, #qtranslate-chooser li {
-  height: 12px;
-  display: inline-block;
-  overflow: hidden; }
-
-#nav-lang li a, #qtranslate-chooser li a {
-  text-decoration: none;
-  color: #fe2c22;
-  font-size: 1.4rem;
-  padding: 0 7px;
-  line-height: 1rem; }
-
-#nav-lang li:first-child a, #qtranslate-chooser li:first-child a {
-  border-right: 1px solid #fe2c22; }
-
-#nav-lang li a:hover, #qtranslate-chooser li a:hover {
-  text-decoration: none;
-  color: #00b6ad; }
-
-/* lang depliable
-========================================================================== */
-/* lang une ligne haut à droite
-========================================================================== */
-
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-/*==========================================================================
-  _____    ______    _____   _____     ____    _   _    _____   _____  __      __  ______     __  __   ______   _   _   _    _
- |  __ \  |  ____|  / ____| |  __ \   / __ \  | \ | |  / ____| |_   _| \ \    / / |  ____|   |  \/  | |  ____| | \ | | | |  | |
- | |__) | | |__    | (___   | |__) | | |  | | |  \| | | (___     | |    \ \  / /  | |__      | \  / | | |__    |  \| | | |  | |
- |  _  /  |  __|    \___ \  |  ___/  | |  | | | . ` |  \___ \    | |     \ \/ /   |  __|     | |\/| | |  __|   | . ` | | |  | |
- | | \ \  | |____   ____) | | |      | |__| | | |\  |  ____) |  _| |_     \  /    | |____    | |  | | | |____  | |\  | | |__| |
- |_|  \_\ |______| |_____/  |_|       \____/  |_| \_| |_____/  |_____|     \/     |______|   |_|  |_| |______| |_| \_|  \____/
-
- ========================================================================== */
-@media screen and (max-width: 840px) {
-  /* taille */
-  #nav-main, #nav-main2 {
-    display: none !important; }
-  /* taille */
-  #navButton {
-    height: 45px; }
-  /*#navButton .toggle:before{ width:80px; height:30px; left:50%; margin-left:-40px; font-size:14px; line-height:30px; font-family:FontAwesome; font-style:normal; font-weight:400; content:'\f0c9'; color:#FFF; background:#09C; border-radius:0 0 .35em .35em; }*/
-  /* position : margin-top + background-position */
-  #navButton .toggle {
-    display: block;
-    height: 20px;
-    margin-top: 20px;
-    background-color: transparent;
-    background-image: -webkit-gradient(linear, left top, right top, from(#000), to(#000)), -webkit-gradient(linear, left top, right top, from(#000), to(#000)), -webkit-gradient(linear, left top, right top, from(#333), to(#000));
-    background-image: -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(left, #000, #000);
-    background-image: linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000);
-    background-position: 95% top, 95% center, 95% bottom;
-    background-repeat: no-repeat;
-    background-size: 20px 2px;
-    padding: 0;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
-    -webkit-transition: .2s;
-    transition: .2s; }
-  /* font */
-  #navPanel .depth-0 {
-    font-size: 1.8rem;
-    text-transform: uppercase; }
-  #navPanel .depth-1 {
-    font-size: 1.3rem !important;
-    text-transform: uppercase;
-    color: #fff !important; }
-  #navPanel .depth-0:hover, #navPanel .depth-1:hover {
-    background: #00b6ad; }
-  /* color */
-  #navPanel .link {
-    color: #fff; }
-  /* style */
-  #navPanel .link {
-    position: relative;
-    z-index: 1;
-    display: block;
-    text-decoration: none;
-    border: 0;
-    border-top: dotted 1px rgba(255, 255, 255, 0.05);
-    padding: .5em; }
-  #navPanel .link:first-child {
-    border-top: 0; }
-  #navPanel .link.depth-0, #navPanel .link.depth-1 {
-    text-align: center;
-    font-weight: 300; }
-  /* animation */
-  #navPanel {
-    height: 50vh;
-    width: 100%; }
-  #navPanel {
-    -webkit-transform: translateY(-50vh);
-    transform: translateY(-50vh);
-    background: #222;
-    box-shadow: inset 0 -2px 8px 0 rgba(0, 0, 0, 0.25); }
-  body.navPanel-visible #navPanel {
-    -webkit-transform: translateY(0);
-    transform: translateY(0); }
-  body.navPanel-visible #page-wrapper, body.navPanel-visible #navButton {
-    -webkit-transform: translateY(50vh);
-    transform: translateY(50vh); } }
-
-/*
-	Config file and project variables
-  Modified : ico-ono (JUIN 2016)
-*/
-/* meta slider */
-/* controllers */
-#home .flex-control-paging {
-  bottom: -22px !important; }
-
-/* viewport */
-.metaslider .flexslider {
-  margin-bottom: 0 !important; }
-
-/* centrage de certaines images */
-.flex-viewport li a img {
-  -webkit-transform: translateY(50%);
-          transform: translateY(50%); }
-
-.flex-viewport li:nth-child(2) a img {
-  -webkit-transform: none !important;
-          transform: none !important; }
-
-/* thumb */
-.metaslider .flex-control-thumbs {
-  margin-top: 11px; }
-
-.metaslider .flex-control-thumbs li {
-  border: 1px solid #bcbcbc;
-  margin-right: 5px; }
-
-.metaslider .flex-control-thumbs li:last-child {
-  margin-right: 0px; }
-
-.metaslider ol.flex-control-thumbs img, #content .metaslider ol.flex-control-thumbs img {
-  margin: 0 !important; }
-
-@media screen and (max-width: 1200px) {
-  .metaslider .flex-control-thumbs li {
-    width: 18% !important; } }
 
 div.wpcf7 {
   margin: 0;
@@ -6446,3 +5797,660 @@ div.wpcf7 .placeheld {
 /* on wp4.1 in the backend, there is no margin on bullets breaking the layout of the columns.*/
 .mce-content-body .rhcol li {
   margin-left: 24px; }
+
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/* category grille */
+.category section {
+  height: auto;
+  margin-bottom: 25px; }
+
+.category section .thumb-wrapper {
+  position: relative;
+  float: left;
+  width: 18.4%;
+  height: auto;
+  min-height: 1px; }
+  .category section .thumb-wrapper:nth-child(n) {
+    margin-right: 2%;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: 2%; }
+  .category section .thumb-wrapper:nth-child(5n) {
+    margin-right: 0; }
+  @media screen and (max-width: 480px) {
+    .category section .thumb-wrapper {
+      width: 100%; } }
+
+/* thumb a */
+.category section .thumb-wrapper a {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0 10px 0 0; }
+
+/* thumb infos */
+.category section .thumb-wrapper .titre {
+  position: absolute;
+  vertical-align: center;
+  width: 100%;
+  height: auto;
+  padding: 0px 10px 0 10px;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
+  display: none;
+  font-size: 1.8rem;
+  font-family: "museo_sans700", "sans-serif";
+  text-align: center;
+  color: #fff;
+  z-index: 2; }
+
+/* thumb afficher au hover */
+.category section .thumb-wrapper:hover .titre {
+  display: block; }
+
+.category section .thumb-wrapper img {
+  width: 100%;
+  height: auto; }
+
+/* thumb bg hover */
+.category section .thumb-wrapper .bg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  display: none;
+  z-index: 1; }
+
+.category section .thumb-wrapper:nth-child(1n) .bg {
+  background: #fe2c22;
+  opacity: 0.74; }
+
+.category section .thumb-wrapper:nth-child(2n) .bg {
+  background: #005359;
+  opacity: 0.74; }
+
+.category section .thumb-wrapper:nth-child(3n) .bg {
+  background: #00b6ad;
+  opacity: 0.74; }
+
+.category section .thumb-wrapper:nth-child(4n) .bg {
+  background: #cae300;
+  opacity: 0.74; }
+
+.category section .thumb-wrapper:hover .titre, .category section .thumb-wrapper:hover .bg {
+  display: block; }
+
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/* ==========================================================================
+   _____    ____    _   _   _______              _____   _   _   ______   _____
+  / ____|  / __ \  | \ | | |__   __|     /\     |_   _| | \ | | |  ____| |  __  | |      | |  | | |  \| |    | |       /  \      | |   |  \| | | |__    | |__) |
+ | |      | |  | | | . ` |    | |      / /\ \     | |   | . ` | |  __|   |  _  /
+ | |____  | |__| | | |\  |    | |     / ____ \   _| |_  | |\  | | |____  | | \   \_____|  \____/  |_| \_|    |_|    /_/    \_\ |_____| |_| \_| |______| |_|  \_
+========================================================================== */
+#page-wrapper {
+  top: 0;
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  padding: 30px; }
+
+@media screen and (max-width: 640px) {
+  #page-wrapper {
+    padding: 20px !important; } }
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%; }
+  @media screen and (min-width: 1280px) {
+    .container {
+      width: 100%; } }
+  @media screen and (max-width: 1280px) {
+    .container {
+      width: 100%px;
+      padding: 0px; } }
+  @media screen and (max-width: 980px) {
+    .container {
+      width: 100%px;
+      padding: 0px; } }
+  @media screen and (max-width: 840px) {
+    .container {
+      width: 100%px;
+      padding: 0px; } }
+  @media screen and (max-width: 736px) {
+    .container {
+      width: 100%px;
+      padding: 10px; } }
+  @media screen and (max-width: 480px) {
+    .container {
+      width: 100%px;
+      padding: 10px; } }
+
+section {
+  width: 100%; }
+
+/* ==========================================================================
+  _    _   ______              _____    ______   _____
+ | |  | | |  ____|     /\     |  __ \  |  ____| |  __  | |__| | | |__       /  \    | |  | | | |__    | |__) |
+ |  __  | |  __|     / /\ \   | |  | | |  __|   |  _  /
+ | |  | | | |____   / ____ \  | |__| | | |____  | | \  |_|  |_| |______| /_/    \_\ |_____/  |______| |_|  \_
+   ========================================================================== */
+header {
+  position: relative;
+  top: 0;
+  z-index: 10000;
+  height: 80px; }
+
+/* logo */
+header #logo {
+  position: absolute;
+  display: block;
+  z-index: 200;
+  width: 117px;
+  height: 40px;
+  top: 0px;
+  margin-left: 50%;
+  margin-right: auto;
+  left: -58.5px; }
+
+/* Menu
+========================================================================== */
+header nav ul {
+  list-style: none;
+  padding-left: 0;
+  width: 300px; }
+  header nav ul > li {
+    position: relative;
+    display: block;
+    float: left;
+    margin-top: 0px;
+    margin-left: 0px; }
+  header nav ul > li a {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-size: 1.8rem;
+    font-weight: 500;
+    font-family: "museo_sans300", "sans-serif";
+    text-transform: none;
+    text-decoration: none;
+    color: #fe2c22;
+    padding: 5px 0px; }
+  header nav ul > li a:hover {
+    color: #00b6ad; }
+  header nav ul li:hover ul.sub-menu {
+    display: block; }
+
+header nav ul.sub-menu {
+  display: none;
+  position: absolute;
+  width: auto; }
+  header nav ul.sub-menu li {
+    clear: both;
+    white-space: nowrap; }
+  header nav ul.sub-menu > li a {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    font-size: 1.1rem;
+    font-weight: 100;
+    font-family: "museo_sans300", "sans-serif";
+    text-transform: none;
+    text-decoration: none;
+    background: #ffffff;
+    color: #fe2c22;
+    padding: 3px 3px; }
+  header nav ul.sub-menu > li a:hover {
+    color: #00b6ad; }
+  header nav ul.sub-menu > li.current-menu-item a, header nav ul.sub-menu > li.current-menu-parent a {
+    color: #00b6ad; }
+
+@media screen and (max-width: 1000px) {
+  header nav ul li a {
+    font-size: 1.4rem;
+    padding: 20px 4px; } }
+
+/* Menu SUB
+========================================================================== */
+header #navigation .sub-menu {
+  /*display:none;*/
+  position: absolute;
+  top: auto;
+  left: auto;
+  width: 0;
+  height: 0;
+  overflow: hidden; }
+
+header #navigation ul li {
+  vertical-align: top; }
+
+header #navigation .menu-item-has-children:hover .sub-menu {
+  display: block;
+  -webkit-transition: height 0.2s ease 0s;
+  transition: height 0.2s ease 0s; }
+
+header #navigation .menu-item-has-children:hover .sub-menu li {
+  clear: both;
+  float: left;
+  width: 100% !important; }
+
+header #navigation .menu-item-has-children:hover .sub-menu li a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 0 !important; }
+
+/*==========================================================================
+  _____    ______    _____   _____     ____    _   _    _____   _____  __      __  ______     __  __   ______   _   _   _    _
+ |  __ \  |  ____|  / ____| |  __ \   / __ \  | \ | |  / ____| |_   _| \ \    / / |  ____|   |  \/  | |  ____| | \ | | | |  | |
+ | |__) | | |__    | (___   | |__) | | |  | | |  \| | | (___     | |    \ \  / /  | |__      | \  / | | |__    |  \| | | |  | |
+ |  _  /  |  __|    \___ \  |  ___/  | |  | | | . ` |  \___ \    | |     \ \/ /   |  __|     | |\/| | |  __|   | . ` | | |  | |
+ | | \ \  | |____   ____) | | |      | |__| | | |\  |  ____) |  _| |_     \  /    | |____    | |  | | | |____  | |\  | | |__| |
+ |_|  \_\ |______| |_____/  |_|       \____/  |_| \_| |_____/  |_____|     \/     |______|   |_|  |_| |______| |_| \_|  \____/
+
+ ========================================================================== */
+#navPanel, #titleBar {
+  display: none; }
+
+@media screen and (max-width: 840px) {
+  #page-wrapper {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: 0 .5s ease;
+    -webkit-transition: -webkit-transform .5s ease;
+    transition: -webkit-transform .5s ease;
+    transition: transform .5s ease;
+    transition: transform .5s ease, -webkit-transform .5s ease;
+    padding-bottom: 1px; }
+  #navButton {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: 0 .5s ease;
+    -webkit-transition: -webkit-transform .5s ease;
+    transition: -webkit-transform .5s ease;
+    transition: transform .5s ease;
+    transition: transform .5s ease, -webkit-transform .5s ease;
+    display: block;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 10001; }
+  #navButton .toggle {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    border: 0;
+    outline: 0; }
+  #navButton .toggle:before {
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: block;
+    position: absolute;
+    border-top: 0; }
+  #navPanel {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: 0 .5s ease;
+    -webkit-transition: -webkit-transform .5s ease;
+    transition: -webkit-transform .5s ease;
+    transition: transform .5s ease;
+    transition: transform .5s ease, -webkit-transform .5s ease;
+    display: block;
+    left: 0;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    z-index: 10002; }
+  #navPanel:before {
+    content: '';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%; }
+  #navPanel .link {
+    position: relative;
+    z-index: 1;
+    display: block;
+    text-decoration: none;
+    color: #ddd;
+    border: 0;
+    border-top: dotted 1px rgba(255, 255, 255, 0.05);
+    padding: .5em; }
+  #navPanel .indent-1, #navPanel .indent-2, #navPanel .indent-3, #navPanel .indent-4, #navPanel .indent-5 {
+    display: inline-block; } }
+
+/* ==========================================================================
+  _                  __     __  ______   _____     _____   _        _____   _____    ______   _____
+ | |          /\     \ \   / / |  ____| |  __ \   / ____| | |      |_   _| |  __ \  |  ____| |  __  | |         /  \     \ \_/ /  | |__    | |__) | | (___   | |        | |   | |  | | | |__    | |__) |
+ | |        / /\ \     \   /   |  __|   |  _  /   \___ \  | |        | |   | |  | | |  __|   |  _  /
+ | |____   / ____ \     | |    | |____  | | \ \   ____) | | |____   _| |_  | |__| | | |____  | | \  |______| /_/    \_\    |_|    |______| |_|  \_\ |_____/  |______| |_____| |_____/  |______| |_|  \_
+   ========================================================================== */
+/* Fullscreen
+========================================================================== */
+/*.ls-wp-fullwidth-container, .ls-wp-fullwidth-helper, .ls-wp-container, .ls-inner{ height:100vh!important; }
+.ls-wp-fullwidth-container img{ height:100%!important; width:100%!important; }
+section.fullscreen{ position:absolute; top:0; margin-top:0; z-index:-1; }
+@media screen and (max-width: 480px){ .ls-wp-fullwidth-container, .ls-wp-fullwidth-helper, .ls-wp-container, .ls-inner{ height:50vh!important; } }
+
+*/
+/* ==========================================================================
+  ______    ____    _____    __  __
+ |  ____|  / __ \  |  __ \  |  \/  |
+ | |__    | |  | | | |__) | | \  / |
+ |  __|   | |  | | |  _  /  | |\/| |
+ | |      | |__| | | | \ \  | |  | |
+ |_|       \____/  |_|  \_\ |_|  |_|
+
+   ========================================================================== */
+textarea, input {
+  outline: none; }
+
+/* remove glow chrome / safari */
+/* Icon
+========================================================================== */
+.icon-android-search:before, .icon-ios-search:before, .icon-ios-search-strong:before, .icon-search:before, .iconehome a:before {
+  display: inline-block;
+  font-family: "Ionicons";
+  speak: none;
+  font-style: normal;
+  line-height: 1; }
+
+.icon-android-search:before {
+  content: "\f2f5"; }
+
+.icon-ios-search:before {
+  content: "\f4a5"; }
+
+.icon-ios-search-strong:before {
+  content: "\f4a4"; }
+
+.icon-search:before {
+  content: "\f21f"; }
+
+.iconehome a:before {
+  content: "\f144"; }
+
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+#error p {
+  text-align: center; }
+
+@charset "UTF-8";
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/* Easy FancyBox */
+/* a faire: deconnecter la feuille de style pour avoir tout ici  */
+/* c'est possible en décochant imprimer les css et coller tout ici  */
+/* custom controler : easy-fancybox/fancybox/fancybox.png  */
+#fancybox-close {
+  top: 10px !important;
+  right: 10px !important; }
+
+/* no shadow */
+.fancybox-bg {
+  display: none; }
+
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/* Menu divider
+========================================================================== */
+/* Top nivo2
+========================================================================== */
+header nav li ul {
+  padding-top: 2px; }
+
+/* Letter spacing
+========================================================================== */
+header nav li a {
+  letter-spacing: 0.12rem; }
+
+header nav li ul li a {
+  letter-spacing: 0.08rem; }
+
+/* Styles specifiques
+========================================================================== */
+#nav-main2, #nav-main2 li {
+  float: right; }
+
+#nav-main2 ul {
+  right: 0; }
+
+@charset "UTF-8";
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/* ==========================================================================
+  CONFIG DE BASE :
+
+    type=[LM|AL] – type of menu:
+    “LM” – Language Menu (default).
+    “AL” – Alternative Language: the top menu entry displays the first available language other than the current.
+
+    title=[none|Language|Current] – title text of the top item (not sub-items):
+    “Language” – word “Language” translated to current language (default).
+    “none” – no title in the top of menu, flag only.
+    “Current” – displays current language name.
+    One may also put arbitrary multilingual title in the field “Navigation Label” in the menu item editor.
+
+    colon=[shown|hidden] – whether to display colon after title.
+
+    flags=[none|all|items] – the way to display language flags:
+    “none” – no flag is shown in any item, including the top item.
+    “all” – all items show flag, including the top item.
+    “items” – only sub-items show corresponding flag, top item does not.
+
+    names=[shown|hidden] – whether to display language names in sub-items.
+
+    current=[shown|hidden] – whether to display the current language in the menu.
+    --------------------------------------------------------------------------------
+    Pour un menu avec seulement le titre de la langue avec le switch :
+    <?php echo qtranxf_generateLanguageSelectCode('text'); ?>
+    Pour changer les titres, les éditer dans la config du module.
+    --------------------------------------------------------------------------------
+    Shortcode dans les champs wordrepss [:en]texte en anglais[:fr]texte en francais
+    --------------------------------------------------------------------------------
+    Teste de langue en php
+    <?php if(get_locale() == "fr_FR"){ echo masterslider("ms-2");} ?>
+    <?php if(get_locale() == "en_US"){ echo masterslider("ms-2-1");} ?>
+
+   ========================================================================== */
+/* reset */
+#nav-lang, #nav-lang .sub-menu, #qtranslate-chooser {
+  list-style: none;
+  padding-left: 0; }
+
+/* langues en ligne <?php echo qtranxf_generateLanguageSelectCode('text'); ?>
+========================================================================== */
+#nav-lang, #qtranslate-chooser {
+  text-align: center; }
+
+#nav-lang li, #qtranslate-chooser li {
+  height: 12px;
+  display: inline-block;
+  overflow: hidden; }
+
+#nav-lang li a, #qtranslate-chooser li a {
+  text-decoration: none;
+  color: #fe2c22;
+  font-size: 1.4rem;
+  padding: 0 7px;
+  line-height: 1rem; }
+
+#nav-lang li:first-child a, #qtranslate-chooser li:first-child a {
+  border-right: 1px solid #fe2c22; }
+
+#nav-lang li a:hover, #qtranslate-chooser li a:hover {
+  text-decoration: none;
+  color: #00b6ad; }
+
+/* lang depliable
+========================================================================== */
+/* lang une ligne haut à droite
+========================================================================== */
+
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/*==========================================================================
+  _____    ______    _____   _____     ____    _   _    _____   _____  __      __  ______     __  __   ______   _   _   _    _
+ |  __ \  |  ____|  / ____| |  __ \   / __ \  | \ | |  / ____| |_   _| \ \    / / |  ____|   |  \/  | |  ____| | \ | | | |  | |
+ | |__) | | |__    | (___   | |__) | | |  | | |  \| | | (___     | |    \ \  / /  | |__      | \  / | | |__    |  \| | | |  | |
+ |  _  /  |  __|    \___ \  |  ___/  | |  | | | . ` |  \___ \    | |     \ \/ /   |  __|     | |\/| | |  __|   | . ` | | |  | |
+ | | \ \  | |____   ____) | | |      | |__| | | |\  |  ____) |  _| |_     \  /    | |____    | |  | | | |____  | |\  | | |__| |
+ |_|  \_\ |______| |_____/  |_|       \____/  |_| \_| |_____/  |_____|     \/     |______|   |_|  |_| |______| |_| \_|  \____/
+
+ ========================================================================== */
+@media screen and (max-width: 840px) {
+  /* taille */
+  #nav-main, #nav-main2 {
+    display: none !important; }
+  /* taille */
+  #navButton {
+    height: 45px; }
+  /*#navButton .toggle:before{ width:80px; height:30px; left:50%; margin-left:-40px; font-size:14px; line-height:30px; font-family:FontAwesome; font-style:normal; font-weight:400; content:'\f0c9'; color:#FFF; background:#09C; border-radius:0 0 .35em .35em; }*/
+  /* position : margin-top + background-position */
+  #navButton .toggle {
+    display: block;
+    height: 20px;
+    margin-top: 20px;
+    background-color: transparent;
+    background-image: -webkit-gradient(linear, left top, right top, from(#000), to(#000)), -webkit-gradient(linear, left top, right top, from(#000), to(#000)), -webkit-gradient(linear, left top, right top, from(#333), to(#000));
+    background-image: -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(left, #000, #000), -webkit-linear-gradient(left, #000, #000);
+    background-image: linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000), linear-gradient(to right, #000, #000);
+    background-position: 95% top, 95% center, 95% bottom;
+    background-repeat: no-repeat;
+    background-size: 20px 2px;
+    padding: 0;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-transition: .2s;
+    transition: .2s; }
+  /* font */
+  #navPanel .depth-0 {
+    font-size: 1.8rem;
+    text-transform: uppercase; }
+  #navPanel .depth-1 {
+    font-size: 1.3rem !important;
+    text-transform: uppercase;
+    color: #fff !important; }
+  #navPanel .depth-0:hover, #navPanel .depth-1:hover {
+    background: #00b6ad; }
+  /* color */
+  #navPanel .link {
+    color: #fff; }
+  /* style */
+  #navPanel .link {
+    position: relative;
+    z-index: 1;
+    display: block;
+    text-decoration: none;
+    border: 0;
+    border-top: dotted 1px rgba(255, 255, 255, 0.05);
+    padding: .5em; }
+  #navPanel .link:first-child {
+    border-top: 0; }
+  #navPanel .link.depth-0, #navPanel .link.depth-1 {
+    text-align: center;
+    font-weight: 300; }
+  /* animation */
+  #navPanel {
+    height: 50vh;
+    width: 100%; }
+  #navPanel {
+    -webkit-transform: translateY(-50vh);
+    transform: translateY(-50vh);
+    background: #222;
+    box-shadow: inset 0 -2px 8px 0 rgba(0, 0, 0, 0.25); }
+  body.navPanel-visible #navPanel {
+    -webkit-transform: translateY(0);
+    transform: translateY(0); }
+  body.navPanel-visible #page-wrapper, body.navPanel-visible #navButton {
+    -webkit-transform: translateY(50vh);
+    transform: translateY(50vh); } }
+
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/* meta slider  */
+/* controllers */
+#home .flex-control-paging {
+  bottom: -22px !important; }
+
+/* viewport */
+.single .metaslider .flexslider {
+  margin-bottom: 0 !important; }
+
+/* centrage de certaines images */
+.single .flex-viewport li a img {
+  -webkit-transform: translateY(50%);
+          transform: translateY(50%); }
+
+.single .flex-viewport li:nth-child(2) a img {
+  -webkit-transform: none !important;
+          transform: none !important; }
+
+/* thumb */
+.single .metaslider .flex-control-thumbs {
+  margin-top: 11px; }
+
+.single .metaslider .flex-control-thumbs li {
+  border: 1px solid #bcbcbc;
+  margin-right: 5px; }
+
+.single .metaslider .flex-control-thumbs li:last-child {
+  margin-right: 0px; }
+
+.single .metaslider ol.flex-control-thumbs img, #content .metaslider ol.flex-control-thumbs img {
+  margin: 0 !important; }
+
+@media screen and (max-width: 1200px) {
+  .single .metaslider .flex-control-thumbs li {
+    width: 18% !important; } }

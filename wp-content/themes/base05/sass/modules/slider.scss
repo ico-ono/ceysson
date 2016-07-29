@@ -1,22 +1,22 @@
 @import "../variables";
 
 
-/* meta slider */
+/* meta slider  */
 
 /* controllers */
 #home .flex-control-paging{ bottom:-22px!important; }
 
 /* viewport */
-.metaslider .flexslider{ margin-bottom:0!important; }
+.single .metaslider .flexslider{ margin-bottom:0!important; }
 /* centrage de certaines images */
-.flex-viewport li a img{ transform: translateY(50%); }
-.flex-viewport li:nth-child(2) a img{ transform: none!important; }
+.single .flex-viewport li a img{ transform: translateY(50%); }
+.single .flex-viewport li:nth-child(2) a img{ transform: none!important; }
 
 /* thumb */
-.metaslider .flex-control-thumbs{ margin-top:11px; }
-.metaslider .flex-control-thumbs li { border:1px solid #bcbcbc; margin-right:5px; }
-.metaslider .flex-control-thumbs li:last-child { margin-right:0px; }
-.metaslider ol.flex-control-thumbs img, #content .metaslider ol.flex-control-thumbs img{ margin:0!important; }
+.single .metaslider .flex-control-thumbs{ margin-top:11px; }
+.single .metaslider .flex-control-thumbs li { border:1px solid #bcbcbc; margin-right:5px; }
+.single .metaslider .flex-control-thumbs li:last-child { margin-right:0px; }
+.single .metaslider ol.flex-control-thumbs img, #content .metaslider ol.flex-control-thumbs img{ margin:0!important; }
 @media screen and (max-width: 1200px) {
-  .metaslider .flex-control-thumbs li{ width:18%!important; }
+  .single .metaslider .flex-control-thumbs li{ width:18%!important; }
 }

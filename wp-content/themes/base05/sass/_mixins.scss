@@ -50,7 +50,7 @@
   	font-weight:$fweigth;
     font-family: $navitems-font-family;
   	@if ($fcap == 'true'){ text-transform:uppercase; }
-    @if ($fcap == 'false'){ text-transform:lowercase; }
+    @if ($fcap == 'false'){ text-transform:none; }
     @if ($funderline == 'true'){ text-decoration:underline; }
     @if ($funderline == 'false'){ text-decoration:none; }
   	background:$bg-item;
@@ -90,7 +90,7 @@
     font-weight:$fweigth;
     font-family: $navitems-font-family;
     @if ($fcap == 'true'){ text-transform:uppercase; }
-    @if ($fcap == 'false'){ text-transform:lowercase; }
+    @if ($fcap == 'false'){ text-transform:none; }
     @if ($funderline == 'true'){ text-decoration:underline; }
     @if ($funderline == 'false'){ text-decoration:none; }
     background:$bg-item;
@@ -167,7 +167,7 @@
     margin-bottom: $line-space;
   }
   &:nth-child(5n) {
-    margin-right:0; 
+    margin-right:0;
   }
   @media screen and (max-width: 480px ){
     width: percentage(1);
