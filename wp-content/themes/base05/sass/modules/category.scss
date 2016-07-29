@@ -6,6 +6,10 @@
 .category section{ height:auto; margin-bottom:25px; }
 .category section .thumb-wrapper{ @include make-grid(5, 2%, 2%); }
 
+.category p{ color:$vert; margin-bottom:30px; }
+.category p a{ display:inline-block; width:100%; font-size:1.4rem; margin-top:55px; font-weight:500; text-decoration:underline; text-align:center; color:$rouge; }
+.category p a:hover{ color:$vert; }
+
 /* thumb a */
 .category section .thumb-wrapper a{ display:block; position:relative; width:100%; height:100%; margin:0 10px 0 0;}
 
