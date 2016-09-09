@@ -103,6 +103,14 @@ if (function_exists('add_theme_support')) {
 
 
 /* ==========================================================================
+   Retirer le css en ligne de la gallery
+   ========================================================================== */
+function remove_css_gal() {
+        return "\n" . '<div class="gallery">';//ici vous pouvez changer de classe
+}
+add_filter( 'gallery_style', 'remove_css_gal', 9 );
+
+/* ==========================================================================
    Meta box (mettre page ou post dans post_types)
    ========================================================================== */
 
@@ -160,7 +168,7 @@ function TwoBlocMore_register_meta_boxes( $meta_boxes )
 				'fields' => array(
 						array(
 								'id'    => $prefix . 'bloc2',
-								'type'  => 'text'
+								'type'  => 'wysiwyg'
 						),
 				)
 		);

@@ -8,16 +8,16 @@
 
    ========================================================================== */
 
-.page h1{ width:100%; font-family: $font-custom2;  text-align:center; color:$vert; font-size:1.8rem; letter-spacing: 0.1rem; margin-bottom:35px; }
-.single .size-6 h1{ text-align:left; color:$rouge; font-size:3rem; font-weight:100; letter-spacing: 0.15rem; margin:0 0 15px 0 }
-.single h2{ font-size:1rem; line-height:1.2rem; color:$vert; text-transform:uppercase; margin:30px 0 0px 0; font-weight:400; }
+.page h1{ width:100%; margin-bottom:35px; font-family: $font-custom2; font-size:1.8rem; letter-spacing: 0.1rem; text-align:center; color:$vert; }
+.single .size-6 h1{ margin:0 0 15px 0; text-align:left; font-size:3rem; font-weight:100; letter-spacing: 0.15rem; color:$rouge; }
+.single h2{ font-size:1.3rem; line-height:2.5rem; color:$vert; text-transform:uppercase; margin:30px 0 0px 0; font-weight:400; }
 
 .page p{ font-size:1.3rem; line-height:1.8rem; letter-spacing:0.07rem; color:$vert; text-align:justify; font-weight:100; margin-bottom:18px; }
-.single .size-6 .bloc1 p{ color:$rouge; font-size:1rem; line-height:1.2rem; }
-.single .size-6 .bloc2 p{ color:$vert; font-size:1.2rem; line-height:1.8rem; text-align:justify; }
+.single .size-6 .bloc1 p{ color:$rouge; font-size:1.25rem; line-height:1.6rem; }
+.single .size-6 .bloc2 p{ color:$vert; font-size:1.45rem; line-height:1.8rem; text-align:justify; }
 
 .single .size-6 ul{ padding-left: 0.5em; margin-top:0; }
-.single .size-6 ul li{ font-size:1rem; line-height:1.2rem; color:$vert; }
+.single .size-6 ul li{ font-size:1.25rem; line-height:1.6rem; color:$vert; }
 
 .page p strong{ font-family: $font-custom2; }
 .single em{ font-family:$font-custom2-italic; }
@@ -103,6 +103,9 @@
     ========================================================================== */
 
   .page .block-center, .category .block-center{ width:66%; }
+  @media screen and (max-width: 1024px) {
+    .page .block-center, .category .block-center{ width:100%; }
+  }
   .single .block-center{ width:100%; }
   header{ padding-top:6px; }
   section{ min-height:70vh; }

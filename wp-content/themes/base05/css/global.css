@@ -1507,7 +1507,7 @@ header nav li ul li a {
   height: 100%;
   margin: 0 10px 0 0; }
 
-/* thumb infos */
+/* thumb infos  */
 .category section .thumb-wrapper .titre {
   position: absolute;
   vertical-align: center;
@@ -1524,6 +1524,10 @@ header nav li ul li a {
   text-align: center;
   color: #fff;
   z-index: 2; }
+
+@media screen and (max-width: 840px) {
+  .category section .thumb-wrapper .titre {
+    font-size: 1.3rem; } }
 
 /* thumb afficher au hover */
 .category section .thumb-wrapper:hover .titre {
@@ -1606,6 +1610,33 @@ header nav li ul li a {
 	Config file and project variables
   Modified : ico-ono (JUIN 2016)
 */
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+.gallery {
+  margin: auto;
+  text-align: center; }
+
+.gallery .gallery-item {
+  display: inline-block;
+  margin: 10px 5px 0 0;
+  text-align: center;
+  width: 75px;
+  height: 50px; }
+
+.gallery img {
+  width: auto;
+  height: 100%;
+  border: 1px solid #bcbcbc; }
+
+.gallery .gallery-caption {
+  margin-left: 0; }
+
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
 /* Easy FancyBox */
 /* a faire: deconnecter la feuille de style pour avoir tout ici  */
 /* c'est possible en décochant imprimer les css et coller tout ici  */
@@ -1635,24 +1666,24 @@ header nav li ul li a {
    ========================================================================== */
 .page h1 {
   width: 100%;
+  margin-bottom: 35px;
   font-family: "museo_sans300", "sans-serif";
-  text-align: center;
-  color: #00b6ad;
   font-size: 1.8rem;
   letter-spacing: 0.1rem;
-  margin-bottom: 35px; }
+  text-align: center;
+  color: #00b6ad; }
 
 .single .size-6 h1 {
+  margin: 0 0 15px 0;
   text-align: left;
-  color: #fe2c22;
   font-size: 3rem;
   font-weight: 100;
   letter-spacing: 0.15rem;
-  margin: 0 0 15px 0; }
+  color: #fe2c22; }
 
 .single h2 {
-  font-size: 1rem;
-  line-height: 1.2rem;
+  font-size: 1.3rem;
+  line-height: 2.5rem;
   color: #00b6ad;
   text-transform: uppercase;
   margin: 30px 0 0px 0;
@@ -1669,12 +1700,12 @@ header nav li ul li a {
 
 .single .size-6 .bloc1 p {
   color: #fe2c22;
-  font-size: 1rem;
-  line-height: 1.2rem; }
+  font-size: 1.25rem;
+  line-height: 1.6rem; }
 
 .single .size-6 .bloc2 p {
   color: #00b6ad;
-  font-size: 1.2rem;
+  font-size: 1.45rem;
   line-height: 1.8rem;
   text-align: justify; }
 
@@ -1683,8 +1714,8 @@ header nav li ul li a {
   margin-top: 0; }
 
 .single .size-6 ul li {
-  font-size: 1rem;
-  line-height: 1.2rem;
+  font-size: 1.25rem;
+  line-height: 1.6rem;
   color: #00b6ad; }
 
 .page p strong {
@@ -1725,6 +1756,10 @@ header #logo:hover {
     ========================================================================== */
 .page .block-center, .category .block-center {
   width: 66%; }
+
+@media screen and (max-width: 1024px) {
+  .page .block-center, .category .block-center {
+    width: 100%; } }
 
 .single .block-center {
   width: 100%; }
@@ -2844,7 +2879,7 @@ body > script {
   height: 100%;
   margin: 0 10px 0 0; }
 
-/* thumb infos */
+/* thumb infos  */
 .category section .thumb-wrapper .titre {
   position: absolute;
   vertical-align: center;
@@ -2861,6 +2896,10 @@ body > script {
   text-align: center;
   color: #fff;
   z-index: 2; }
+
+@media screen and (max-width: 840px) {
+  .category section .thumb-wrapper .titre {
+    font-size: 1.3rem; } }
 
 /* thumb afficher au hover */
 .category section .thumb-wrapper:hover .titre {
@@ -3208,6 +3247,33 @@ textarea, input {
 */
 #error p {
   text-align: center; }
+
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+/*
+	Config file and project variables
+  Modified : ico-ono (JUIN 2016)
+*/
+.gallery {
+  margin: auto;
+  text-align: center; }
+
+.gallery .gallery-item {
+  display: inline-block;
+  margin: 10px 5px 0 0;
+  text-align: center;
+  width: 75px;
+  height: 50px; }
+
+.gallery img {
+  width: auto;
+  height: 100%;
+  border: 1px solid #bcbcbc; }
+
+.gallery .gallery-caption {
+  margin-left: 0; }
 
 @charset "UTF-8";
 /*
