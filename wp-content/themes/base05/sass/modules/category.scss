@@ -3,7 +3,7 @@
 
 
 /* category grille */
-.category section{ height:auto; margin-bottom:25px; }
+.category section{ height:auto; margin-bottom:25px; min-height:auto; }
 .category section .thumb-wrapper{ @include make-grid(5, 2%, 2%); }
 
 .category p{ color:$vert; margin-bottom:30px; }

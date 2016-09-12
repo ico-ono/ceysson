@@ -10,33 +10,43 @@ $font-custom : "museo_sans100", "sans-serif";
 $font-custom2 : "museo_sans300", "sans-serif";
 $font-custom2-italic : "museo_sans300", "sans-serif";
 $font-custom3 : "museo_sans700", "sans-serif";
-$font-icon : "FontAwesome";
+//$font-icon : "FontAwesome";
 $font-size : 1.4rem !default;				// 1rem equiv "10px" en gardant 1.4rem comme base
 
 // BACKGROUND
 //--------------------------------------------------------
-	$site-bg:#fff;
+	$site-bg: #fff;
 
 // COLORS
 //--------------------------------------------------------
-	$rouge:#fe2c22;
-	$vert:#00b6ad;
-	$gris:#dad9d7;
-	$vertfonce:#005359;
-	$vertclair:#cae300;
-
+	$rouge: #fe2c22;
+	$vert: #00b6ad;
+	$gris: #dad9d7;
+	$vertfonce: #005359;
+	$vertclair: #cae300;
 
 // CONTAINER
 //--------------------------------------------------------
 	$container: 100%; 								// 100%, taille
 	$container-position: "center";  	// center, right, left
-	$padding-global:30px;
+	$padding-global: 30px;
 	$padding-screen: 0px;
 	$padding-mobile: 10px;
 
-// HEADER
+
+	/* ==========================================================================
+	  _    _   ______              _____    ______   _____
+	 | |  | | |  ____|     /\     |  __ \  |  ____| |  __ \
+	 | |__| | | |__       /  \    | |  | | | |__    | |__) |
+	 |  __  | |  __|     / /\ \   | |  | | |  __|   |  _  /
+	 | |  | | | |____   / ____ \  | |__| | | |____  | | \ \
+	 |_|  |_| |______| /_/    \_\ |_____/  |______| |_|  \_\
+
+	   ========================================================================== */
+
+// HEIGHT
 //--------------------------------------------------------
-	$header-height:80px;
+	$header-height: 80px;
 
 // LOGO
 //--------------------------------------------------------
