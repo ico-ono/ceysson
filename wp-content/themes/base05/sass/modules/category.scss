@@ -3,10 +3,11 @@
 
 
 /* category grille */
-.category section{ height:auto; margin-bottom:25px; min-height:auto; }
+.category section{ height:auto; margin-bottom:25px; }
+#IAC section{ min-height:auto;  }
 .category section .thumb-wrapper{ @include make-grid(5, 2%, 2%); }
 
-.category p{ color:$vert; margin-bottom:30px; }
+.category p{ font-size:1.3rem; line-height:1.8rem; letter-spacing:0.07rem; color:$vert; text-align:justify; font-weight:100; margin-bottom:30px; }
 .category p a{ display:inline-block; width:100%; font-size:1.4rem; margin-top:55px; font-weight:500; text-decoration:underline; text-align:center; color:$rouge; }
 .category p a:hover{ color:$vert; }
 
