@@ -1669,6 +1669,9 @@ header nav li ul li a {
 	 | |  | | | |____   / ____ \  | |__| | | |____  | | \ 	 |_|  |_| |______| /_/    \_\ |_____/  |______| |_|  \_
 	   ========================================================================== */
 /* meta slider  */
+.metaslider .flexslider {
+  margin: 0 !important; }
+
 /* controllers */
 #home .flex-control-paging {
   bottom: -22px !important; }
@@ -1821,10 +1824,10 @@ header nav li ul li a {
 
 .page p {
   font-size: 1.3rem;
-  line-height: 1.8rem;
+  line-height: 2.1rem;
   letter-spacing: 0.07rem;
   color: #00b6ad;
-  text-align: justify;
+  /*text-align:justify;*/
   font-weight: 100;
   margin-bottom: 18px; }
 
@@ -1836,8 +1839,8 @@ header nav li ul li a {
 .single .size-6 .bloc2 p {
   color: #00b6ad;
   font-size: 1.45rem;
-  line-height: 1.8rem;
-  text-align: justify; }
+  line-height: 2.1rem;
+  /*text-align:justify;*/ }
 
 .single .size-6 ul {
   padding-left: 0.5em;
@@ -1900,9 +1903,8 @@ header {
 section {
   min-height: 65vh; }
 
-@media screen and (min-height: 700px) {
-  section {
-    min-height: 77vh; } }
+.page section {
+  min-height: 65vh; }
 
 footer {
   float: left;
@@ -1988,6 +1990,11 @@ footer a:hover {
   .single section .size-6 {
     padding-left: 0px;
     margin-top: 40px; } }
+
+/* category
+    ========================================================================== */
+#IAC section {
+  min-height: 30vh !important; }
 
 /* ==========================================================================
   ______    ____    _____    __  __
@@ -3748,6 +3755,9 @@ header nav li ul li a {
 	 | |  | | | |____   / ____ \  | |__| | | |____  | | \ 	 |_|  |_| |______| /_/    \_\ |_____/  |______| |_|  \_
 	   ========================================================================== */
 /* meta slider  */
+.metaslider .flexslider {
+  margin: 0 !important; }
+
 /* controllers */
 #home .flex-control-paging {
   bottom: -22px !important; }
