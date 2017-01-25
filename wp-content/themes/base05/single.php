@@ -9,7 +9,8 @@
 
     <!-- section -->
 	<section class="center block-center">
-		<div class="container row">
+		<div class="container">
+		<div class="row">
 			<div class="size-5 txtcenter size-12-mobile">
 				<?php echo do_shortcode( rwmb_meta('rw_bloc2') ); ?>
 			</div>
@@ -21,5 +22,7 @@
 				<div class="bloc2"><?php echo rwmb_meta('rw_bloc1'); ?></div>
 			</div>
 		</div>
+	</div>
+		
   </section>
 <?php get_footer(); ?>
