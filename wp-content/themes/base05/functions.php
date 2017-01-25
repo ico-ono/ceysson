@@ -97,9 +97,21 @@ if (function_exists('add_theme_support')) {
 }
 
 /* ==========================================================================
-   Images sizes
+   Images sizes (au moment de l'ajout des medias : ne marche que sur les nouveaux médias)
    ========================================================================== */
-// add_image_size( 'actu', 750, 620, true, array( 'center', 'center' ));
+if ( function_exists( 'add_image_size' ) ) {
+add_image_size( 'photo_couv', 900, 900, true, array( 'center', 'center' )); //(cropped)
+add_image_size( 'photo_inter', 1600, 1200, true, array( 'center', 'center' )); //(cropped)
+}
+add_filter('image_size_names_choose', 'my_image_sizes');
+function my_image_sizes($sizes) {
+$addsizes = array(
+"photo_couv" => __( "Photo couverture"),
+"photo_inter" => __( "Photo interieure"),
+);
+$newsizes = array_merge($sizes, $addsizes);
+return $newsizes;
+}
 
 
 /* ==========================================================================

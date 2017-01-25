@@ -43,12 +43,8 @@
             <div class="container">
                 <a id="logo" href="<?php echo home_url(); ?>"><img src="<?php echo get_template_directory_uri(); ?>/images/logo.gif" alt="<?php wp_title('');?>"></a>
                 <!-- navigation-->
-              		<nav class="row">
-                    <div class="size-6">
-                    <?php wp_nav_menu( array( 'menu' => 'nav-main', 'container' => '', 'menu_id' => 'nav-main', 'depth' => '2' ) ); ?>
-                  </div><div class="size-6 txtright">
+              		<nav class="txtright">
                     <?php wp_nav_menu( array( 'menu' => 'nav-main2', 'container' => '', 'menu_id' => 'nav-main2', 'depth' => '2' ) ); ?>
-                  </div>
                   </nav>
             </div>
         </header>

@@ -27,7 +27,7 @@ $font-size : 1.4rem !default;				// 1rem equiv "10px" en gardant 1.4rem comme ba
 
 // CONTAINER
 //--------------------------------------------------------
-	$container: 100%; 								// 100%, taille
+	$container: 66%; 								// 100%, taille
 	$container-position: "center";  	// center, right, left
 	$padding-global: 30px;
 	$padding-screen: 0px;
@@ -52,7 +52,7 @@ $font-size : 1.4rem !default;				// 1rem equiv "10px" en gardant 1.4rem comme ba
 //--------------------------------------------------------
 	$logo-width: 117px;
 	$logo-height: 40px;
-	$logo-position: "topcenter";			// topcenter, topright, topleft, bottomcenter, bottomright, bottomleft
+	$logo-position: "topleft";			// topcenter, topright, topleft, bottomcenter, bottomright, bottomleft
 	$logo-x: 0px;
 	$logo-y: 0px;
 

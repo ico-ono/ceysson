@@ -9,15 +9,15 @@
    ========================================================================== */
 
 .page h1{ width:100%; margin-bottom:35px; font-family: $font-custom2; font-size:1.8rem; letter-spacing: 0.1rem; text-align:center; color:$vert; }
-.single .size-6 h1{ margin:0 0 15px 0; text-align:left; font-size:3rem; font-weight:100; letter-spacing: 0.15rem; color:$rouge; }
+.single .size-7 h1{ margin:0 0 15px 0; text-align:left; font-size:3rem; font-weight:100; letter-spacing: 0.15rem; color:$rouge; }
 .single h2{ font-size:1.3rem; line-height:2.5rem; color:$vert; text-transform:uppercase; margin:30px 0 0px 0; font-weight:400; }
 
 .page p{ font-size:1.3rem; line-height:2.1rem; letter-spacing:0.07rem; color:$vert; /*text-align:justify;*/ font-weight:100; margin-bottom:18px; }
-.single .size-6 .bloc1 p{ color:$rouge; font-size:1.25rem; line-height:1.6rem; }
-.single .size-6 .bloc2 p{ color:$vert; font-size:1.45rem; line-height:2.1rem; /*text-align:justify;*/ }
+.single .size-7 .bloc1 p{ color:$rouge; font-size:1.25rem; line-height:1.6rem; }
+.single .size-7 .bloc2 p{ color:$vert; font-size:1.45rem; line-height:2.1rem; /*text-align:justify;*/ }
 
-.single .size-6 ul{ padding-left: 0.5em; margin-top:0; }
-.single .size-6 ul li{ font-size:1.25rem; line-height:1.6rem; color:$vert; }
+.single .size-7 ul{ padding-left: 0.5em; margin-top:0; }
+.single .size-7 ul li{ font-size:1.25rem; line-height:1.6rem; color:$vert; }
 
 .page p strong{ font-family: $font-custom2; }
 .single em{ font-family:$font-custom2-italic; }
@@ -80,11 +80,14 @@
    /* logo anim */
     header #logo:hover{ opacity:0.7; transition:all .5s ease; }
 
+
+
     @media screen and (max-width: 1280px) {
         // header #logo{ height:50px!important; width:344px!important; left:-172px; top:120px!important;  }
         // .page_produits header #logo{ top:170px!important; }
     }
-    @media screen and (max-width: 840px) {
+    @media screen and (min-width: 840px) {
+      header #logo{ position:relative!important; float:left; }
       // .page_produits header #logo{ top:100px!important; }
       //   header #logo{ height:50px!important; width:344px!important; left:-172px; top:50px!important;  }
     }
@@ -92,6 +95,8 @@
       // header #logo, .page_produits header #logo{ height:54px!important; width:230px!important; left:-115px; top:50px!important;  }
     }
 
+    header #menu-item-639{ margin-right:20px; }
+    header #menu-item-562{ margin-right:20px; } // en local
 
  /* ==========================================================================
    ____    _         ____     _____    _____
@@ -154,13 +159,14 @@
   /* mentions legales
     ========================================================================== */
   #mentions-legales section{ padding:45px 0 0px 0; }
+  #mentions-legales section a, #mentions-legales section a:hover{ color:$vert; }
 
   /* single
     ========================================================================== */
-  .single section .size-6{ padding-left:40px; }
-  .single section .size-6 .bloc1{ margin-bottom:25px;}
+  .single section .size-7{ padding-left:40px; }
+  .single section .size-7 .bloc1{ margin-bottom:25px;}
 @media screen and (max-width: 680px) {
-  .single section .size-6{ padding-left:0px; margin-top:40px; }
+  .single section .size-7{ padding-left:0px; margin-top:40px; }
   }
   /* category
     ========================================================================== */
