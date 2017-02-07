@@ -115,7 +115,7 @@
   .single .block-center{ width:100%; }
   header{ padding-top:6px; }
   section{ min-height:65vh; }
-  .page section{ min-height:65vh; }
+  .page section{ min-height:65vh; margin-top:70px; }
   // .flex-control-nav{ border:1px solid #f00; }
   // .flex-viewport{ border:1px solid #000; }
   @media screen and (min-height: 700px) {
@@ -166,13 +166,12 @@
   .single section{ margin-top:70px; }
   .single section .size-7{ padding-left:40px; }
   .single section .size-7 .bloc1{ margin-bottom:25px;}
-@media screen and (max-width: 680px) {
-  .single section .size-7{ padding-left:0px; margin-top:40px; }
+  @media screen and (max-width: 680px) {
+    .single section .size-7{ padding-left:0px; margin-top:40px; }
   }
   /* category
     ========================================================================== */
-    #IAC section{ min-height:30vh!important; }
-
+    #IAC section{ min-height:20vh!important; }
 
 /* ==========================================================================
   ______    ____    _____    __  __

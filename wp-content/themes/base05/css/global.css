@@ -1913,7 +1913,8 @@ section {
   min-height: 65vh; }
 
 .page section {
-  min-height: 65vh; }
+  min-height: 65vh;
+  margin-top: 70px; }
 
 footer {
   float: left;
@@ -2009,7 +2010,7 @@ footer a:hover {
 /* category
     ========================================================================== */
 #IAC section {
-  min-height: 30vh !important; }
+  min-height: 20vh !important; }
 
 /* ==========================================================================
   ______    ____    _____    __  __
