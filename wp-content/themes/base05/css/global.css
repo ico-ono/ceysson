@@ -1896,14 +1896,15 @@ header #menu-item-562 {
   | |_) | | |      | |  | | | |      | (___
   |  _ <  | |      | |  | | | |       \___   | |_) | | |____  | |__| | | |____   ____) |
   |____/  |______|  \____/   \_____| |_____/
-
+ 
     ========================================================================== */
 .page .block-center, .category .block-center {
   width: 66%; }
 
 .page p {
   width: 70%;
-  margin: 0 auto; }
+  margin-left: auto;
+  margin-right: auto; }
 
 @media screen and (max-width: 1024px) {
   .page .block-center, .category .block-center {

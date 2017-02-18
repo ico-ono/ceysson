@@ -9,7 +9,7 @@
 	<footer>
 		<div class="container row">
 		<div class="size-5 size-12-mobile">
-			 © Ceysson Éditions d’Art 2017
+			 © Ceysson éditions d’Art 2017
 		</div>
 		<div class="size-2 size-12-mobile">
 			<?php echo qtranxf_generateLanguageSelectCode('text'); ?>
