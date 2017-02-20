@@ -1690,6 +1690,10 @@ header nav li ul li a {
   -webkit-transform: none !important;
           transform: none !important; }
 
+@media screen and (max-height: 650px) {
+  .home .flexslider .slides li {
+    height: 74vh !important; } }
+
 /* thumb */
 .single .metaslider .flex-control-thumbs {
   margin-top: 11px; }
@@ -3797,6 +3801,10 @@ header nav li ul li a {
 .single .flex-viewport li:nth-child(2) a img {
   -webkit-transform: none !important;
           transform: none !important; }
+
+@media screen and (max-height: 650px) {
+  .home .flexslider .slides li {
+    height: 74vh !important; } }
 
 /* thumb */
 .single .metaslider .flex-control-thumbs {

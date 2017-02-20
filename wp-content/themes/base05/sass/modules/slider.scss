@@ -12,6 +12,10 @@
 .single .flex-viewport li a img{ transform: translateY(50%); }
 .single .flex-viewport li:nth-child(2) a img{ transform: none!important; }
 
+@media screen and (max-height: 650px) {
+  .home .flexslider .slides li{ height:74vh!important; }
+}
+
 /* thumb */
 .single .metaslider .flex-control-thumbs{ margin-top:11px; }
 .single .metaslider .flex-control-thumbs li { border:1px solid #bcbcbc; margin-right:5px; }
