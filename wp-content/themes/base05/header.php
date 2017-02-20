@@ -17,7 +17,7 @@
     <title><?php wp_title(''); ?></title>
     <!-- Meta -->
     <meta charset="<?php bloginfo( 'charset' ); ?>" />
-    <meta name="description" content="Ceysson">
+    <meta name="description" content="Ceysson édition">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1"><!-- mobile setting -->
 		<meta name="google" content="nositelinkssearchbox">  <!-- retire box google search dans les resultats de recherche -->
     <meta name="format-detection" content="telephone=no"/>    <!-- Convertir les numéros de téléphone en liens pour mobiles -->
