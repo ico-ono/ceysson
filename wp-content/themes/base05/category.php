@@ -24,8 +24,8 @@ the_post_thumbnail( array(100,100) );
 <?php endif;?>
 
 <section class="gallery block-center center">
-
-    <?php if(have_posts()) : ?>
+<?php echo do_shortcode( '[cactus-masonry quality="full" post_category="IAC" display_post_titles="true" max_width="157px" max_height="600px" horizontal_spacing="17" vertical_spacing="17"]' );?>
+    <!-- <?php if(have_posts()) : ?>
       <?php $i=1; while(have_posts()) : the_post(); ?>
         <div id="actu-0<?php echo ($i++); ?>" class="thumb-wrapper">
           <a href="<?php the_permalink(); ?> ">
@@ -35,6 +35,6 @@ the_post_thumbnail( array(100,100) );
         </div>
 
      <?php endwhile; ?>
-   <?php endif; ?>
+   <?php endif; ?> -->
    	</section>
 <?php get_footer(); ?>
