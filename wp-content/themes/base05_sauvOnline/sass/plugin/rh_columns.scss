@@ -1,0 +1,266 @@
+.row-fluid {
+  width: 100%;
+  margin-bottom:2%;
+  word-wrap: break-word;
+  /*zoom:1;*/
+}
+
+.row-fluid:before,
+.row-fluid:after {
+  display: table;
+  content: "";
+}
+
+.row-fluid:after {
+  clear: both;
+}
+
+.row-fluid [class*="span"] {
+  display: block;
+  float: left;
+  width: 100%;
+  min-height: 28px;
+  margin-left: 2.127659574%;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+      -ms-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.row-fluid [class*="span"]:first-child {
+  margin-left: 0;
+}
+
+.row-fluid .span12 {
+  width: 99.99999998999999%;
+}
+
+.row-fluid .span11 {
+  width: 91.489361693%;
+}
+
+.row-fluid .span10 {
+  width: 82.97872339599999%;
+}
+
+.row-fluid .span9 {
+  width: 74.468085099%;
+}
+
+.row-fluid .span8 {
+  width: 65.95744680199999%;
+}
+
+.row-fluid .span7 {
+  width: 57.446808505%;
+}
+
+.row-fluid .span6 {
+  width: 48.93617020799999%;
+}
+
+.row-fluid .span5 {
+  width: 40.425531911%;
+}
+
+.row-fluid .span4 {
+  width: 31.914893614%;
+}
+
+.row-fluid .span3 {
+  width: 23.404255317%;
+}
+
+.row-fluid .span2 {
+  width: 14.89361702%;
+}
+
+.row-fluid .span1 {
+  width: 6.382978723%;
+}
+
+
+/* from responsive.css */
+@media (max-width: 550px) {
+  .row-fluid {
+    width: 100%;
+  }
+
+  /*[class*="span"],*/
+  .row-fluid [class*="span"] {
+    display: block;
+    float: none;
+    width: auto;
+    margin-left: 0;
+  }
+  
+}
+
+@media (min-width: 551px) and (max-width: 979px) {
+  /*
+  [class*="span"] {
+    float: left;
+    margin-left: 20px;
+  }
+  */
+  .row-fluid {
+    width: 100%;
+  }
+  .row-fluid:before,
+  .row-fluid:after {
+    display: table;
+    content: "";
+  }
+  .row-fluid:after {
+    clear: both;
+  }
+  .row-fluid [class*="span"] {
+    display: block;
+    float: left;
+    width: 100%;
+    min-height: 28px;
+    margin-left: 2.762430939%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+            box-sizing: border-box;
+  }
+  .row-fluid [class*="span"]:first-child {
+    margin-left: 0;
+  }
+  .row-fluid .span12 {
+    width: 99.999999993%;
+  }
+  .row-fluid .span11 {
+    width: 91.436464082%;
+  }
+  .row-fluid .span10 {
+    width: 82.87292817100001%;
+  }
+  .row-fluid .span9 {
+    width: 74.30939226%;
+  }
+  .row-fluid .span8 {
+    width: 65.74585634900001%;
+  }
+  .row-fluid .span7 {
+    width: 57.182320438000005%;
+  }
+  .row-fluid .span6 {
+    width: 48.618784527%;
+  }
+  .row-fluid .span5 {
+    width: 40.055248616%;
+  }
+  .row-fluid .span4 {
+    width: 31.491712705%;
+  }
+  .row-fluid .span3 {
+    width: 22.928176794%;
+  }
+  .row-fluid .span2 {
+    width: 14.364640883%;
+  }
+  .row-fluid .span1 {
+    width: 5.801104972%;
+  }
+}
+
+@media (min-width: 1200px) {
+  /*[class*="span"] {
+    float: left;
+    margin-left: 30px;
+  }*/
+  .row-fluid {
+    width: 100%;
+  }
+  .row-fluid:before,
+  .row-fluid:after {
+    display: table;
+    content: "";
+  }
+  .row-fluid:after {
+    clear: both;
+  }
+  .row-fluid [class*="span"] {
+    display: block;
+    float: left;
+    width: 100%;
+    min-height: 28px;
+    margin-left: 2.564102564%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+        -ms-box-sizing: border-box;
+            box-sizing: border-box;
+  }
+  .row-fluid [class*="span"]:first-child {
+    margin-left: 0;
+  }
+  .row-fluid .span12 {
+    width: 100%;
+  }
+  .row-fluid .span11 {
+    width: 91.45299145300001%;
+  }
+  .row-fluid .span10 {
+    width: 82.905982906%;
+  }
+  .row-fluid .span9 {
+    width: 74.358974359%;
+  }
+  .row-fluid .span8 {
+    width: 65.81196581200001%;
+  }
+  .row-fluid .span7 {
+    width: 57.264957265%;
+  }
+  .row-fluid .span6 {
+    width: 48.717948718%;
+  }
+  .row-fluid .span5 {
+    width: 40.170940171000005%;
+  }
+  .row-fluid .span4 {
+    width: 31.623931624%;
+  }
+  .row-fluid .span3 {
+    width: 23.076923077%;
+  }
+  .row-fluid .span2 {
+    width: 14.529914530000001%;
+  }
+  .row-fluid .span1 {
+    width: 5.982905983%;
+  }
+}
+
+/* editor fullscreen */
+.wp_themeSkin .mceIcon.mce_rh_columns {
+	background:url(../img/columns.png) 0 0;
+}
+
+/* rhcol buttons */
+#rhcol_buttons {
+	padding: 2px;
+	position: absolute;
+	display: none;
+	z-index: 999998;
+	/*margin-top:-23px;*/
+}
+
+.branch-3-1 #rhcol_buttons,
+.branch-3-2 #rhcol_buttons,
+.branch-3-3 #rhcol_buttons,
+.branch-3-4 #rhcol_buttons,
+.branch-3-5 #rhcol_buttons,
+.branch-3-6 #rhcol_buttons,
+.branch-3-7 #rhcol_buttons,
+.branch-3-8 #rhcol_buttons,
+.branch-3-9 #rhcol_buttons{
+	margin-top:-40px;
+}
+
+/* on wp4.1 in the backend, there is no margin on bullets breaking the layout of the columns.*/
+.mce-content-body .rhcol li {
+margin-left:24px;
+}

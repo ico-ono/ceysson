@@ -33,6 +33,19 @@
 				<!-- <script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/init.js"></script> -->
 				<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/smooth_scroll.js"></script>
 
+				<!-- Hammer pour le touch -->
+				<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/hammer.js"></script>
+				<!-- Lightbox -->
+				<script type="text/javascript" src="<?php echo get_template_directory_uri(); ?>/js/lightbox-plus-jquery-custom.min.js"></script>
+				<!-- SLick slider   -->
+				<script src="<?php echo get_template_directory_uri(); ?>/js/slick-modify.min.js" type="text/javascript" charset="utf-8"></script>
+				<script src="<?php echo get_template_directory_uri(); ?>/js/slick_config.js" type="text/javascript" charset="utf-8"></script>
+
+				<!-- Masonry -->
+				<!-- <script src="<?php echo get_template_directory_uri(); ?>/js/masonry.pkgd.min.js" type="text/javascript" charset="utf-8"></script>
+				<script src="<?php echo get_template_directory_uri(); ?>/js/masonry_imagesloaded.pkgd.min.js" type="text/javascript" charset="utf-8"></script>
+				<script src="<?php echo get_template_directory_uri(); ?>/js/masonry_spin.min.js" type="text/javascript" charset="utf-8"></script>
+				<script src="<?php echo get_template_directory_uri(); ?>/js/masonry_cactus.min.js" type="text/javascript" charset="utf-8"></script> -->
 
 
 

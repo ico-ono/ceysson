@@ -94,7 +94,7 @@ class MetaLayerSlide extends MetaSlide {
         if (strlen($colors) && $colors[0] != ',') {
             $colors = "," . $colors;
         }
-        
+
         // localise the JS
         wp_localize_script( 'metasliderpro-layer-editor-script', 'metasliderpro', array(
                 'newLayer' => __( "New Layer", 'metasliderpro' ),
@@ -315,7 +315,7 @@ class MetaLayerSlide extends MetaSlide {
                 'title' => __( "Crop", "metaslider" ),
                 'content' => $crop_tab
             );
-            
+
         }
 
         return apply_filters("metaslider_layer_slide_tabs", $tabs, $this->slide, $this->slider, $this->settings);
@@ -394,7 +394,7 @@ class MetaLayerSlide extends MetaSlide {
 
         $url = $imageHelper->get_image_url();
 
-        $slide = array(
+        $image_attributes = array(
             'src' => $url,
             'alt' => get_post_meta( $this->slide->ID, '_wp_attachment_image_alt', true ),
             'title' => get_post_meta( $this->slide->ID, 'ml-slider_title', true ),
@@ -403,7 +403,19 @@ class MetaLayerSlide extends MetaSlide {
             'width' => $this->settings['width']
         );
 
-        $return = $this->build_image_tag( $slide );
+        $slide = array(
+            'id' => $this->slide->ID
+        );
+
+        if ( $this->settings['type'] == 'flex' ) {
+            $attributes = apply_filters( 'metaslider_flex_slider_image_attributes', $image_attributes, $slide, $this->slider->ID );
+        }
+
+        if ( $this->settings['type'] == 'responsive' ) {
+            $attributes = apply_filters( 'metaslider_responsive_slider_image_attributes', $image_attributes, $slide, $this->slider->ID );
+        }
+
+        $return = $this->build_image_tag( $attributes );
 
         // video backgrounds
         $webm = esc_attr( get_post_meta( $this->slide->ID, 'ml-slider_webm', true ) );

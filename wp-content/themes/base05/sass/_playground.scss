@@ -105,9 +105,9 @@
   |  _ <  | |      | |  | | | |       \___ \
   | |_) | | |____  | |__| | | |____   ____) |
   |____/  |______|  \____/   \_____| |_____/
- 
-    ========================================================================== */
 
+    ========================================================================== */
+  .container{ position:relative; }
   .page .block-center, .category .block-center{ width:66%; }
   .page p{ width:70%; margin-left:auto; margin-right:auto; }
   @media screen and (max-width: 1024px) {
@@ -165,6 +165,7 @@
   /* single
     ========================================================================== */
   .single section{ margin-top:70px; }
+  .single section a { color:$rouge; }
   .single section .size-7{ padding-left:40px; }
   .single section .size-7 .bloc1{ margin-bottom:25px;}
   @media screen and (max-width: 680px) {

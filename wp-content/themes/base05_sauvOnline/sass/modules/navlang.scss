@@ -1,0 +1,88 @@
+@import "../variables";
+/* ==========================================================================
+  CONFIG DE BASE :
+
+    type=[LM|AL] – type of menu:
+    “LM” – Language Menu (default).
+    “AL” – Alternative Language: the top menu entry displays the first available language other than the current.
+
+    title=[none|Language|Current] – title text of the top item (not sub-items):
+    “Language” – word “Language” translated to current language (default).
+    “none” – no title in the top of menu, flag only.
+    “Current” – displays current language name.
+    One may also put arbitrary multilingual title in the field “Navigation Label” in the menu item editor.
+
+    colon=[shown|hidden] – whether to display colon after title.
+
+    flags=[none|all|items] – the way to display language flags:
+    “none” – no flag is shown in any item, including the top item.
+    “all” – all items show flag, including the top item.
+    “items” – only sub-items show corresponding flag, top item does not.
+
+    names=[shown|hidden] – whether to display language names in sub-items.
+
+    current=[shown|hidden] – whether to display the current language in the menu.
+    --------------------------------------------------------------------------------
+    Pour un menu avec seulement le titre de la langue avec le switch :
+    <?php echo qtranxf_generateLanguageSelectCode('text'); ?>
+    Pour changer les titres, les éditer dans la config du module.
+    --------------------------------------------------------------------------------
+    Shortcode dans les champs wordrepss [:en]texte en anglais[:fr]texte en francais
+    --------------------------------------------------------------------------------
+    Teste de langue en php
+    <?php if(get_locale() == "fr_FR"){ echo masterslider("ms-2");} ?>
+    <?php if(get_locale() == "en_US"){ echo masterslider("ms-2-1");} ?>
+
+   ========================================================================== */
+
+/* reset */
+#nav-lang, #nav-lang .sub-menu, #qtranslate-chooser{ list-style: none; padding-left: 0; }
+
+/* langues en ligne <?php echo qtranxf_generateLanguageSelectCode('text'); ?>
+========================================================================== */
+// #nav-lang, #qtranslate-chooser{height:12px}
+#nav-lang, #qtranslate-chooser{ text-align: center; }
+#nav-lang li, #qtranslate-chooser li{ height:12px; display: inline-block; overflow: hidden;}
+#nav-lang li a, #qtranslate-chooser li a{ text-decoration:none; color:$rouge; font-size:1.4rem; padding:0 7px; line-height:1rem;  }
+// #nav-lang li.active a, #qtranslate-chooser li.active a{ text-decoration:none; color:$vert;  }
+#nav-lang li:first-child a, #qtranslate-chooser li:first-child a{ border-right:1px solid $rouge; }
+#nav-lang li a:hover, #qtranslate-chooser li a:hover{ text-decoration:none; color:$vert;  }
+
+/* lang depliable
+========================================================================== */
+// #nav-lang { text-align: left; display: inline; margin: 0; padding: 15px 4px 17px 0; list-style: none; }
+// #nav-lang li { display: inline-block; margin-right: -4px; position: relative; padding: 15px 20px; background: #fff; cursor: pointer; -webkit-transition: all 0.2s; -moz-transition: all 0.2s; -ms-transition: all 0.2s; -o-transition: all 0.2s; transition: all 0.2s; }
+// #nav-lang li:hover { /*background: #555; color: #fff;*/ }
+// #nav-lang li ul { padding: 0; position: absolute; top: 48px; left: 0; width: 150px; -webkit-box-shadow: none; -moz-box-shadow: none; box-shadow: none; display: none; opacity: 0; visibility: hidden; -webkit-transiton: opacity 0.2s; -moz-transition: opacity 0.2s; -ms-transition: opacity 0.2s; -o-transition: opacity 0.2s; -transition: opacity 0.2s; }
+// #nav-lang li ul li {  background: #555;  display: block;  color: #fff; text-shadow: 0 -1px 0 #000; }
+// #nav-lang li ul li:hover { /*background: #666;*/ }
+// #nav-lang li:hover ul { display: block; opacity: 1; visibility: visible; }
+
+/* lang une ligne haut à droite
+========================================================================== */
+
+// #nav-lang #menu-item-248 a:first-child, #nav-lang .sub-menu img{ display:none; }
+// #nav-lang {  text-transform:uppercase; position:absolute; top:8px; right:20px; @include make-nav($nav-bg, "auto", "topright");  }
+// #nav-lang .sub-menu{ padding-left:0; }
+// #nav-lang .sub-menu li{ display:inline-block; }
+// #nav-lang .sub-menu a{ display:block!important; font-size:1.3rem; color:$rouge; text-decoration:none; }
+// #nav-lang .sub-menu li.current-menu-item a{ color:$rouge;  }
+// .qtranxs-lang-menu-fr .qtranxs-lang-menu-item-fr a{ color:$rouge!important; }
+//
+// #nav-lang2 { display:none; }
+//
+// @media screen and (max-width: 1100px) {
+//   #nav-lang { display:none; }
+//   #nav-lang2 { display:block!important; list-style: none; }
+//   #nav-lang2 .menu-item-248 a:first-child, #nav-lang2 .sub-menu img{ display:none; }
+//   #nav-lang2 {  text-transform:uppercase; position:absolute; top:8px; right:20px; @include make-nav($nav-bg, 120px, "bottomright");  }
+//   #nav-lang2 .sub-menu{ padding-left:0; }
+//   #nav-lang2 .sub-menu li{ display:inline-block; }
+//   #nav-lang2 .sub-menu a{ display:block!important; font-size:1.3rem; color:$rouge; text-decoration:none; }
+//   #nav-lang2 .sub-menu li.current-menu-item a{ color:$rouge;  }
+// }
+
+
+
+// #nav-lang li.nav-main_sep{ width:7px; height:inherit; line-height:1.2rem; background: url('../images/menu-main_sep.png') no-repeat center center; overflow:hidden; text-indent:-1000px; }
+// #nav-lang li.nav-main_sep:first-child, #nav-lang li.nav-main_sep:last-child{ display: none !important; }

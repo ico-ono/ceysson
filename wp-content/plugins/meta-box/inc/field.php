@@ -1,97 +1,69 @@
 <?php
+/**
+ * The field base class.
+ * This is the parent class of all custom fields defined by the plugin, which defines all the common methods.
+ * Fields must inherit this class and overwrite methods with its own.
+ *
+ * @package Meta Box
+ */
 
 /**
- * Base field class which defines all necessary methods.
- * Fields must inherit this class and overwrite methods with its own.
+ * The field base class.
  */
-abstract class RWMB_Field
-{
+abstract class RWMB_Field {
 	/**
-	 * Add actions
+	 * Add actions.
 	 */
-	public static function add_actions()
-	{
+	public static function add_actions() {
 	}
 
 	/**
-	 * Enqueue scripts and styles
+	 * Enqueue scripts and styles.
 	 */
-	public static function admin_enqueue_scripts()
-	{
+	public static function admin_enqueue_scripts() {
+	}
+
+	/**
+	 * Localize scripts with prevention of loading localized data twice.
+	 *
+	 * @link https://github.com/rilwis/meta-box/issues/850
+	 *
+	 * @param string $handle Script handle.
+	 * @param string $name Object name.
+	 * @param mixed  $data Localized data.
+	 */
+	public static function localize_script( $handle, $name, $data ) {
+		/*
+		 * Check with function_exists to make it work in WordPress 4.1.
+		 * @link https://github.com/rilwis/meta-box/issues/1009
+		 */
+		if ( ! function_exists( 'wp_scripts' ) || ! wp_scripts()->get_data( $handle, 'data' ) ) {
+			wp_localize_script( $handle, $name, $data );
+		}
 	}
 
 	/**
 	 * Show field HTML
 	 * Filters are put inside this method, not inside methods such as "meta", "html", "begin_html", etc.
-	 * That ensures the returned value are always been applied filters
-	 * This method is not meant to be overwritten in specific fields
+	 * That ensures the returned value are always been applied filters.
+	 * This method is not meant to be overwritten in specific fields.
 	 *
-	 * @param array $field
-	 * @param bool  $saved
-	 *
-	 * @return string
+	 * @param array $field   Field parameters.
+	 * @param bool  $saved   Whether the meta box is saved at least once.
+	 * @param int   $post_id Post ID.
 	 */
-	public static function show( $field, $saved )
-	{
-		$post    = get_post();
-		$post_id = isset( $post->ID ) ? $post->ID : 0;
-
+	public static function show( $field, $saved, $post_id = 0 ) {
 		$meta = self::call( $field, 'meta', $post_id, $saved );
 		$meta = self::filter( 'field_meta', $meta, $field, $saved );
 
 		$begin = self::call( $field, 'begin_html', $meta );
 		$begin = self::filter( 'begin_html', $begin, $field, $meta );
 
-		// Separate code for cloneable and non-cloneable fields to make easy to maintain
-
-		// Cloneable fields
-		if ( $field['clone'] )
-		{
-			$field_html = '';
-
-			/**
-			 * Note: $meta must contain value so that the foreach loop runs!
-			 * @see meta()
-			 */
-			foreach ( $meta as $index => $sub_meta )
-			{
-				$sub_field               = $field;
-				$sub_field['field_name'] = $field['field_name'] . "[{$index}]";
-				if ( $index > 0 )
-				{
-					if ( isset( $sub_field['address_field'] ) )
-						$sub_field['address_field'] = $field['address_field'] . "_{$index}";
-					$sub_field['id'] = $field['id'] . "_{$index}";
-				}
-				if ( $field['multiple'] )
-					$sub_field['field_name'] .= '[]';
-
-				// Wrap field HTML in a div with class="rwmb-clone" if needed
-				$class     = "rwmb-clone rwmb-{$field['type']}-clone";
-				$sort_icon = '';
-				if ( $field['sort_clone'] )
-				{
-					$class .= ' rwmb-sort-clone';
-					$sort_icon = "<a href='javascript:;' class='rwmb-clone-icon'></a>";
-				}
-				$input_html = "<div class='$class'>" . $sort_icon;
-
-				// Call separated methods for displaying each type of field
-				$input_html .= self::call( $sub_field, 'html', $sub_meta );
-				$input_html = self::filter( 'html', $input_html, $sub_field, $sub_meta );
-
-				// Remove clone button
-				$input_html .= self::call( 'remove_clone_button', $sub_field );
-
-				$input_html .= '</div>';
-
-				$field_html .= $input_html;
-			}
-		}
-		// Non-cloneable fields
-		else
-		{
-			// Call separated methods for displaying each type of field
+		// Separate code for cloneable and non-cloneable fields to make easy to maintain.
+		if ( $field['clone'] ) {
+			$field_html = RWMB_Clone::html( $meta, $field );
+		} else {
+			// Call separated methods for displaying each type of field.
 			$field_html = self::call( $field, 'html', $meta );
 			$field_html = self::filter( 'html', $field_html, $field, $meta );
 		}
@@ -101,12 +73,14 @@ abstract class RWMB_Field
 
 		$html = self::filter( 'wrapper_html', "$begin$field_html$end", $field, $meta );
 
-		// Display label and input in DIV and allow user-defined classes to be appended
+		// Display label and input in DIV and allow user-defined classes to be appended.
 		$classes = "rwmb-field rwmb-{$field['type']}-wrapper " . $field['class'];
-		if ( 'hidden' === $field['type'] )
+		if ( 'hidden' === $field['type'] ) {
 			$classes .= ' hidden';
-		if ( ! empty( $field['required'] ) )
+		}
+		if ( ! empty( $field['required'] ) ) {
 			$classes .= ' required';
+		}
 
 		$outer_html = sprintf(
 			$field['before'] . '<div class="%s">%s</div>' . $field['after'],
@@ -115,39 +89,40 @@ abstract class RWMB_Field
 		);
 		$outer_html = self::filter( 'outer_html', $outer_html, $field, $meta );
 
-		echo $outer_html;
+		echo $outer_html; // WPCS: XSS OK.
 	}
 
 	/**
-	 * Get field HTML
+	 * Get field HTML.
 	 *
-	 * @param mixed $meta
-	 * @param array $field
+	 * @param mixed $meta  Meta value.
+	 * @param array $field Field parameters.
 	 *
 	 * @return string
 	 */
-	public static function html( $meta, $field )
-	{
+	public static function html( $meta, $field ) {
 		return '';
 	}
 
 	/**
-	 * Show begin HTML markup for fields
+	 * Show begin HTML markup for fields.
 	 *
-	 * @param mixed $meta
-	 * @param array $field
+	 * @param mixed $meta  Meta value.
+	 * @param array $field Field parameters.
 	 *
 	 * @return string
 	 */
-	public static function begin_html( $meta, $field )
-	{
+	public static function begin_html( $meta, $field ) {
 		$field_label = '';
-		if ( $field['name'] )
-		{
+		if ( $field['name'] ) {
 			$field_label = sprintf(
-				'<div class="rwmb-label"><label for="%s">%s</label></div>',
-				$field['id'],
-				$field['name']
+				'<div class="rwmb-label">
+					<label for="%s">%s</label>
+					%s
+				</div>',
+				esc_attr( $field['id'] ),
+				$field['name'],
+				self::label_description( $field )
 			);
 		}
 
@@ -162,86 +137,100 @@ abstract class RWMB_Field
 	}
 
 	/**
-	 * Show end HTML markup for fields
+	 * Show end HTML markup for fields.
 	 *
-	 * @param mixed $meta
-	 * @param array $field
+	 * @param mixed $meta  Meta value.
+	 * @param array $field Field parameters.
 	 *
 	 * @return string
 	 */
-	public static function end_html( $meta, $field )
-	{
-		$button = $field['clone'] ? self::call( 'add_clone_button', $field ) : '';
-		$desc   = $field['desc'] ? "<p id='{$field['id']}_description' class='description'>{$field['desc']}</p>" : '';
-
-		// Closes the container
-		$html = "{$button}{$desc}</div>";
-
-		return $html;
+	public static function end_html( $meta, $field ) {
+		return RWMB_Clone::add_clone_button( $field ) . self::call( 'input_description', $field ) . '</div>';
 	}
 
 	/**
-	 * Add clone button
+	 * Display field label description.
 	 *
-	 * @param array $field Field parameter
-	 *
-	 * @return string $html
+	 * @param array $field Field parameters.
+	 * @return string
 	 */
-	public static function add_clone_button( $field )
-	{
-		$text = apply_filters( 'rwmb_add_clone_button_text', __( '+ Add more', 'meta-box' ), $field );
-		return "<a href='#' class='rwmb-button button-primary add-clone'>$text</a>";
+	protected static function label_description( $field ) {
+		$id = $field['id'] ? ' id="' . esc_attr( $field['id'] ) . '-label-description"' : '';
+		return $field['label_description'] ? "<p{$id} class='description'>{$field['label_description']}</p>" : '';
 	}
 
 	/**
-	 * Remove clone button
+	 * Display field description.
 	 *
-	 * @param array $field Field parameter
-	 *
-	 * @return string $html
+	 * @param array $field Field parameters.
+	 * @return string
 	 */
-	public static function remove_clone_button( $field )
-	{
-		$icon = '<i class="dashicons dashicons-minus"></i>';
-		$text = apply_filters( 'rwmb_remove_clone_button_text', $icon, $field );
-		return "<a href='#' class='rwmb-button remove-clone'>$text</a>";
+	protected static function input_description( $field ) {
+		$id = $field['id'] ? ' id="' . esc_attr( $field['id'] ) . '-description"' : '';
+		return $field['desc'] ? "<p{$id} class='description'>{$field['desc']}</p>" : '';
 	}
 
 	/**
-	 * Get meta value
+	 * Get raw meta value.
 	 *
-	 * @param int   $post_id
-	 * @param bool  $saved
-	 * @param array $field
+	 * @param int   $post_id Post ID.
+	 * @param array $field   Field parameters.
 	 *
 	 * @return mixed
 	 */
-	public static function meta( $post_id, $saved, $field )
-	{
-		/**
-		 * For special fields like 'divider', 'heading' which don't have ID, just return empty string
-		 * to prevent notice error when displaying fields
-		 */
-		if ( empty( $field['id'] ) )
+	public static function raw_meta( $post_id, $field ) {
+		if ( empty( $field['id'] ) ) {
 			return '';
+		}
 
 		$single = $field['clone'] || ! $field['multiple'];
-		$meta   = get_post_meta( $post_id, $field['id'], $single );
+		return get_post_meta( $post_id, $field['id'], $single );
+	}
 
-		// Use $field['std'] only when the meta box hasn't been saved (i.e. the first time we run)
-		$meta = ( ! $saved && '' === $meta || array() === $meta ) ? $field['std'] : $meta;
+	/**
+	 * Get meta value.
+	 *
+	 * @param int   $post_id Post ID.
+	 * @param bool  $saved   Whether the meta box is saved at least once.
+	 * @param array $field   Field parameters.
+	 *
+	 * @return mixed
+	 */
+	public static function meta( $post_id, $saved, $field ) {
+		/**
+		 * For special fields like 'divider', 'heading' which don't have ID, just return empty string
+		 * to prevent notice error when displaying fields.
+		 */
+		if ( empty( $field['id'] ) ) {
+			return '';
+		}
 
-		// Escape attributes
+		// Get raw meta.
+		$meta = self::call( $field, 'raw_meta', $post_id );
+
+		// Use $field['std'] only when the meta box hasn't been saved (i.e. the first time we run).
+		$meta = ! $saved ? $field['std'] : $meta;
+
+		// Ensue multiple fields are arrays.
+		if ( $field['multiple'] ) {
+			if ( $field['clone'] ) {
+				$meta = (array) $meta;
+				foreach ( $meta as $key => $m ) {
+					$meta[ $key ] = (array) $m;
+				}
+			} else {
+				$meta = (array) $meta;
+			}
+		}
+		// Escape attributes.
 		$meta = self::call( $field, 'esc_meta', $meta );
 
-		// Make sure meta value is an array for clonable and multiple fields
-		if ( $field['clone'] || $field['multiple'] )
-		{
-			if ( empty( $meta ) || ! is_array( $meta ) )
-			{
+		// Make sure meta value is an array for clonable and multiple fields.
+		if ( $field['clone'] || $field['multiple'] ) {
+			if ( empty( $meta ) || ! is_array( $meta ) ) {
 				/**
-				 * Note: if field is clonable, $meta must be an array with values
-				 * so that the foreach loop in self::show() runs properly
+				 * If field is clonable, $meta must be an array with values so that the foreach loop in self::show() runs properly.
+				 *
 				 * @see self::show()
 				 */
 				$meta = $field['clone'] ? array( '' ) : array();
@@ -252,111 +241,106 @@ abstract class RWMB_Field
 	}
 
 	/**
-	 * Escape meta for field output
+	 * Escape meta for field output.
 	 *
-	 * @param mixed $meta
+	 * @param mixed $meta Meta value.
 	 *
 	 * @return mixed
 	 */
-	public static function esc_meta( $meta )
-	{
+	public static function esc_meta( $meta ) {
 		return is_array( $meta ) ? array_map( __METHOD__, $meta ) : esc_attr( $meta );
 	}
 
 	/**
-	 * Set value of meta before saving into database
+	 * Set value of meta before saving into database.
 	 *
-	 * @param mixed $new
-	 * @param mixed $old
-	 * @param int   $post_id
-	 * @param array $field
+	 * @param mixed $new     The submitted meta value.
+	 * @param mixed $old     The existing meta value.
+	 * @param int   $post_id The post ID.
+	 * @param array $field   The field parameters.
 	 *
 	 * @return int
 	 */
-	public static function value( $new, $old, $post_id, $field )
-	{
+	public static function value( $new, $old, $post_id, $field ) {
 		return $new;
 	}
 
 	/**
-	 * Save meta value
+	 * Save meta value.
 	 *
-	 * @param $new
-	 * @param $old
-	 * @param $post_id
-	 * @param $field
+	 * @param mixed $new     The submitted meta value.
+	 * @param mixed $old     The existing meta value.
+	 * @param int   $post_id The post ID.
+	 * @param array $field   The field parameters.
 	 */
-	public static function save( $new, $old, $post_id, $field )
-	{
+	public static function save( $new, $old, $post_id, $field ) {
 		$name = $field['id'];
 
-		// Remove post meta if it's empty
-		if ( '' === $new || array() === $new )
-		{
+		// Remove post meta if it's empty.
+		if ( '' === $new || array() === $new ) {
 			delete_post_meta( $post_id, $name );
 			return;
 		}
 
-		// If field is cloneable, value is saved as a single entry in the database
-		if ( $field['clone'] )
-		{
-			// Remove empty values
+		// If field is cloneable, value is saved as a single entry in the database.
+		if ( $field['clone'] ) {
+			// Remove empty values.
 			$new = (array) $new;
-			foreach ( $new as $k => $v )
-			{
-				if ( '' === $v || array() === $v )
-					unset( $new[$k] );
+			foreach ( $new as $k => $v ) {
+				if ( '' === $v || array() === $v ) {
+					unset( $new[ $k ] );
+				}
 			}
-			// Reset indexes
+			// Reset indexes.
 			$new = array_values( $new );
 			update_post_meta( $post_id, $name, $new );
 			return;
 		}
 
-		// If field is multiple, value is saved as multiple entries in the database (WordPress behaviour)
-		if ( $field['multiple'] )
-		{
+		// If field is multiple, value is saved as multiple entries in the database (WordPress behaviour).
+		if ( $field['multiple'] ) {
+			$old = (array) $old;
+			$new = (array) $new;
 			$new_values = array_diff( $new, $old );
-			foreach ( $new_values as $new_value )
-			{
+			foreach ( $new_values as $new_value ) {
 				add_post_meta( $post_id, $name, $new_value, false );
 			}
 			$old_values = array_diff( $old, $new );
-			foreach ( $old_values as $old_value )
-			{
+			foreach ( $old_values as $old_value ) {
 				delete_post_meta( $post_id, $name, $old_value );
 			}
 			return;
 		}
 
-		// Default: just update post meta
+		// Default: just update post meta.
 		update_post_meta( $post_id, $name, $new );
 	}
 
 	/**
-	 * Normalize parameters for field
+	 * Normalize parameters for field.
 	 *
-	 * @param array $field
+	 * @param array $field Field parameters.
 	 *
 	 * @return array
 	 */
-	public static function normalize( $field )
-	{
+	public static function normalize( $field ) {
 		$field = wp_parse_args( $field, array(
-			'id'          => '',
-			'name'        => '',
-			'multiple'    => false,
-			'std'         => '',
-			'desc'        => '',
-			'format'      => '',
-			'before'      => '',
-			'after'       => '',
-			'field_name'  => isset( $field['id'] ) ? $field['id'] : '',
-			'placeholder' => '',
+			'id'                => '',
+			'name'              => '',
+			'label_description' => '',
+			'multiple'          => false,
+			'std'               => '',
+			'desc'              => '',
+			'format'            => '',
+			'before'            => '',
+			'after'             => '',
+			'field_name'        => isset( $field['id'] ) ? $field['id'] : '',
+			'placeholder'       => '',
 
 			'clone'      => false,
 			'max_clone'  => 0,
 			'sort_clone' => false,
+			'add_button' => __( '+ Add more', 'meta-box' ),
 
 			'class'      => '',
 			'disabled'   => false,
@@ -368,44 +352,45 @@ abstract class RWMB_Field
 	}
 
 	/**
-	 * Get the attributes for a field
+	 * Get the attributes for a field.
 	 *
-	 * @param array $field
-	 * @param mixed $value
+	 * @param array $field Field parameters.
+	 * @param mixed $value Meta value.
 	 *
 	 * @return array
 	 */
-	public static function get_attributes( $field, $value = null )
-	{
+	public static function get_attributes( $field, $value = null ) {
 		$attributes = wp_parse_args( $field['attributes'], array(
 			'disabled' => $field['disabled'],
 			'required' => $field['required'],
-			'class'    => "rwmb-{$field['type']}",
 			'id'       => $field['id'],
+			'class'    => '',
 			'name'     => $field['field_name'],
 		) );
+
+		$attributes['class'] = implode( ' ', array_merge( array( "rwmb-{$field['type']}" ), (array) $attributes['class'] ) );
 
 		return $attributes;
 	}
 
 	/**
-	 * Renders an attribute array into an html attributes string
+	 * Renders an attribute array into an html attributes string.
 	 *
-	 * @param array $attributes
+	 * @param array $attributes HTML attributes.
 	 *
 	 * @return string
 	 */
-	public static function render_attributes( $attributes )
-	{
+	public static function render_attributes( $attributes ) {
 		$output = '';
 
-		foreach ( $attributes as $key => $value )
-		{
-			if ( false === $value || '' === $value )
+		foreach ( $attributes as $key => $value ) {
+			if ( false === $value || '' === $value ) {
 				continue;
+			}
 
-			if ( is_array( $value ) )
-				$value = json_encode( $value );
+			if ( is_array( $value ) ) {
+				$value = wp_json_encode( $value );
+			}
 
 			$output .= sprintf( true === $value ? ' %s' : ' %s="%s"', $key, esc_attr( $value ) );
 		}
@@ -414,38 +399,35 @@ abstract class RWMB_Field
 	}
 
 	/**
-	 * Get the field value
+	 * Get the field value.
 	 * The difference between this function and 'meta' function is 'meta' function always returns the escaped value
 	 * of the field saved in the database, while this function returns more meaningful value of the field, for ex.:
-	 * for file/image: return array of file/image information instead of file/image IDs
+	 * for file/image: return array of file/image information instead of file/image IDs.
 	 *
 	 * Each field can extend this function and add more data to the returned value.
 	 * See specific field classes for details.
 	 *
-	 * @param  array    $field   Field parameters
-	 * @param  array    $args    Additional arguments. Rarely used. See specific fields for details
+	 * @param  array    $field   Field parameters.
+	 * @param  array    $args    Additional arguments. Rarely used. See specific fields for details.
 	 * @param  int|null $post_id Post ID. null for current post. Optional.
 	 *
 	 * @return mixed Field value
 	 */
-	public static function get_value( $field, $args = array(), $post_id = null )
-	{
+	public static function get_value( $field, $args = array(), $post_id = null ) {
 		// Some fields does not have ID like heading, custom HTML, etc.
-		if ( empty( $field['id'] ) )
-		{
+		if ( empty( $field['id'] ) ) {
 			return '';
 		}
 
-		if ( ! $post_id )
+		if ( ! $post_id ) {
 			$post_id = get_the_ID();
+		}
 
-		// Get raw meta value in the database, no escape
-		$single = $field['clone'] || ! $field['multiple'];
-		$value  = get_post_meta( $post_id, $field['id'], $single );
+		// Get raw meta value in the database, no escape.
+		$value  = self::call( $field, 'raw_meta', $post_id );
 
-		// Make sure meta value is an array for cloneable and multiple fields
-		if ( $field['clone'] || $field['multiple'] )
-		{
+		// Make sure meta value is an array for cloneable and multiple fields.
+		if ( $field['clone'] || $field['multiple'] ) {
 			$value = is_array( $value ) && $value ? $value : array();
 		}
 
@@ -453,7 +435,7 @@ abstract class RWMB_Field
 	}
 
 	/**
-	 * Output the field value
+	 * Output the field value.
 	 * Depends on field value and field types, each field can extend this method to output its value in its own way
 	 * See specific field classes for details.
 	 *
@@ -463,33 +445,30 @@ abstract class RWMB_Field
 	 * @use self::get_value()
 	 * @see rwmb_the_value()
 	 *
-	 * @param  array    $field   Field parameters
-	 * @param  array    $args    Additional arguments. Rarely used. See specific fields for details
+	 * @param  array    $field   Field parameters.
+	 * @param  array    $args    Additional arguments. Rarely used. See specific fields for details.
 	 * @param  int|null $post_id Post ID. null for current post. Optional.
 	 *
 	 * @return string HTML output of the field
 	 */
-	public static function the_value( $field, $args = array(), $post_id = null )
-	{
+	public static function the_value( $field, $args = array(), $post_id = null ) {
 		$value = self::call( 'get_value', $field, $args, $post_id );
 		return self::call( 'format_value', $field, $value );
 	}
 
 	/**
 	 * Format value for the helper functions.
-	 * @param array        $field Field parameter
-	 * @param string|array $value The field meta value
+	 *
+	 * @param array        $field Field parameters.
+	 * @param string|array $value The field meta value.
 	 * @return string
 	 */
-	public static function format_value( $field, $value )
-	{
-		if ( ! is_array( $value ) )
-		{
+	public static function format_value( $field, $value ) {
+		if ( ! is_array( $value ) ) {
 			return self::call( 'format_single_value', $field, $value );
 		}
 		$output = '<ul>';
-		foreach ( $value as $subvalue )
-		{
+		foreach ( $value as $subvalue ) {
 			$output .= '<li>' . self::call( 'format_value', $field, $subvalue ) . '</li>';
 		}
 		$output .= '</ul>';
@@ -498,60 +477,67 @@ abstract class RWMB_Field
 
 	/**
 	 * Format a single value for the helper functions. Sub-fields should overwrite this method if necessary.
-	 * @param array  $field Field parameter
-	 * @param string $value The value
+	 *
+	 * @param array  $field Field parameters.
+	 * @param string $value The value.
 	 * @return string
 	 */
-	public static function format_single_value( $field, $value )
-	{
+	public static function format_single_value( $field, $value ) {
 		return $value;
 	}
 
 	/**
 	 * Call a method of a field.
 	 * This should be replaced by static::$method( $args ) in PHP 5.3.
+	 *
 	 * @return mixed
 	 */
-	public static function call()
-	{
+	public static function call() {
 		$args = func_get_args();
 
 		$check = reset( $args );
 
 		// Params: method name, field, other params.
-		if ( is_string( $check ) )
-		{
+		if ( is_string( $check ) ) {
 			$method = array_shift( $args );
-			$field  = reset( $args ); // Keep field as 1st param
-		}
-		// Params: field, method name, other params.
-		else
-		{
+			$field  = reset( $args ); // Keep field as 1st param.
+		} else {
 			$field  = array_shift( $args );
 			$method = array_shift( $args );
-			$args[] = $field; // Add field as last param
+			$args[] = $field; // Add field as last param.
 		}
 
 		return call_user_func_array( array( self::get_class_name( $field ), $method ), $args );
 	}
 
 	/**
-	 * Get field class name
+	 * Map field types.
 	 *
-	 * @param array $field Field array
-	 * @return string Field class name
+	 * @param array $field Field parameters.
+	 * @return string Field mapped type.
 	 */
-	public static function get_class_name( $field )
-	{
-		$type = $field['type'];
-		if ( 'file_advanced' == $field['type'] )
-		{
-			$type = 'media';
-		}
-		if ( 'plupload_image' == $field['type'] )
-		{
-			$type = 'image_upload';
-		}
+	public static function map_types( $field ) {
+		$type = isset( $field['type'] ) ? $field['type'] : 'input';
+		$type_map = apply_filters(
+			'rwmb_type_map',
+			array(
+				'file_advanced'  => 'media',
+				'plupload_image' => 'image_upload',
+				'url'            => 'text',
+			)
+		);
+
+		return isset( $type_map[ $type ] ) ? $type_map[ $type ] : $type;
+	}
+
+	/**
+	 * Get field class name.
+	 *
+	 * @param array $field Field parameters.
+	 * @return string Field class name.
+	 */
+	public static function get_class_name( $field ) {
+		$type = self::map_types( $field );
 		$type  = str_replace( array( '-', '_' ), ' ', $type );
 		$class = 'RWMB_' . ucwords( $type ) . '_Field';
 		$class = str_replace( ' ', '_', $class );
@@ -564,10 +550,10 @@ abstract class RWMB_Field
 	 * - rwmb_{$name}
 	 * - rwmb_{$field['type']}_{$name}
 	 * - rwmb_{$field['id']}_{$name}
+	 *
 	 * @return mixed
 	 */
-	public static function filter()
-	{
+	public static function filter() {
 		$args = func_get_args();
 
 		// 3 first params must be: filter name, value, field. Other params will be used for filters.
@@ -575,20 +561,18 @@ abstract class RWMB_Field
 		$value = array_shift( $args );
 		$field = array_shift( $args );
 
-		// List of filters
+		// List of filters.
 		$filters = array(
 			'rwmb_' . $name,
 			'rwmb_' . $field['type'] . '_' . $name,
 		);
-		if ( isset( $field['id'] ) )
-		{
+		if ( isset( $field['id'] ) ) {
 			$filters[] = 'rwmb_' . $field['id'] . '_' . $name;
 		}
 
 		// Filter params: value, field, other params. Note: value is changed after each run.
 		array_unshift( $args, $field );
-		foreach ( $filters as $filter )
-		{
+		foreach ( $filters as $filter ) {
 			$filter_args = $args;
 			array_unshift( $filter_args, $value );
 			$value = apply_filters_ref_array( $filter, $filter_args );

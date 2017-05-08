@@ -1,0 +1,25 @@
+// Sass import file
+// -----------------
+
+@charset "UTF-8";
+
+// Import Local Fonts
+@import "../fonts/museo/stylesheet.css";
+
+//  Import des variables utiles pour le site
+@import "variables";
+
+//  Import des mixins (pour l'instant pas maitriser)
+@import "mixins";
+
+// Import du Framework perso
+@import "library";
+
+//	Import des modules du sites
+@import "modules";
+
+//  Import des fichiers utiles pour faire tourner la boutique, fancybox, autocomplete jquery, bxslider etc..
+//@import "utils";
+
+//	Import de la feuille de style propre au site, le global de prestashop en gros.
+@import "playground";

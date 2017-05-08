@@ -330,8 +330,10 @@ class MetaYouTubeSlide extends MetaSlide {
         $options["auto"] = "false";
 
         $options["before"][] = "    $('#metaslider_{$slider_id} .youtube').each(function(index) {
-                        if(typeof $(this).tubeplayer('data') !== 'undefined' && $(this).tubeplayer('data').state == 1) {
-                           $(this).tubeplayer('pause');
+                        if(typeof $(this).tubeplayer('data') !== 'undefined') {
+                            if ($(this).tubeplayer('data').state == 1) {
+                                $(this).tubeplayer('pause');
+                            }
                         }
                     });";
 
@@ -368,8 +370,10 @@ class MetaYouTubeSlide extends MetaSlide {
         $options["useCSS"] = "false";
 
         $options["before"][] = "    $('#metaslider_{$slider_id} .youtube').each(function(index) {
-                        if(typeof $(this).tubeplayer('data') !== 'undefined' && $(this).tubeplayer('data').state == 1) {
-                           $(this).tubeplayer('pause');
+                        if(typeof $(this).tubeplayer('data') !== 'undefined') {
+                            if($(this).tubeplayer('data').state == 1) {
+                                $(this).tubeplayer('pause');
+                            }
                         }
                     });";
 
@@ -379,6 +383,12 @@ class MetaYouTubeSlide extends MetaSlide {
 
         $options["start"][]  = "    $('#metaslider_{$slider_id} .youtube').each(function() {
                         var youtube = $(this);
+                        var autoplay = false;
+                        if (youtube.attr('data-autoPlay') === '1') {
+                            if (youtube.parents('.flex-active-slide, .rslides1_on').length) {
+                                autoplay = true;
+                            }
+                        }
                         $(this).tubeplayer({{$this->get_tubeplayer_params()}
                             onPlayerPlaying: function(id) {
                                 $('#metaslider_{$slider_id} .flex-active-slide .youtube').attr('data-autoPlay', 0);
@@ -401,6 +411,12 @@ class MetaYouTubeSlide extends MetaSlide {
     public function get_responsive_youtube_javascript( $javascript, $slider_id ) {
         $html  = "\n            $('#metaslider_{$this->slider->ID} .youtube').each(function() {";
         $html .= "\n                var youtube = $(this);";
+        $html .= "\n                var autoplay = false;";
+        $html .= "\n                if (youtube.attr('data-autoPlay') === '1') {";
+        $html .= "\n                    if (youtube.parents('.flex-active-slide, .rslides1_on').length) {";
+        $html .= "\n                        autoplay = true;";
+        $html .= "\n                    }";
+        $html .= "\n                }";
         $html .= "\n                $(this).tubeplayer({{$this->get_tubeplayer_params()}";
         $html .= "\n                    onPlayerPlaying: function(id) {";
         $html .= "\n                        $('#metaslider_{$slider_id} .rslides1_on .youtube').attr('data-autoPlay', 0);";
@@ -433,7 +449,7 @@ class MetaYouTubeSlide extends MetaSlide {
             'autoHide' => "youtube.attr('data-autoHide') === '1'",
             'theme' => "youtube.attr('data-theme')",
             'color' => "youtube.attr('data-color')",
-            'autoPlay' => "youtube.attr('data-autoPlay') === '1' && youtube.parents('.flex-active-slide, .rslides1_on').length"
+            'autoPlay' => "autoplay"
         );
 
         $tubeplayer_params = apply_filters( 'metaslider_tubeplayer_params', $tubeplayer_params, $this->slider->ID, $this->slide->ID );

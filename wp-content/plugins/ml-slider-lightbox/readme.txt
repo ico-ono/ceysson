@@ -4,8 +4,8 @@ Contributors: matchalabs
 Tags: wordpress slideshow lightbox,meta slider,meta slider lightbox,slideshow lightbox,lightbox,slideshow,slider,wordpress lightbox
 Donate link: https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=CQ84KC4X8YKW8
 Requires at least: 3.5
-Tested up to: 4.1.1
-Stable tag: 1.7
+Tested up to: 4.7.3
+Stable tag: 1.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,12 @@ The not so easy way:
 3. Manage your slideshows using the 'Meta Slider' menu option
 
 == Changelog ==
+
+= 1.9 [28/03/17] =
+* Simple lightbox use slide caption instead of attachment caption
+
+= 1.8 [16/03/17] =
+* Update slide image URL to comply with new slide post type
 
 = 1.7 [09/05/16] =
 * Removes defunct Lightbox Plus plugin link (thanks to @Hendrik57)

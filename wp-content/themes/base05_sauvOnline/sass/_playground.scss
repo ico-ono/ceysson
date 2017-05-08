@@ -1,0 +1,186 @@
+/* ==========================================================================
+  ______    ____    _   _   _______    _____
+ |  ____|  / __ \  | \ | | |__   __|  / ____|
+ | |__    | |  | | |  \| |    | |    | (___
+ |  __|   | |  | | | . ` |    | |     \___ \
+ | |      | |__| | | |\  |    | |     ____) |
+ |_|       \____/  |_| \_|    |_|    |_____/
+
+   ========================================================================== */
+
+.page h1{ width:100%; margin-bottom:35px; font-family: $font-custom2; font-size:1.8rem; letter-spacing: 0.1rem; text-align:center; color:$vert; }
+.single .size-6 h1{ margin:0 0 15px 0; text-align:left; font-size:3rem; font-weight:100; letter-spacing: 0.15rem; color:$rouge; }
+.single h2{ font-size:1.3rem; line-height:2.5rem; color:$vert; text-transform:uppercase; margin:30px 0 0px 0; font-weight:400; }
+
+.page p{ font-size:1.3rem; line-height:1.8rem; letter-spacing:0.07rem; color:$vert; text-align:justify; font-weight:100; margin-bottom:18px; }
+.single .size-6 .bloc1 p{ color:$rouge; font-size:1.25rem; line-height:1.6rem; }
+.single .size-6 .bloc2 p{ color:$vert; font-size:1.45rem; line-height:1.8rem; text-align:justify; }
+
+.single .size-6 ul{ padding-left: 0.5em; margin-top:0; }
+.single .size-6 ul li{ font-size:1.25rem; line-height:1.6rem; color:$vert; }
+
+.page p strong{ font-family: $font-custom2; }
+.single em{ font-family:$font-custom2-italic; }
+
+/* ==========================================================================
+  ____    _    _   _______   _______    ____    _   _                _        _____   _   _   _  __   _____
+ |  _ \  | |  | | |__   __| |__   __|  / __ \  | \ | |     ___      | |      |_   _| | \ | | | |/ /  / ____|
+ | |_) | | |  | |    | |       | |    | |  | | |  \| |    ( _ )     | |        | |   |  \| | | ' /  | (___
+ |  _ <  | |  | |    | |       | |    | |  | | | . ` |    / _ \/\   | |        | |   | . ` | |  <    \___ \
+ | |_) | | |__| |    | |       | |    | |__| | | |\  |   | (_>  <   | |____   _| |_  | |\  | | . \   ____) |
+ |____/   \____/     |_|       |_|     \____/  |_| \_|    \___/\/   |______| |_____| |_| \_| |_|\_\ |_____/
+
+   ========================================================================== */
+// /* liens */
+// .txt a, .txt a:hover, #mentions-legales section:nth-child(2) a{ color:$rouge!important;  }
+// .ms-layer a, .ms-layer a:visited, .master-slider a, .master-slider a:visited, .txt a, .txt a:hover, .txt a, .txt a:visited{ color:$rouge!important; }
+// .txt a:hover, .master-slider a:hover, #mentions-legales section:nth-child(2) a{ text-decoration:none!important; }
+//
+// /* btns */
+// .btn_hexa{ display:inline-block; position:relative; width:157px; height:173px; color:	$beige; text-transform:uppercase; text-align:center; font-size:1.4rem; }
+// @media screen and (max-width: 1280px) {
+//     .btn_hexa{ width:137px!important; height:153px!important; font-size:1.2rem; }
+// }
+// .btn_hexa span{ position:absolute; top:50%; left:0; transform: translateY(-50%); width:100%; }
+// .btn_hexa_grisc{ background:url('../images/titre_bg_grisc.svg') no-repeat; background-size:cover; }
+// .btn_hexa_grisf{ background:url('../images/titre_bg_grisf.svg') no-repeat; background-size:cover; }
+// .btn_hexa:hover{ opacity:0.8; transition:all .5s ease; }
+//
+// /* sliders */
+// .ms-skin-light-6 .ms-nav-next, .ms-skin-light-6 .ms-nav-prev{ width:36px!important; height:36px!important; border:0!important; border-radius:72px!important; background-color:none; border:0; }
+// .ms-skin-light-6 .ms-nav-prev{ background-position:-92px -31px!important; }
+// .ms-skin-light-6 .ms-nav-next{ background-position:-92px -107px!important; }
+// #batistou .ms-skin-light-6 .ms-nav-prev{ left:-10%!important;  }
+// #batistou .ms-skin-light-6 .ms-nav-next{ right:-10%!important;  }
+// #notre-savoir-faire .ms-skin-light-6 .ms-nav-prev{ left:4%!important;  }
+// #notre-savoir-faire .ms-skin-light-6 .ms-nav-next{ right:4%!important;  }
+//
+// @media screen and (max-width: 1200px) {
+//   #batistou .ms-skin-light-6 .ms-nav-prev{ left:0%!important;  }
+//   #batistou .ms-skin-light-6 .ms-nav-next{ right:0%!important;  }
+// }
+// @media screen and (max-width: 960px) {
+//   #batistou .ms-skin-light-6 .ms-nav-prev{ left:3%!important;  }
+//   #batistou .ms-skin-light-6 .ms-nav-next{ right:3%!important;  }
+// }
+//
+/* ==========================================================================
+  _    _   ______              _____    ______   _____
+ | |  | | |  ____|     /\     |  __ \  |  ____| |  __ \
+ | |__| | | |__       /  \    | |  | | | |__    | |__) |
+ |  __  | |  __|     / /\ \   | |  | | |  __|   |  _  /
+ | |  | | | |____   / ____ \  | |__| | | |____  | | \ \
+ |_|  |_| |______| /_/    \_\ |_____/  |______| |_|  \_\
+
+   ========================================================================== */
+
+   /* Logo
+   ========================================================================== */
+   /* logo anim */
+    header #logo:hover{ opacity:0.7; transition:all .5s ease; }
+
+    @media screen and (max-width: 1280px) {
+        // header #logo{ height:50px!important; width:344px!important; left:-172px; top:120px!important;  }
+        // .page_produits header #logo{ top:170px!important; }
+    }
+    @media screen and (max-width: 840px) {
+      // .page_produits header #logo{ top:100px!important; }
+      //   header #logo{ height:50px!important; width:344px!important; left:-172px; top:50px!important;  }
+    }
+    @media screen and (max-width: 680px) {
+        // header #logo, .page_produits header #logo{ height:54px!important; width:230px!important; left:-115px; top:50px!important;  }
+    }
+
+
+ /* ==========================================================================
+   ____    _         ____     _____    _____
+  |  _ \  | |       / __ \   / ____|  / ____|
+  | |_) | | |      | |  | | | |      | (___
+  |  _ <  | |      | |  | | | |       \___ \
+  | |_) | | |____  | |__| | | |____   ____) |
+  |____/  |______|  \____/   \_____| |_____/
+
+    ========================================================================== */
+
+  .page .block-center, .category .block-center{ width:66%; }
+  @media screen and (max-width: 1024px) {
+    .page .block-center, .category .block-center{ width:100%; }
+  }
+  .single .block-center{ width:100%; }
+  header{ padding-top:6px; }
+  section{ min-height:65vh; }
+  @media screen and (min-height: 700px) {
+      section{ min-height:77vh; }
+  }
+  footer{ float:left; margin-top:35px; padding-top:10px; border-top:1px solid $vert; font-size:1.2rem; color:$vert; letter-spacing: 0.03rem; font-weight:100; }
+  footer a{ text-decoration:none; color:$vert; }
+  footer a:hover{ color:$rouge; }
+  @media screen and (max-width: 650px) {
+      footer .size-12-mobile{ height:20px; text-align:center!important; }
+  }
+
+  /* ==========================================================================
+  _____                _____   ______    _____
+  |  __ \      /\      / ____| |  ____|  / ____|
+  | |__) |    /  \    | |  __  | |__    | (___
+  |  ___/    / /\ \   | | |_ | |  __|    \___ \
+  | |       / ____ \  | |__| | | |____   ____) |
+  |_|      /_/    \_\  \_____| |______| |_____/
+
+  ========================================================================== */
+
+
+  /* editions
+    ========================================================================== */
+  #les-editions section{ padding:45px 0 0px 0; }
+  #les-editions section a{ display:inline-block; width:100%; font-size:1.4rem; margin-top:55px; font-weight:500; text-decoration:underline; text-align:center; color:$rouge; }
+  #les-editions section a:hover{ color:$vert; }
+
+  /* l'equipe
+    ========================================================================== */
+  #lequipe section{ padding:80px 0 65px 0; }
+  #lequipe section *{ color:$rouge!important; }
+
+  /* contact
+    ========================================================================== */
+  #contact section{ padding:80px 0 65px 0; }
+  #contact section *{ color:$rouge!important; }
+  #contact section a{ text-decoration: none;}
+
+  /* mentions legales
+    ========================================================================== */
+  #mentions-legales section{ padding:45px 0 0px 0; }
+
+  /* single
+    ========================================================================== */
+  .single section .size-6{ padding-left:40px; }
+  .single section .size-6 .bloc1{ margin-bottom:25px;}
+@media screen and (max-width: 680px) {
+  .single section .size-6{ padding-left:0px; margin-top:40px; }
+}
+
+/* ==========================================================================
+  ______    ____    _____    __  __
+ |  ____|  / __ \  |  __ \  |  \/  |
+ | |__    | |  | | | |__) | | \  / |
+ |  __|   | |  | | |  _  /  | |\/| |
+ | |      | |__| | | | \ \  | |  | |
+ |_|       \____/  |_|  \_\ |_|  |_|
+
+   ========================================================================== */
+// /* Contact form plugin */
+//
+// /* size */
+// .wpcf7-form span{ display:block; clear:both; padding-top:7px; }
+// input.wpcf7-text, select{ width:100%; height:45px; color:$gris-clair; text-transform:uppercase; font-size:1.3rem; }
+// textarea, select{ width:100%; color:$gris-clair; text-transform:uppercase; font-size:1.3rem; }
+// textarea{ width:100%; height:250px; margin-top:0!important; }
+//
+// /* font & color */
+// textarea, input, select{ font-family:inherit; background:#fff; border:2px solid $beige; padding:5px 10px; }
+// textarea:focus, input:focus, select:focus{ color:$gris-fonce; text-transform:none!important; border-color:$gris-fonce; background:#fff; transition: all 0.2s ease-in-out 0s; }
+// .wpcf7-submit{ font-size:1.6rem; margin:30px auto; padding:20px 25px; background:$rouge; border:0; color:#fff; }
+// #desc{ margin-bottom:15px; }
+//
+// #contact .wpcf7 .size-6, #contact .wpcf7 .size-12{ padding-right:2%; }
+//

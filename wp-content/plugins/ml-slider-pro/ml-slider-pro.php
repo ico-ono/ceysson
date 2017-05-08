@@ -3,7 +3,7 @@
  * Plugin Name: Meta Slider - Pro Addon Pack
  * Plugin URI: http://www.metaslider.com
  * Description: Supercharge your slideshows!
- * Version: 2.6.6
+ * Version: 2.6.8
  * Author: Matcha Labs
  * Author URI: http://www.metaslider.com
  * Copyright: Matcha Labs LTD 2014
@@ -26,7 +26,7 @@ class MetaSliderPro {
     /**
      * @var string
      */
-    public $version = '2.6.6';
+    public $version = '2.6.8';
 
     /**
      * Init

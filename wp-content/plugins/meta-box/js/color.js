@@ -1,23 +1,19 @@
-jQuery( function ( $ )
-{
+jQuery( function ( $ ) {
 	'use strict';
 
 	/**
 	 * Update color picker element
 	 * Used for static & dynamic added elements (when clone)
 	 */
-	function update()
-	{
+	function update() {
 		var $this = $( this ),
 			$container = $this.closest( '.wp-picker-container' ),
 			data = $.extend(
 				{
-					change: function ()
-					{
+					change: function () {
 						$( this ).trigger( 'color:change' );
 					},
-					clear : function ()
-					{
+					clear: function () {
 						$( this ).trigger( 'color:clear' );
 					}
 				},
@@ -25,8 +21,7 @@ jQuery( function ( $ )
 			);
 
 		// Clone doesn't have input for color picker, we have to add the input and remove the color picker container
-		if ( $container.length > 0 )
-		{
+		if ( $container.length > 0 ) {
 			$this.insertBefore( $container );
 			$container.remove();
 		}
@@ -36,5 +31,5 @@ jQuery( function ( $ )
 	}
 
 	$( '.rwmb-color' ).each( update );
-	$( '#wpbody' ).on( 'clone', '.rwmb-color', update );
+	$( document ).on( 'clone', '.rwmb-color', update );
 } );

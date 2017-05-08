@@ -273,7 +273,7 @@ class MetaVimeoSlide extends MetaSlide {
      */
     public function get_vimeo_iframe_url( $video_id ) {
 
-        $url = "//player.vimeo.com/video/{$video_id}?api=1&player_id=vimeo_{$this->slide->ID}";
+        $url = "https://player.vimeo.com/video/{$video_id}?api=1&player_id=vimeo_{$this->slide->ID}";
 
         foreach ( array( 'badge', 'byline', 'title', 'portrait' ) as $param ) {
             $url .= '&' . $param . "=";
@@ -285,7 +285,10 @@ class MetaVimeoSlide extends MetaSlide {
             }
         }
 
-        $url = apply_filters( 'metaslider_vimeo_params', $url, $this->slider->ID, $this->slide->ID );
+        // this filter applied before HTTPS was added directly to the url
+        //$url = apply_filters( 'metaslider_vimeo_params', $url, $this->slider->ID, $this->slide->ID );
+
+        $url = apply_filters( 'metaslider_vimeo_url', $url, $this->slider->ID, $this->slide->ID );
 
         return $url;
 
@@ -300,7 +303,7 @@ class MetaVimeoSlide extends MetaSlide {
         $autoPlay = isset( $this->slide_settings['autoPlay'] ) && $this->slide_settings['autoPlay'] == 'on' ? '1' : '0';
 
         $html  = "<div style='position: relative; padding-bottom: {$ratio}%; height: 0;'>";
-        $html .= "<iframe class='vimeo' data-autoPlay='{$autoPlay}' id='vimeo_{$this->slide->ID}' width='{$settings['width']}' height='{$settings['height']}' src='{$url}' frameborder='0'></iframe>";
+        $html .= "<iframe class='vimeo' data-autoPlay='{$autoPlay}' id='vimeo_{$this->slide->ID}' width='{$settings['width']}' height='{$settings['height']}' src='{$url}' frameborder='0' allowfullscreen></iframe>";
         $html .= "</div>";
 
         return $html;
@@ -316,7 +319,7 @@ class MetaVimeoSlide extends MetaSlide {
         $autoPlay = isset( $this->slide_settings['autoPlay'] ) && $this->slide_settings['autoPlay'] == 'on' ? '1' : '0';
 
         $html  = "<div style='position: relative; padding-bottom: {$ratio}%; height: 0;'>";
-        $html .= "<iframe class='vimeo' data-autoPlay='{$autoPlay}' id='vimeo_{$this->slide->ID}' width='{$settings['width']}' height='{$settings['height']}' src='{$url}' frameborder='0'></iframe>";
+        $html .= "<iframe class='vimeo' data-autoPlay='{$autoPlay}' id='vimeo_{$this->slide->ID}' width='{$settings['width']}' height='{$settings['height']}' src='{$url}' frameborder='0' allowfullscreen></iframe>";
         $html .= "</div>";
 
         // store the slide details
@@ -346,8 +349,10 @@ class MetaVimeoSlide extends MetaSlide {
     public function get_flex_vimeo_javascript( $javascript, $slider_id ) {
 
         $html = "$('#metaslider_{$slider_id} iframe.vimeo').each(function(i) {";
-        $html .= "\n                if (is_first_slide($(this)) && is_autoplay($(this))) {";
-        $html .= "\n                    $('#metaslider_{$slider_id}').flexslider('pause');";
+        $html .= "\n                if (is_first_slide($(this))) {";
+        $html .= "\n                    if (is_autoplay($(this))) {";
+        $html .= "\n                        $('#metaslider_{$slider_id}').flexslider('pause');";
+        $html .= "\n                    }";
         $html .= "\n                }";
         $html .= "\n                var player = document.getElementById($(this).attr('id'));";
         $html .= "\n                Froogaloop(player).addEvent('ready', ready);";
@@ -380,9 +385,12 @@ class MetaVimeoSlide extends MetaSlide {
         $html .= "\n                    $('#metaslider_{$slider_id}').flexslider('stop');";
         $html .= "\n                    $('#metaslider_{$slider_id} .flex-active-slide iframe.vimeo').attr('data-autoPlay', 0);";
         $html .= "\n                });";
-        $html .= "\n                if (is_first_slide($('#' + player_id)) && is_autoplay($('#' + player_id))) {";
-        $html .= "\n                    froogaloop.api('play');";
+        $html .= "\n                if (is_first_slide($('#' + player_id))) {";
+        $html .= "\n                    if (is_autoplay($('#' + player_id))) {";
+        $html .= "\n                       froogaloop.api('play');";
+        $html .= "\n                    }";
         $html .= "\n                }";
+
         $html .= "\n            }";
 
 

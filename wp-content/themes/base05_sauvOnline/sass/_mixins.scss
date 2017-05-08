@@ -1,0 +1,191 @@
+@import "variables";
+
+// POSITIONS
+// ---------------------------------------------------------------
+@mixin left { margin-right: auto; }
+@mixin right { margin-left: auto; }
+@mixin center { margin-left: auto; margin-right: auto; }
+@mixin left-abs($left) { left: $left; }
+@mixin right-abs($right) { right: $right; }
+@mixin center-abs($lwidth) { margin-left: 50%; margin-right: auto; left:-($lwidth/2); }
+
+// MAKE LOGO
+// ---------------------------------------------------------------
+@mixin make-logo{
+  position:absolute;
+  display:block;
+  z-index:200;
+  width:$logo-width;
+  height:$logo-height;
+  @if ($logo-position=="topleft"){ top:$logo-y; left:$logo-x; }
+  @if ($logo-position=="topcenter"){ top:$logo-y; @include center-abs($logo-width);  }
+  @if ($logo-position=="topright"){ top:$logo-y; right:$logo-x; }
+  @if ($logo-position=="bottomleft"){ bottom:calc(#{-100vh} + #{$logo-y}); left:$logo-x; }
+  @if ($logo-position=="bottomcenter"){ bottom:calc(#{-100vh} + #{$logo-y}); @include center-abs($logo-width);  }
+  @if ($logo-position=="bottomright"){ bottom:calc(#{-100vh} + #{$logo-y}); right:$logo-x; }
+}
+
+// MAKE NAV
+// ---------------------------------------------------------------
+@mixin make-nav($bg,$width,$pos, $x, $y, $fsize, $fweigth, $fcap, $funderline, $bg-item, $color, $padx, $pady, $bg-item_H, $color_H, $bg-item_A, $color_A, $navitems-font-family){
+  list-style:none;
+  padding-left:0;
+  background:$bg;
+  width:$width;
+  @if ($pos=="topcenter"){ text-align:center; }
+
+  > li {
+    position:relative;
+    @if ($pos=="topleft"){ display:block; float:left; margin-top:$y; margin-left:$x; }
+    @if ($pos=="topcenter"){ margin-top:$y; display:inline-block; }
+    @if ($pos=="topright"){ display:block; float:right; margin-top:$y; margin-right:$x; }
+
+  }
+  > li a{
+    display:block;
+    position:relative;
+    width:100%;
+    height:100%;
+    font-size:$fsize;
+  	font-weight:$fweigth;
+    font-family: $navitems-font-family;
+  	@if ($fcap == 'true'){ text-transform:uppercase; }
+    @if ($fcap == 'false'){ text-transform:none; }
+    @if ($funderline == 'true'){ text-decoration:underline; }
+    @if ($funderline == 'false'){ text-decoration:none; }
+  	background:$bg-item;
+  	color:$color;
+  	padding: $pady $padx;
+  }
+  > li a:hover{
+    background:$bg-item_H;
+    color:$color_H;
+  }
+  // > li.current_page_item a{
+  // // > li.current-menu-item a, > li.current-menu-parent a{
+  //   background:$bg-item_A;
+  //   color:$color_A;
+  // }
+
+  li:hover ul.sub-menu{
+    display:block;
+  }
+
+}
+@mixin make-nav-sub($bg,$width,$pos, $x, $y, $fsize, $fweigth, $fcap, $funderline, $bg-item, $color, $padx, $pady, $bg-item_H, $color_H, $bg-item_A, $color_A, $navitems-font-family){
+  display:none;
+  position:absolute;
+  width:auto;
+
+  li{
+    clear:both;
+    white-space: nowrap;
+  }
+  > li a{
+    display:block;
+    position:relative;
+    width:100%;
+    height:100%;
+    font-size:$fsize;
+    font-weight:$fweigth;
+    font-family: $navitems-font-family;
+    @if ($fcap == 'true'){ text-transform:uppercase; }
+    @if ($fcap == 'false'){ text-transform:none; }
+    @if ($funderline == 'true'){ text-decoration:underline; }
+    @if ($funderline == 'false'){ text-decoration:none; }
+    background:$bg-item;
+    color:$color;
+    padding: $pady $padx;
+  }
+  > li a:hover{
+    background:$bg-item_H;
+    color:$color_H;
+  }
+  > li.current-menu-item a, > li.current-menu-parent a{
+    background:$bg-item_A;
+    color:$color_A;
+  }
+
+}
+
+
+// MAKE CONTAINER
+// ---------------------------------------------------------------
+@mixin make-container{
+    //position:relative;
+    @if ($container-position == 'center'){ @include center(); }
+    @if ($container-position == 'left'){ @include left(); }
+    @if ($container-position == 'right'){ @include right(); }
+
+    width:$container;
+
+    @media screen and (min-width: 1280px) {
+    width:$container;
+    }
+    @media screen and (max-width: 1280px){
+      @if($container >= 1280){ width:100%;}
+      @else{ width:#{$container}px; }
+      padding:$padding-screen;
+    }
+
+    @media screen and (max-width: 980px) {
+      @if($container >= 980){ width:100%; }
+      @else{ width:#{$container}px; }
+      padding:$padding-screen;
+    }
+    @media screen and (max-width: 840px) {
+      @if($container >= 840){ width:100%; }
+      @else{ width:#{$container}px; }
+      padding:$padding-screen;
+    }
+    @media screen and (max-width: 736px){
+      @if($container >= 736){ width:100%; }
+      @else{ width:#{$container}px; }
+      padding:$padding-mobile;
+    }
+    @media screen and (max-width: 480px) {
+      @if($container >= 480){ width:100%; }
+      @else{ width:#{$container}px; }
+      padding:$padding-mobile;
+    }
+}
+
+
+// MAKE GRID
+// ---------------------------------------------------------------
+@mixin make-grid($col, $gutter, $line-space) {
+  position: relative;
+  float: left;
+  width: ((100% - (($col - 1) * $gutter)) / $col);
+  height:auto;
+  min-height: 1px;                                            // Prevent columns from collapsing when empty
+
+  &:nth-child(n) {
+    margin-right: $gutter;
+    margin-left: 0;
+    margin-top: 0;
+    margin-bottom: $line-space;
+  }
+  &:nth-child(5n) {
+    margin-right:0;
+  }
+  @media screen and (max-width: 480px ){
+    width: percentage(1);
+  }
+
+}
+
+
+// TRANSFORM
+// ---------------------------------------------------------------
+
+@mixin scale($ratio) {
+  -webkit-transform: scale($ratio);
+      -ms-transform: scale($ratio); // IE9+
+          transform: scale($ratio);
+}
+
+@mixin transition($transition...) {
+  -webkit-transition: $transition;
+          transition: $transition;
+}

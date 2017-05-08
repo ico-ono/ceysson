@@ -1,0 +1,34 @@
+<?php
+
+/* ==========================================================================
+   Activer l’option « Image à la une »
+   ========================================================================== */
+if (function_exists('add_theme_support')) {
+ add_theme_support('post-thumbnails');
+}
+
+/* ==========================================================================
+   Images sizes (pour un champ image particulier)... variable que l'on met dans le templates
+   Genere automatiquement une image de cette taille si taille est superieure
+   ========================================================================== */
+add_image_size( 'medium', 400);
+add_image_size( 'grande', 1600);
+
+/* ==========================================================================
+   Images sizes (au moment de l'ajout des medias : ne marche que sur les nouveaux médias)
+   ========================================================================== */
+// if ( function_exists( 'add_image_size' ) ) {
+// add_image_size( 'photo_couv', 900, 900, true, array( 'center', 'center' )); //(cropped)
+// add_image_size( 'photo_inter', 1600, 1200, true, array( 'center', 'center' )); //(cropped)
+// }
+// add_filter('image_size_names_choose', 'my_image_sizes');
+// function my_image_sizes($sizes) {
+// $addsizes = array(
+// "photo_couv" => __( "Photo couverture"),
+// "photo_inter" => __( "Photo interieure"),
+// );
+// $newsizes = array_merge($sizes, $addsizes);
+// return $newsizes;
+// }
+
+?>

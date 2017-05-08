@@ -1,0 +1,17 @@
+@import "../variables";
+
+/* Easy FancyBox */
+/* CONFIG de BASE : dans média */
+/* a faire: deconnecter la feuille de style pour avoir tout ici  */
+/* c'est possible en décochant imprimer les css et coller tout ici  */
+
+/* custom controler : easy-fancybox/fancybox/fancybox.png  */
+#fancybox-close{ top:10px!important; right:10px!important; }
+
+/* affinage de la bordure config dans média  */
+@media screen and (max-width: 840px) {
+  #fancybox-content{ width: 100%!important; height: auto!important; border-width:5px!important;  }
+}
+
+/* no shadow */
+.fancybox-bg{ display:none; }

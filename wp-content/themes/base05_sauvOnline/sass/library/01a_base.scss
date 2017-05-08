@@ -1,0 +1,130 @@
+@import "../variables";
+
+// ==============================================================
+//                          SOFT RESET
+// ==============================================================
+
+/* Border-box model for all elements */
+html { box-sizing: border-box; }
+* { box-sizing: inherit; }
+
+//kna-namespace (default : null)
+$kna-namespace: null !default;
+
+/* listes default style */
+ul, ol { padding-left: 2em; }
+// ul.#{$kna-namespace}unstyled { list-style: none; }
+
+/* images */
+img { vertical-align: middle;}
+img:not([src$=".svg"]) { height: auto; } // height auto only for non SVG images
+
+/* other */
+blockquote, figure { margin-left: 0; margin-right: 0;}
+textarea { resize: none; }
+
+// ==============================================================
+//                          BODY
+// ==============================================================
+//line-height sur le body : créer des décalages sur tous les positionnements
+body {
+	min-width: 320px;
+	min-height: 100%!important;
+	height: 100%;
+	font-family: $font-custom;
+	font-size: $font-size;
+	background:$site-bg;
+}
+
+// ==============================================================
+//                          CONTAINER
+// ==============================================================
+// .container{ max-width: $container-size; margin-left: auto; margin-right: auto; }
+
+
+// ==============================================================
+//                          TYPOGRAPHY RESET
+// ==============================================================
+
+html {
+  /* set base font-size to equiv "10px", which is adapted to rem unit */
+  font-size: 62.5%;
+
+  /* IE9-IE11 math fixing. See http://bit.ly/1g4X0bX */
+  /* thanks to @guardian, @victorbritopro and @eQRoeil */
+  //font-size: calc(1em * 0.625);
+  //font-size: calc(1em * 0.625);
+
+  /* disallow text zooming on orientation change (non standard property) */
+  -webkit-text-size-adjust: 100%;
+      -ms-text-size-adjust: 100%;
+}
+
+/* font-sizing for content */
+p, ul, ol, dl, blockquote, pre, td, th, label, textarea, caption, details, figure {
+  margin-top: 0.75em;
+  margin-bottom: 0;
+  // line-height: $line-height;
+}
+
+/* font-sizing for title */
+// h1{ font-size: $h1-size; }
+// h2{ font-size: $h2-size; }
+// h3{ font-size: $h3-size; }
+// h4{ font-size: $h4-size; }
+// h5{ font-size: $h5-size; }
+// h6{ font-size: $h6-size; }
+
+/* alternate font-sizing
+.#{$kna-namespace}smaller { font-size: 0.6em; }
+.#{$kna-namespace}small { font-size: 0.8em; }
+.#{$kna-namespace}big { font-size: 1.2em; }
+.#{$kna-namespace}bigger { font-size: 1.5em; }
+.#{$kna-namespace}biggest { font-size: 2em; } */
+
+/* other */
+
+code, pre, samp, kbd {
+  /* IE fix */
+  white-space: pre-line;
+  white-space: pre-wrap;
+  // font-family: $font-stack-monospace;
+  line-height: normal;
+}
+em, address, cite, i, var { font-style: italic; }
+
+
+// ==============================================================
+//                          HIDE
+// ==============================================================
+
+/* hidden but not for assistance tools, Yahoo! method */
+.visually-hidden {
+  position: absolute !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+}
+
+// @media (max-width: $small-screen) { .#{$kna-namespace}no-small-screen { display: none !important; } }
+// @media (max-width: $medium-screen) { .#{$kna-namespace}no-medium-screen { display: none !important; } }
+// @media (min-width: $large-screen) { .#{$kna-namespace}no-large-screen { display: none !important; } }
+
+
+// ==============================================================
+//                          BROWSER CONSISTENCY
+// ==============================================================
+
+/* avoid top margins on first content element */
+p, ul, ol, dl, blockquote, pre, h1, h2, h3, h4, h5, h6{
+  &:first-child { margin-top: 0; }
+}
+/* avoid margins on nested elements */
+li p, li ul, li ol { margin-top: 0; margin-bottom: 0;}
+/* max values */
+img, table, td, blockquote, code, pre, textarea, input, video, svg { max-width: 100%; }
+/* margin-bottom on tables */
+// table { margin-bottom: $medium-value; }

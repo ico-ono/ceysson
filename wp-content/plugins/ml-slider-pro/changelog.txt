@@ -1,6 +1,15 @@
 /**
  * Changelog:
  *
+ * 2.6.8
+ * - Add 'allowfullscreen' Vimeo attribute 
+ *
+ * 2.6.7
+ * - Fix: Force https vimeo urls
+ * - Fix: Workaround wptexturize and wpautop by removing && from video JavaScript
+ * - Fix: Apply Smart Pad to post feed slides
+ * - Fix: Apply metaslider_flex_slider_image_attributes and metaslider_responsive_slider_image_attributes filters to laye slides
+ *
  * 2.6.6
  * - Fix PHP notice (wp-updates.com check)
  * - Fix black thumbnails (YouTube Player Update)

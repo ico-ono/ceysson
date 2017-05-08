@@ -41,7 +41,7 @@ class MetaPostFeedSlide extends MetaSlide {
     public function register_admin_styles() {
 
         wp_enqueue_style( "metasliderpro-{$this->identifier}-style", plugins_url( 'assets/style.css' , __FILE__ ), false, METASLIDERPRO_VERSION );
-    
+
     }
 
 
@@ -103,7 +103,7 @@ class MetaPostFeedSlide extends MetaSlide {
         $row  = "<tr class='slide post_feed flex responsive coin nivo'>";
         $row .= "    <td class='col-1'>";
         $row .= "        <div class='thumb post_feed'>";
-        
+
         if ( method_exists( $this, 'get_delete_button_html' ) ) {
             $row .= $this->get_delete_button_html();
         }
@@ -355,7 +355,7 @@ class MetaPostFeedSlide extends MetaSlide {
             __( 'Menu Order', 'metasliderpro') => 'menu_order'
         );
 
-        // add in sort by Event Date option from The Events Calendar 
+        // add in sort by Event Date option from The Events Calendar
         if ( is_plugin_active( 'the-events-calendar/the-events-calendar.php' ) ) {
 
             $orderby_event = array(
@@ -491,6 +491,7 @@ class MetaPostFeedSlide extends MetaSlide {
     }
 
 
+
     /**
      * Generate post type selection list HTML
      *
@@ -500,7 +501,7 @@ class MetaPostFeedSlide extends MetaSlide {
         $all_post_types = get_post_types( array( 'public' => 'true' ), 'objects' );
         $selected_post_types =$this->get_selected_post_types();
 
-        $exclude = apply_filters( "metaslider_post_feed_exclude_post_types", array( "page", "attachment" ) ); 
+        $exclude = apply_filters( "metaslider_post_feed_exclude_post_types", array( "page", "attachment" ) );
 
         $options = "";
 
@@ -533,7 +534,7 @@ class MetaPostFeedSlide extends MetaSlide {
     private function get_order_by() {
 
         return isset( $this->slide_settings['order_by'] ) ? $this->slide_settings['order_by'] : 'date';
-    
+
     }
 
 
@@ -545,7 +546,7 @@ class MetaPostFeedSlide extends MetaSlide {
     private function get_number_of_posts() {
 
         return isset( $this->slide_settings['number_of_posts'] ) ? $this->slide_settings['number_of_posts'] : 5;
-    
+
     }
 
 
@@ -639,6 +640,7 @@ class MetaPostFeedSlide extends MetaSlide {
         return $args;
 
     }
+
 
 
     /**
@@ -788,7 +790,7 @@ class MetaPostFeedSlide extends MetaSlide {
     }
 
 
-    /** 
+    /**
      * Process tags for custom fields
      */
     private function process_custom_tags( $content ) {
@@ -839,7 +841,7 @@ class MetaPostFeedSlide extends MetaSlide {
         $event_time_format = get_option('time_format');
 
         $event_all_day = get_post_meta( get_the_ID(), '_EventAllDay', true );
-        
+
         $event_start_date = tribe_get_start_date( get_the_ID(), false, $event_date_format );
         $event_start_time = tribe_get_start_date( get_the_ID(), false, $event_time_format );
         $event_end_date = tribe_get_end_date( get_the_ID(), false, $event_date_format );
@@ -934,6 +936,13 @@ class MetaPostFeedSlide extends MetaSlide {
                 'title' => $slide['title']
             ), $slide, $this->slider->ID );
 
+        if ( $this->settings['smartCrop'] == 'disabled_pad') {
+
+            $attributes['style'] = $this->flex_smart_pad( $attributes, $slide );
+
+        }
+
+
         $html = $this->build_image_tag( $attributes );
 
         $anchor_attributes = apply_filters( 'metaslider_flex_slider_anchor_attributes', array(
@@ -972,6 +981,42 @@ class MetaPostFeedSlide extends MetaSlide {
 
     }
 
+    /**
+     * Calculate the correct width (for vertical alignment) or top margin (for horizontal alignment)
+     * so that images are never stretched above the height set in the slideshow settings
+     */
+    private function flex_smart_pad( $atts, $slide ) {
+
+        $meta = wp_get_attachment_metadata( $slide['id'] );
+
+        if ( isset( $meta['width'], $meta['height'] ) ) {
+
+            $image_width = $meta['width'];
+            $image_height = $meta['height'];
+            $container_width = $this->settings['width'];
+            $container_height = $this->settings['height'];
+
+            $new_image_height = $image_height * ( $container_width / $image_width );
+
+            if ( $new_image_height < $container_height ) {
+
+                $margin_top_in_px = ( $container_height - $new_image_height ) / 2;
+
+                $margin_top_in_percent = ( $margin_top_in_px / $container_width ) * 100;
+
+                return 'margin-top: ' . $margin_top_in_percent . '%';
+
+            } else {
+
+                return 'margin: 0 auto; width: ' . ( $container_height / $new_image_height ) * 100 . '%';
+
+            }
+
+        }
+
+        return "";
+
+    }
 
     /**
      * Generate coin slider markup

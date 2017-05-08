@@ -1,0 +1,15 @@
+.icon{
+		background-image: url("../images_framework/sprite_icon.png");
+    background-repeat: no-repeat;
+    // background: url(../images_framework/sprite_icon.svg) no-repeat;
+    overflow: hidden;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-indent: -999rem;
+		transition: opacity 0.2s;
+
+    // on regle la position ds le sprite
+  	&.next{		background-position: -20px 0; }
+    &.prev{		background-position: 0 0; }
+}

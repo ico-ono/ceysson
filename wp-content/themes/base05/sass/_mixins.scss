@@ -73,6 +73,7 @@
 
 }
 @mixin make-nav-sub($bg,$width,$pos, $x, $y, $fsize, $fweigth, $fcap, $funderline, $bg-item, $color, $padx, $pady, $bg-item_H, $color_H, $bg-item_A, $color_A, $navitems-font-family){
+  list-style:none;
   display:none;
   position:absolute;
   width:auto;

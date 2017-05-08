@@ -62,7 +62,7 @@ $font-size : 1.4rem !default;				// 1rem equiv "10px" en gardant 1.4rem comme ba
 	$nav-width: 300px;
 	$nav-position:"topleft";				// topcenter, topright, topleft
 	$nav-x:0px;
-	$nav-y:0px;
+	$nav-y:8px;
 
 	//NAV-MAIN items
 	$navitems-bg:;
@@ -109,6 +109,7 @@ $font-size : 1.4rem !default;				// 1rem equiv "10px" en gardant 1.4rem comme ba
 		//NAV-MAIN items _Actif
 		$navitems-bg-n2_A:;
 		$navitems-color-n2_A:$vert;
+
 
 
 // GRID :

@@ -15,7 +15,7 @@
  /*  Copyright 2014  Cactus Computers  (email : forum@cactus.cloud)
 
     This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License, version 2, as 
+    it under the terms of the GNU General Public License, version 2, as
     published by the Free Software Foundation.
 
     This program is distributed in the hope that it will be useful,
@@ -26,25 +26,25 @@
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
     Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-	
+
 	Simply put - from the author:  This plugin is designed to be helpful,
 	and we will take all reasonable efforts to maintain the plugin's quality for all
 	those who use it.
-	
-	However, there is no guarantee as to the effectiveness of the plugin, nor is 
+
+	However, there is no guarantee as to the effectiveness of the plugin, nor is
 	there any guarantee that the plugin will be supported indefinitely.  One day the plugin
-	may become insecure or obsolete due to changing online conditions and/or a lack of 
-	updates.  This plugin also relies on third party JavaScript modules and thus may 
+	may become insecure or obsolete due to changing online conditions and/or a lack of
+	updates.  This plugin also relies on third party JavaScript modules and thus may
 	become ineffective due to these modules becoming obsolete.
-	
+
 	Any loss arising directly or indirectly from the plugin is unfortunate and unintentional.
 	However, by using this plugin you agree to accept any risk of loss caused and not
 	hold the authors or distributors liable for any such loss.  This plugin is supplied
 	with the best of intentions, free of charge, to help those who wish to use it.
-	
+
 	By using this plugin you agree to accept this risk of loss caused and not hold the
 	author responsible.
-	
+
 	I really hope this plugin can help you and that you have a great experience with it!
 */
 
@@ -55,15 +55,15 @@
 	- document 'display_custom_field'
 	*/
 
-class Cactus_Masonry {	
+class Cactus_Masonry {
 	private static $id = "CM_GALLERY_";
 	private static $CM_version = "1.1.0.3";
 	private static $a = null;
 	private static $post_count = 0;
-	
+
 	private static $noscript_text;
 	private static $nomasonry_text;
-	
+
 	static public function init() {
 		include_once('cactus-masonry-options.php');
 		add_shortcode("cactus-masonry", array(__CLASS__, "masonrypostgallery_handler"));
@@ -77,15 +77,15 @@ class Cactus_Masonry {
 	}
 
 	static public function cmpg_add_dependencies() {
-		wp_enqueue_script('jquery');		
+		wp_enqueue_script('jquery');
 	}
-	
+
 	//Attempts to stop iNTERNET eXPLORER!!!!!! from entering incompatibility mode
 	static public function cmpg_add_header($head) {
 		if (isset($_SERVER['HTTP_USER_AGENT']) && (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false)) $head['X-UA-Compatible'] = 'IE=edge,chrome=1';
 		return $head;
 	}
-	
+
 	static public function plugin_settings_link($links) {
 		$newlink = "<a href='https://www.paypal.com/cgi-bin/webscr?cmd=_donations&amp;business=cactus%40cactuscomputers%2ecom%2eau&amp;lc=AU&amp;currency_code=AUD&amp;bn=PP%2dDonationsBF%3abtn_donate_LG%2egif%3aNonHosted'>Donate</a>";
 		array_unshift($links, $newlink);
@@ -115,51 +115,51 @@ class Cactus_Masonry {
 		if(!isset($CM_JS_MSG_COUNTER)) $CM_JS_MSG_COUNTER = 0;
 		self::$id = "CM_GALLERY_" . mt_rand(10000,99999);
 		self::$post_count = 0;
-		
+
 		//Accept input parameters
 		self::$a = shortcode_atts(array(
-			'quality' 					=> 	"thumbnail", 
+			'quality' 					=> 	"thumbnail",
 			'masonry' 					=> 	true,
-			'max_width'					=> 	"none", 
-			'max_height' 				=> 	"none", 
+			'max_width'					=> 	"none",
+			'max_height' 				=> 	"none",
 			'width' 					=> 	"auto",
-			'height'					=> 	"auto", 
+			'height'					=> 	"auto",
 			'horizontal_spacing' 		=> 	10,
-			'vertical_spacing' 			=> 	10, 
+			'vertical_spacing' 			=> 	10,
 			'fit_width' 				=> 	false,
-			'border_color' 				=>	"#000000", 
+			'border_color' 				=>	"#000000",
 			'border_thickness' 			=>	"0px",
-			'outer_border_color' 		=>	"#000000",  
+			'outer_border_color' 		=>	"#000000",
 			'outer_border_thickness'	=>	"0px",
-			'post_category' 			=>	"", 
-			'post_order'				=>	"DESC", 
-			'post_orderby' 				=>	"post_date", 
+			'post_category' 			=>	"",
+			'post_order'				=>	"DESC",
+			'post_orderby' 				=>	"post_date",
 			'post_id'					=>	"",
 			'gallery_align' 			=>	"center",
-			'image_background_color' 	=>	"#ffffff", 
-			'hover_color' 				=>	"#ffffff", 
+			'image_background_color' 	=>	"#ffffff",
+			'hover_color' 				=>	"#ffffff",
 			'hover_intensity' 			=>	"0.5",
-			'upscale_narrow_images'		=>	0, 
-			'upscale_short_images' 		=>	0, 
+			'upscale_narrow_images'		=>	0,
+			'upscale_short_images' 		=>	0,
 			'max_upscale_quality' 		=>	"large",
-			'noscript_width' 			=>	"auto", 
+			'noscript_width' 			=>	"auto",
 			'noscript_height' 			=>	"auto",
 			'noscript_max_width' 		=>	"none",
 			'noscript_max_height' 		=>	"none",
-			'upscale_max_width' 		=>	"none", 
+			'upscale_max_width' 		=>	"none",
 			'upscale_max_height' 		=>	"none",
-			'link_location' 			=>	"post", 
+			'link_location' 			=>	"post",
 			'show_lightbox' 			=>	false,
-			'browse_with_lightbox' 		=>	false, 
-			'show_lightbox_title' 		=>	false, 
+			'browse_with_lightbox' 		=>	false,
+			'show_lightbox_title' 		=>	false,
 			'soft_gutter' 				=>	0,
-			'infinite_scroll' 			=>	true, 
+			'infinite_scroll' 			=>	true,
 			'posts_per_page' 			=>	30,
-			'show_loader' 				=>	true, 
-			'search_start'				=>	0, 
-			'page_size' 				=>	1000, 
-			'test_mode' 				=>	false, 
-			'default_image_id' 			=>	false, 
+			'show_loader' 				=>	true,
+			'search_start'				=>	0,
+			'page_size' 				=>	1000,
+			'test_mode' 				=>	false,
+			'default_image_id' 			=>	false,
 			'show_posts' 				=>	true,
 			'show_pages' 				=>	false,
 			'require_javascript' 		=>	false,
@@ -189,14 +189,14 @@ class Cactus_Masonry {
 			'custom_id'					=>	'',
 			'display_custom_field'		=>	''
 			), $atts);
-		
+
 		//Get custom Id
-		if(self::$a['custom_id'] != '') self::$id = self::$a['custom_id'];		
+		if(self::$a['custom_id'] != '') self::$id = self::$a['custom_id'];
 		//Prepare output variable
 		$output = self::cmpg_prep_JS_globals();
 		//Find global variable
 		global $post;
-		
+
 		//Fix boolean parameter values
 		self::$a['show_lightbox'] = self::cmpg_fix_boolean(self::$a['show_lightbox'], false);
 		self::$a['browse_with_lightbox'] = self::cmpg_fix_boolean(self::$a['browse_with_lightbox'], false);
@@ -220,8 +220,8 @@ class Cactus_Masonry {
 		self::$a['id_as_brick_class'] = self::cmpg_fix_boolean(self::$a['id_as_brick_class'], false);
 		//Load external libraries
 		if(self::$a['load_js']) {
-			wp_enqueue_style('MPG_style', plugin_dir_url(__FILE__) . 'masonry-post-gallery.min.css');
-			if(self::$a['show_lightbox']) wp_enqueue_style('Lightbox_style', plugin_dir_url(__FILE__) . 'lightbox.min.css');
+			// wp_enqueue_style('MPG_style', plugin_dir_url(__FILE__) . 'masonry-post-gallery.min.css');
+			// if(self::$a['show_lightbox']) wp_enqueue_style('Lightbox_style', plugin_dir_url(__FILE__) . 'lightbox.min.css');
 			wp_enqueue_script('Masonry', plugin_dir_url(__FILE__) . 'masonry.pkgd.min.js');
 			wp_enqueue_script('ImagesLoaded', plugin_dir_url(__FILE__) . 'imagesloaded.pkgd.min.js');
 			wp_enqueue_script('Spin', plugin_dir_url(__FILE__) . 'spin.min.js');
@@ -276,11 +276,11 @@ class Cactus_Masonry {
 				if($out != 0) array_push(self::$a['author_ids'], $out);
 			}
 		}
-		
+
 		//Set up query
-		$args = array(	'posts_per_page' => self::$a['page_size'], 
+		$args = array(	'posts_per_page' => self::$a['page_size'],
 						'offset' => self::$a['search_start'],
-						'orderby' => self::fix_sort_column(self::$a['post_orderby']), 
+						'orderby' => self::fix_sort_column(self::$a['post_orderby']),
 						'order' => self::$a['post_order'],
 						'post_parent' => self::$a['post_parent_id'],
 						'tag' => self::$a['post_tag_slug'],
@@ -296,7 +296,7 @@ class Cactus_Masonry {
 		if(count(self::$a['author_ids']) > 0) $args['author'] = implode(',',self::$a['author_ids']);
 		//Taxonomy
 		if(strlen(self::$a['post_taxonomy']) > 0 && strlen(self::$a['post_taxonomy_term']) > 0) $args[self::$a['post_taxonomy']] = self::$a['post_taxonomy_term'];
-		
+
 		$post_ids = explode(",", self::$a['post_id']);
 		$posts_in = array();
 		$posts_out = array();
@@ -307,13 +307,13 @@ class Cactus_Masonry {
 		}
 		$args['post__in'] = $posts_in;
 		$args['post__not_in'] = $posts_out;
-		
+
 		//Check thumbnail
 		if(self::$a['default_image_id'] === false) $args['meta'] = array (
 																		'key'	=> '_thumbnail_id',
 																		'compare' => 'EXISTS'
 																	);
-		
+
 		$lastposts = get_posts($args);
 		//Parse stamp IDs
 		self::$a['stamp_id'] = explode(",", self::$a['stamp_id']);
@@ -321,7 +321,7 @@ class Cactus_Masonry {
 		for($i = 0; $i < $i_size; $i++) {
 			self::$a['stamp_id'][$i] = intval(self::$a['stamp_id'][$i]);
 		}
-		
+
 		//For each post found by the query:
 		$script_text = "";
 		self::$noscript_text = "";
@@ -332,7 +332,7 @@ class Cactus_Masonry {
 			self::$post_count++;
 		}
 		//Broadcast post count
-		global $GLOBALS; 
+		global $GLOBALS;
 		$GLOBALS['cactus_masonry_post_count'] = self::$post_count;
 		$output .= self::$noscript_text . "
 			</noscript>
@@ -345,7 +345,7 @@ class Cactus_Masonry {
 				var timer" . self::$id . " = null;
 				var s = '';
 				var el = null;\n";
-		
+
 			$output .= $script_text . "</script>";
 		}
 		$output .= "
@@ -391,7 +391,7 @@ class Cactus_Masonry {
 		else $str = str_replace(array("\r\n","\r","\n"), "<br/>", $str);
 		return wptexturize($str);
 	}
-	
+
 	static private function render_post() {
 		global $post;
 		$output = "";
@@ -410,7 +410,7 @@ class Cactus_Masonry {
 		$show_databox = (!empty($cats) || (self::$a['display_post_titles'] && strlen($tit) > 0) || strlen($excerpt) > 0 || strlen($custom) > 0);
 		if(has_post_thumbnail()) $iid = get_post_thumbnail_id($post->ID);
 		else $iid = self::$a['default_image_id'];
-		$thumbnail = self::cmpg_upsize_image($iid, self::$a['quality'], self::$a['max_upscale_quality'], self::$a['upscale_max_width'], self::$a['upscale_max_height'], self::$a['upscale_narrow_images'], self::$a['upscale_short_images']);		
+		$thumbnail = self::cmpg_upsize_image($iid, self::$a['quality'], self::$a['max_upscale_quality'], self::$a['upscale_max_width'], self::$a['upscale_max_height'], self::$a['upscale_narrow_images'], self::$a['upscale_short_images']);
 		if(!$thumbnail) {
 			$output.="console.log('Cactus Masonry Error: -" . self::$a['default_image_id'] . "- Image with ID={$iid} cannot be found');";
 			return $output;
@@ -455,7 +455,7 @@ class Cactus_Masonry {
 					self::$a['show_lightbox'] = false;
 					break;
 				default:
-					$lnk = get_permalink();	
+					$lnk = get_permalink();
 					self::$a['show_lightbox'] = false;
 			}
 		} else switch(self::$a['link_location']) {//Default Image
@@ -484,7 +484,7 @@ class Cactus_Masonry {
 				self::$a['show_lightbox'] = false;
 				break;
 			default:
-				$lnk = get_permalink();	
+				$lnk = get_permalink();
 				self::$a['show_lightbox'] = false;
 		}
 		if(!(self::$a['show_lightbox'] === true)) {
@@ -503,9 +503,9 @@ class Cactus_Masonry {
 				for($i = 0, $j = count($cats); $i < $j; $i++) {
 					$data_text .= "<span>" . $cats[$i]->name . "</span>";
 				}
-				$data_text .= "</div>";	
+				$data_text .= "</div>";
 			}
-			$data_text .= "</div>";	
+			$data_text .= "</div>";
 		}
 		//Get div max dimensions
 		if($thumbnail[4]) $max_height = self::$a['upscale_max_height'];
@@ -548,7 +548,7 @@ class Cactus_Masonry {
 			//Start with the innerHTML of the masonry_brick DIVs
 			$output .= "				s = \"<img class='masonry_brick_img size-thumbnail' src='{$thumbnail[0]}' alt='{$tit}' style='";
 			if(!($thumbnail[5] && strpos(self::$a['upscale_max_width'], '%') !== false) && (self::$a['width'] != 'auto')) $output .= "width: 100%; ";
-			$output .= "height: " . self::$a['height'] . "; ";		
+			$output .= "height: " . self::$a['height'] . "; ";
 			$output .= "max-height: " . self::$a['max_height'] . "; ";
 			if(self::$a['crop_images']) $output .= "visibility: hidden; ";
 			$output .= "'/>";
@@ -601,11 +601,11 @@ class Cactus_Masonry {
 				DRAW NOSCRIPT BOX
 			*/
 			if(!self::$a['require_javascript']) {
-				self::$noscript_text .= "		
+				self::$noscript_text .= "
 					<div class='{$main_class}{$i_class}' style='height: " . self::$a['noscript_height'] . "; width: " . self::$a['noscript_width'] . ";	max-height: " . self::$a['noscript_max_height'] . "; max-width: " . self::$a['noscript_max_width'] . ";'>
 						<{$link_type} class='{$link_class}' style='display: block; height: 100%; width: 100%;' href='{$lnk}'>
 							<img class='masonry_brick_img' style='display: block; height: 100%; width: 100%;' src='{$thumbnail[0]}' alt='{$tit}'/>";
-				if($show_databox) self::$noscript_text .= $data_text;		
+				if($show_databox) self::$noscript_text .= $data_text;
 				self::$noscript_text .= "
 						</{$link_type}>
 					</div>";
@@ -620,7 +620,7 @@ class Cactus_Masonry {
 				<img class='masonry_brick_img' src='{$thumbnail[0]}' alt='{$tit}' style='";
 			if(!($thumbnail[5] && strpos(self::$a['upscale_max_width'], '%') !== false) && (self::$a['width'] != 'auto')) self::$nomasonry_text .= "width: 100%; ";
 			if(self::$a['crop_images']) self::$nomasonry_text .= "visibility: hidden; ";
-			self::$nomasonry_text .= "height: " . self::$a['height'] . "; ";		
+			self::$nomasonry_text .= "height: " . self::$a['height'] . "; ";
 			self::$nomasonry_text .= "max-height: " . self::$a['max_height'] . "; ";
 			self::$nomasonry_text .= "'/>";
 			if(self::$a['crop_images']) self::$nomasonry_text .= "<div class='cactus_masonry_cropped' style='background-image: url({$thumbnail[0]});'></div>";
@@ -694,7 +694,7 @@ class Cactus_Masonry {
 		//	- Both thumb width and height are less than maximum (unless maximum is 0)
 		while(($thumb[1] < $min_width || $thumb[2] < $min_height) && ($nextsize != $quality) && ($thumb[1] < $max_width || $max_width == 0) && ($thumb[2] < $max_height || $max_height == 0)) {
 			$quality = $nextsize;
-			$thumb = wp_get_attachment_image_src(get_post_thumbnail_id($ID),$nextsize);	
+			$thumb = wp_get_attachment_image_src(get_post_thumbnail_id($ID),$nextsize);
 			$nextsize = cmpg_get_next_image_size($quality, $max_quality);
 		}
 		if(!$thumb) return false;
@@ -750,20 +750,20 @@ class Cactus_Masonry {
 		<script type='text/javascript'>
 				var " . self::$id . ";
 			jQuery(document).ready(function() {
-				
-				function " . self::$id . "_drawGallery() {		
+
+				function " . self::$id . "_drawGallery() {
 					" . self::$id . " = new cactusMasonry();
-					" . self::$id . ".init('" . self::$id ."', 
-										{showLoader : " . self::cmpg_bool_to_string(self::$a['show_loader']) . ", 
+					" . self::$id . ".init('" . self::$id ."',
+										{showLoader : " . self::cmpg_bool_to_string(self::$a['show_loader']) . ",
 										infiniteScroll : " . self::cmpg_bool_to_string(self::$a['infinite_scroll']) . ",
-										postsPerPage : " . self::$a['posts_per_page'] . ", 
+										postsPerPage : " . self::$a['posts_per_page'] . ",
 										isIe9 : IE_LT_9" . self::$id . ",
-										width : '" . self::$a['width'] . "', 
+										width : '" . self::$a['width'] . "',
 										softGutter : " . self::$a['soft_gutter'] . ",
 										fitWidth : " . self::cmpg_bool_to_string(self::$a['fit_width']) . ",
-										forceAutoWidth : " . self::cmpg_bool_to_string(self::$a['force_auto_width']) . ", 
+										forceAutoWidth : " . self::cmpg_bool_to_string(self::$a['force_auto_width']) . ",
 										transitionDuration : " . self::$a['transition_duration'] . "});
-					" . self::$id . ".drawGallery(elems" . self::$id . ");	
+					" . self::$id . ".drawGallery(elems" . self::$id . ");
 					//alert('Sorry, I\'m lazy and live test on my publicly facing page.  Cactus Masonry is currently being updated and may not work properly on this page.  Sorry for the inconvenience.');
 				}
 				function " . self::$id . "_testGallery() {
