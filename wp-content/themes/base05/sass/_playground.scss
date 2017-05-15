@@ -113,6 +113,9 @@
   @media screen and (max-width: 1024px) {
     .page .block-center, .category .block-center{ width:100%; }
   }
+  @media screen and (max-width: 650px) {
+    .container, .page p, .category p{ width:100%!important; }
+  }
   .single .block-center{ width:100%; }
   header{ padding-top:6px; }
   section{ min-height:65vh; }

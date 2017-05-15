@@ -2,6 +2,8 @@
 
   show_admin_bar( false );
 
+  add_filter ('jpeg_quality', function ($ arg) {return 100;});
+  add_filter ('wp_editor_set_quality', function ($ arg) {return 100;});
 
   /* ==========================================================================
      Afficher la categorie courante (slug)
