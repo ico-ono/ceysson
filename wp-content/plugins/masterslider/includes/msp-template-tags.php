@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 function msp_get_general_post_template_tags() {
 
@@ -10,8 +10,20 @@ function msp_get_general_post_template_tags() {
 		       'callback' 	=> ''
 		),
 
+		array( 'name'		=> 'linked_title',
+		       'label' 		=> __( 'The post title with link', MSWP_TEXT_DOMAIN ),
+		       'type'		=> '_general',
+		       'callback' 	=> ''
+		),
+
 	    array( 'name'		=> 'content',
 		       'label' 		=> __( 'The post content', MSWP_TEXT_DOMAIN ),
+		       'type'		=> '_general',
+		       'callback' 	=> ''
+		),
+
+		array( 'name'		=> 'content-150',
+		       'label' 		=> __( 'The post content-(with length limit)', MSWP_TEXT_DOMAIN ),
 		       'type'		=> '_general',
 		       'callback' 	=> ''
 		),
@@ -21,7 +33,7 @@ function msp_get_general_post_template_tags() {
 		       'type'		=> '_general',
 		       'callback' 	=> ''
 		),
-	    
+
 	    array( 'name'		=> 'categories',
 		       'label' 		=> __( 'The post categories', MSWP_TEXT_DOMAIN ),
 		       'type'		=> '_general',
@@ -58,8 +70,44 @@ function msp_get_general_post_template_tags() {
 		       'callback' 	=> ''
 		),
 
+		array( 'name'		=> 'image-150x150',
+		       'label' 		=> __( 'Post image-(with custom dimensions)', MSWP_TEXT_DOMAIN ),
+		       'type'		=> '_general',
+		       'callback' 	=> ''
+		),
+
 		array( 'name'		=> 'image-url',
 		       'label' 		=> __( 'Post image source', MSWP_TEXT_DOMAIN ),
+		       'type'		=> '_general',
+		       'callback' 	=> ''
+		),
+
+        array( 'name'       => 'image-alt',
+               'label'      => __( 'Post image alternative text', MSWP_TEXT_DOMAIN ),
+               'type'       => '_general',
+               'callback'   => ''
+        ),
+
+        array( 'name'       => 'image-title',
+               'label'      => __( 'Post image title', MSWP_TEXT_DOMAIN ),
+               'type'       => '_general',
+               'callback'   => ''
+        ),
+
+		array( 'name'		=> 'thumbnail',
+		       'label' 		=> __( 'Post thumbnail', MSWP_TEXT_DOMAIN ),
+		       'type'		=> '_general',
+		       'callback' 	=> ''
+		),
+
+		array( 'name'		=> 'thumbnail-150x150',
+		       'label' 		=> __( 'Post thumbnail-(with custom dimensions)', MSWP_TEXT_DOMAIN ),
+		       'type'		=> '_general',
+		       'callback' 	=> ''
+		),
+
+		array( 'name'		=> 'thumbnailurl',
+		       'label' 		=> __( 'Post thumbnail source', MSWP_TEXT_DOMAIN ),
 		       'type'		=> '_general',
 		       'callback' 	=> ''
 		),
@@ -134,6 +182,12 @@ function msp_get_woocommerce_template_tags() {
 		       'callback' 	=> ''
 		),
 
+        array( 'name'       => 'wc_price-3',
+               'label'      => __( 'Price (custom decimals)', MSWP_TEXT_DOMAIN ),
+               'type'       => 'product',
+               'callback'   => ''
+        ),
+
 	    array( 'name'		=> 'wc_regular_price',
 		       'label' 		=> __( 'Regular Price', MSWP_TEXT_DOMAIN ),
 		       'type'		=> 'product',
@@ -192,7 +246,20 @@ function msp_get_woocommerce_template_tags() {
 		       'label' 		=> __( 'Rating Count', MSWP_TEXT_DOMAIN ),
 		       'type'		=> 'product',
 		       'callback' 	=> ''
-		)
+		),
+
+        array( 'name'       => 'wc_add_to_cart_link',
+               'label'      => __( 'Add to Cart Link', MSWP_TEXT_DOMAIN ),
+               'type'       => 'product',
+               'callback'   => ''
+        ),
+
+        array( 'name'       => 'wc_add_to_cart',
+               'label'      => __( 'Add to Cart', MSWP_TEXT_DOMAIN ),
+               'type'       => 'product',
+               'callback'   => ''
+        )
+
 	);
 
 	return apply_filters( 'masterslider_woocommerce_product_slider_tags_list', $tags );
@@ -207,7 +274,7 @@ function get_post_template_tags_value( $post = null, $args = null ){
 
 	if ( msp_is_plugin_active( 'woocommerce/woocommerce.php' ) )
 		$template_tags = array_merge( $template_tags, msp_get_woocommerce_template_tags() );
-	
+
 	$tags_dictionary = array();
 
 	foreach ( $template_tags as $template_tag ) {

@@ -15,6 +15,7 @@ include_once( 'classes/class-msp-admin-editor.php'  );
 include_once( 'classes/class-msp-pointers.php'      );
 include_once( 'classes/class-axiom-plugin-check-update.php' );
 include_once( 'classes/class-axiom-plugin-updater.php' );
+include_once( 'classes/class-axiom-plugin-license.php' );
 include_once( 'classes/class-msp-importer.php' );
 include_once( 'classes/class-msp-post-sliders.php' );
 include_once( 'classes/class-msp-import-custom-sliders.php' );

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * @package   MasterSlider
  * @author    averta [averta.net]
@@ -16,10 +16,10 @@ if ( ! defined('ABSPATH') ) {
 if( ! class_exists( 'MSP_WP_Post' ) ) :
 
 /**
-* 
+*
 */
 class MSP_WP_Post {
-	
+
 	var $dictionary   = array();
 	var $recent_query = array();
 
@@ -34,11 +34,11 @@ class MSP_WP_Post {
 
 		$tax_list = array();
 		foreach ( $the_taxs as $tax_name => $tax ) {
-			if( ( $hierarchical && $tax->hierarchical ) || ( ! $hierarchical && ! $tax->hierarchical ) ) 
+			if( ( $hierarchical && $tax->hierarchical ) || ( ! $hierarchical && ! $tax->hierarchical ) )
 				$tax_list[ $tax_name ] = $tax->label;
 		}
 
-		return $tax_list; 
+		return $tax_list;
 	}
 
 
@@ -74,10 +74,10 @@ class MSP_WP_Post {
 			$tax_terms = $this->get_terms( $tax_name );
 
 			foreach ( $tax_terms as $tax_term ) {
-				
+
 				if ( is_object( $tax_term ) )
 					$tax_term = get_object_vars( $tax_term );
-				
+
 				$taxs_terms_list[] = $tax_term;
 			}
 
@@ -90,19 +90,20 @@ class MSP_WP_Post {
 	public function get_posts_query(){
 
 		$query = array();
-		
+
 		$query['image_from']     = isset( $_REQUEST['slideImage'] )     ? $_REQUEST['slideImage']     : 'auto';
 		$query['excerpt_length'] = isset( $_REQUEST['excerpt_length'] ) ? $_REQUEST['excerpt_length'] : 100;
+        $query['exclude_post_no_image'] = isset( $_REQUEST['exclude_post_no_image'] ) ? $_REQUEST['exclude_post_no_image'] : false;
 
 		if( isset( $_REQUEST['post_type'] ) && ! empty( $_REQUEST['post_type'] ) )
 			$query['post_type'] = $_REQUEST['post_type'];
-		
+
 		if( isset( $_REQUEST['orderby'] ) )
 			$query['orderby'] = $_REQUEST['orderby'];
 
 		if( isset( $_REQUEST['order'] ) )
 			$query['order'] = $_REQUEST['order'];
-		
+
 		$query['posts_per_page'] = isset( $_REQUEST['limit'] )  && ! empty( $_REQUEST['limit'] ) ? (int)$_REQUEST['limit'] : 10;
 
 		if( isset( $_REQUEST['post__not_in'] )  && ! empty( $_REQUEST['post__not_in'] ) ) {
@@ -114,7 +115,7 @@ class MSP_WP_Post {
 			$posts_in = explode( ',', $_REQUEST['post__in'] );
 			$query['post__in'] = array_filter( $posts_in );
 		}
-		
+
 		if( isset( $_REQUEST['offset'] ) && ! empty( $_REQUEST['offset'] ) )
 			$query['offset'] = (int)$_REQUEST['offset'];
 
@@ -130,7 +131,7 @@ class MSP_WP_Post {
 			$tags = explode( ',', $_REQUEST['tags'] );
 			$taxs_data = array_merge( $taxs_data, $tags );
 		}
-	
+
 		$query['tax_query'] = $this->get_tax_query( $taxs_data );
 
 		$this->recent_query = $query;
@@ -167,51 +168,51 @@ class MSP_WP_Post {
 		$th_wp_query = $this->get_query_results( $args );
 
 		$object_list = array();
-		
-		if( $th_wp_query->have_posts() ) : while ( $th_wp_query->have_posts() ) : $th_wp_query->the_post(); 
+
+		if( $th_wp_query->have_posts() ) : while ( $th_wp_query->have_posts() ) : $th_wp_query->the_post();
 			if( 0 === $count )
 				break;
 
 			$object_list[] = $th_wp_query->post;
 			--$count;
 
-			endwhile; 
+			endwhile;
 		endif;
 
 		return $object_list;
 	}
 
 	/**
-	 * Generate a tax_query for using in WP_Query by tax_terms_ids 
+	 * Generate a tax_query for using in WP_Query by tax_terms_ids
 	 * @param  array   $taxs_term_ids  The taxonomy_term id
 	 * @return array   The tax query
 	 */
 	public function get_tax_query( $taxs_term_ids ){
-		
+
 		$tax_query     = array();
 		$taxs_term_ids = array_filter( $taxs_term_ids );
-		
+
 		// collect terms ids for each taxonomy
 		$tax_term_archive = array();
 
 		foreach ( $taxs_term_ids as $tax_id ) {
-			$the_tax_term_obj = $this->get_taxonomy_by_id( $tax_id );
-			$tax_term_archive[ $the_tax_term_obj->taxonomy ][] = $the_tax_term_obj->term_id;
+			if( $the_tax_term_obj = $this->get_taxonomy_by_id( $tax_id ) )
+    			$tax_term_archive[ $the_tax_term_obj->taxonomy ][] = $the_tax_term_obj->term_id;
 		}
 
 		// generate tax_query
 		foreach ( $tax_term_archive as $taxonomy => $terms) {
-			$tax_query[] = array( 
+			$tax_query[] = array(
 				'taxonomy' 		=> $taxonomy,
 				'field' 		=> 'id',
 				'terms' 		=> $terms
 			);
 		}
-		
+
 		// add relationship between each inner taxonomy array when there is more than one
 		if( count( $tax_query ) > 1 )
 			$tax_query['relation'] = 'AND';
-		
+
 
 		return $tax_query;
 	}
@@ -219,10 +220,10 @@ class MSP_WP_Post {
 
 	public function get_taxonomy_by_id( $term_taxonomy_id ) {
 	    global $wpdb;
-	    $taxonomy = $wpdb->get_row( $wpdb->prepare( 
+	    $taxonomy = $wpdb->get_row( $wpdb->prepare(
 	        "SELECT * FROM $wpdb->term_taxonomy wta
 	            INNER JOIN $wpdb->terms wt ON (wta.term_id = wt.term_id)
-	            WHERE wta.term_taxonomy_id = %d", $term_taxonomy_id 
+	            WHERE wta.term_taxonomy_id = %d", $term_taxonomy_id
 	    ) );
 
 	    return $taxonomy;
@@ -231,38 +232,38 @@ class MSP_WP_Post {
 
 
 	public function get_posts_result( $args ){
-		
+
 		$slide_image_target = isset( $args['image_from'] ) ? $args['image_from'] : 'auto';
 
 		$th_wp_query = $this->get_query_results( $args );
 
 		ob_start();
-		if( $th_wp_query->have_posts() ):  while ( $th_wp_query->have_posts() ) : $th_wp_query->the_post(); 
+		if( $th_wp_query->have_posts() ):  while ( $th_wp_query->have_posts() ) : $th_wp_query->the_post();
 
 			$the_excerpt = get_the_excerpt();
 			$excerpt_length = isset( $args['excerpt_length'] ) ? $args['excerpt_length'] : '';
 
-			if( ! empty( $excerpt_length ) ) 
+			if( ! empty( $excerpt_length ) )
 				$the_excerpt = msp_get_trimmed_string( get_the_excerpt(), (int)$excerpt_length );
 
 			$the_media     = '';
-			$the_media_src = msp_get_auto_post_thumbnail_src( $th_wp_query->post->ID, $slide_image_target );
+			$the_media_src = msp_get_auto_post_thumbnail_url( $th_wp_query->post->ID, $slide_image_target );
 
 			if( ! empty( $the_media_src ) ) {
 				$the_media_tag  = msp_get_the_resized_image( $the_media_src, 80, 80, true, 100 );
 				$the_media 		= sprintf( '<div class="msp-entry-media" ><a href="%s" target="_blank">%s</a></div>', get_the_permalink(), $the_media_tag );
 			}
-		?>  
+		?>
 
 		<article class="msp-post msp-post-<?php echo $th_wp_query->post->ID; ?> msp-post-<?php echo $th_wp_query->post->post_type; ?>">
            <figure>
            		<?php echo $the_media; ?>
-           		
+
                 <figcaption>
                     <div class="msp-entry-header">
                         <h4 class="msp-entry-title"><a href="<?php the_permalink(); ?>" target="_blank"><?php the_title(); ?></a></h4>
                     </div>
-                    
+
                     <div class="msp-entry-content">
                         <time datetime="<?php the_time('Y-m-d')?>" title="<?php the_time('Y-m-d')?>" ><?php the_time('F j, Y'); ?></time>
                         ( <span class="ps-post-id">Post ID: <?php the_ID(); ?></span> )
@@ -270,19 +271,19 @@ class MSP_WP_Post {
                     </div>
                 </figcaption>
            </figure>
-		</article>   
+		</article>
 
 		<?php
 
-			endwhile; 
+			endwhile;
 		endif;
-    	
+
     	return ob_get_clean();
 	}
 
 
 	public function get_query_results( $args ){
-	    
+
 		// default query args
 		$defaults = array(
 			'orderby' 		=> 'menu_order date',

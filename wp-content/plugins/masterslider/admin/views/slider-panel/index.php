@@ -6,7 +6,7 @@
  * @author    averta [averta.net]
  * @license   LICENSE.txt
  * @link      http://masterslider.com
- * @copyright Copyright © 2014 averta
+ * @copyright Copyright © 2015 averta
  */
 
 ?>
@@ -26,7 +26,7 @@
 
 <!-- Application Template -->
 <script type="text/x-handlebars">
-    
+
     {{#if hasError}}
         <div class="msp-error-cont">
             {{partial errorTemplate}}
@@ -47,16 +47,26 @@
         <div class="clear"></div>
         {{outlet}}
         <div class="msp-shortcode-cont">
-            <span><?php _e('Shortcode :', MSWP_TEXT_DOMAIN); ?> </span> {{view MSPanel.SimpleCodeBlock value=shortCode width=120}}
-            <span><?php _e('PHP function :', MSWP_TEXT_DOMAIN); ?> </span> {{view MSPanel.SimpleCodeBlock value=phpFunction width=160}}
+            <span><?php _e('Shortcode :', MSWP_TEXT_DOMAIN); ?> </span>
+            {{view MSPanel.SimpleCodeBlock value=shortCode width=120}}
+            {{view MSPanel.SimpleCodeBlock value=shortCodeSlug width=120}}
+            <span><?php _e('PHP function :', MSWP_TEXT_DOMAIN); ?> </span>
+            {{view MSPanel.SimpleCodeBlock value=phpFunction width=160}}
+            {{view MSPanel.SimpleCodeBlock value=phpFunctionSlug width=160}}
         </div>
-        <button id="msp-preview-btn" {{action showPreview}} class="msp-blue-btn msp-save-changes"> <?php _e('Preview', MSWP_TEXT_DOMAIN); ?></button>
-        {{#if isSending}}
-            <button class="msp-blue-btn msp-save-changes disabled"> <?php _e('Saving...', MSWP_TEXT_DOMAIN); ?></button>
-        {{else}}
-            <button class="msp-blue-btn msp-save-changes" {{action "saveAll"}}> <?php _e('Save Changes', MSWP_TEXT_DOMAIN); ?></button>
-        {{/if}}
-        <span class="msp-save-status">{{statusMsg}}</span>
+        <div class="msp-save-bar-placeholder" id="saveBarPlaceHolder"></div>
+        <div class="msp-save-bar" id="saveBar">
+            <button id="msp-preview-btn" {{action showPreview}} class="msp-blue-btn msp-save-changes"> <?php _e('Preview', MSWP_TEXT_DOMAIN); ?></button>
+            {{#if isSending}}
+                <button class="msp-blue-btn msp-save-changes disabled"> <?php _e('Saving...', MSWP_TEXT_DOMAIN); ?></button>
+            {{else}}
+                <button class="msp-blue-btn msp-save-changes" {{action "saveAll"}}> <?php _e('Save Changes', MSWP_TEXT_DOMAIN); ?></button>
+            {{/if}}
+            <div class="msp-saving-msg-cont">
+                <span {{bind-attr class=":msp-save-status savingStatus"}}>{{statusMsg}}</span>
+                <div {{bind-attr class=":msp-time-ago savingStatus"}}><?php _e('Saved', MSWP_TEXT_DOMAIN); ?> <span  id="timeAgo"></span>.</div>
+            </div>
+        </div>
     {{/if}}
 </script>
 
@@ -75,10 +85,14 @@
 
         <div class="msp-metabox-row">
 
-            <h4><?php _e('Slider name and dimentions', MSWP_TEXT_DOMAIN); ?></h4>
+            <h4><?php _e('Slider name and dimensions', MSWP_TEXT_DOMAIN); ?></h4>
 
             <div class="msp-metabox-indented">
                 <label><?php _e('Slider name :', MSWP_TEXT_DOMAIN); ?> </label> {{input value=name size="40"}}
+            </div>
+            <div class="msp-metabox-indented">
+                <label><?php _e('Slider alias :', MSWP_TEXT_DOMAIN); ?> </label> {{input value=slug action="checkSliderSlug" on="focus-out" size="40"}}
+                <span {{bind-attr class=":msp-save-status slugStatus"}}></span>
             </div>
             <div class="msp-metabox-indented">
                  <label><?php _e('Slider width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=width}} px
@@ -87,7 +101,7 @@
             </div>
 
             <div class="msp-metabox-indented">
-               {{switch-box value=autoCrop}}<label><?php _e('Automatically crop and resize slider images based on above size.', MSWP_TEXT_DOMAIN); ?></label>
+               {{switch-box value=autoCrop}}<label><?php _e('Automatically crop and resize slider images based on the size above.', MSWP_TEXT_DOMAIN); ?></label>
             </div>
 
             <h4><?php _e('Slider sizing method', MSWP_TEXT_DOMAIN); ?></h4>
@@ -110,6 +124,16 @@
                     <label><?php _e('Fullscreen margin :', MSWP_TEXT_DOMAIN); ?> </label>{{number-input value=fullscreenMargin}} px
                 {{/if}}
             </div>
+            {{#if showAutoFillTarget}}
+                <div class="msp-metabox-indented">
+                    <label><?php _e('Auto fill to element :', MSWP_TEXT_DOMAIN); ?> </label>{{input value=autofillTarget}} <em> Default is parent element of slider.</em>
+                </div>
+            {{/if}}
+            {{#if showMinHeight}}
+                <div class="msp-metabox-indented">
+                    <label><?php _e('Minimum height amount :', MSWP_TEXT_DOMAIN); ?> </label>{{number-input value=minHeight}} px
+                </div>
+            {{/if}}
             {{#if showWrapperWidth}}
                <div class="msp-metabox-indented">
                     <label><?php _e('Slider wrapper width :', MSWP_TEXT_DOMAIN); ?> </label>{{number-input value=wrapperWidth}}
@@ -122,13 +146,13 @@
 
         </div>
 
-    {{/meta-box}} 
+    {{/meta-box}}
 
     {{#meta-box title="<?php _e('Slider Template', MSWP_TEXT_DOMAIN); ?>"}}
         <div class="msp-metabox-row">
-            <h4><?php _e('Select slider template here, click on "Choose template" for list of all templates.', MSWP_TEXT_DOMAIN); ?></h4>
+            <h4><?php _e('Select slider template here, click on "Choose template" for the list of all templates.', MSWP_TEXT_DOMAIN); ?></h4>
             <div class="msp-metabox-indented">
-                <label><?php _e('Template:', MSWP_TEXT_DOMAIN); ?> </label> 
+                <label><?php _e('Template:', MSWP_TEXT_DOMAIN); ?> </label>
                 <div class="msp-choose-template">
                     <div class="msp-img-box"><img {{action "openTemplates"}} {{bind-attr src=msTemplateImg}}></div>
                         <div class="float-left">
@@ -137,20 +161,21 @@
                         </div>
                 </div>
             </div>
-            
-            <h4><?php _e('Change slider transition, transition speed and space between slides', MSWP_TEXT_DOMAIN); ?></h4>
+            <h4><?php _e('Change slider transition, transition speed and spacing between slides', MSWP_TEXT_DOMAIN); ?></h4>
 
             <div class="msp-metabox-indented">
-                <label><?php _e('Transition :', MSWP_TEXT_DOMAIN); ?> </label> 
+                <label><?php _e('Transition :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#view MSPanel.Select value=trView width=150}}
                     <option value="basic">Normal</option>
                     <option value="fadeBasic">Normal and Fade</option>
                     <option value="wave">Wave</option>
                     <option value="fadeWave">Wave and Fade</option>
                     <option value="flow">Flow</option>
+                    <option value="stack">Stack</option>
                     <option value="fadeFlow">Flow and Fade</option>
                     <option value="mask">Mask</option>
                     <option value="parallaxMask">Parallax Mask</option>
+                    <option value="box">Box</option>
                     <option value="fade">Fade</option>
                     <option value="scale">Scale</option>
                     <option value="focus">Focus</option>
@@ -160,40 +185,43 @@
                 <label><?php _e('Transition speed :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=speed}}
             </div>
             <div class="msp-metabox-indented">
-                <label><?php _e('Direction :', MSWP_TEXT_DOMAIN); ?> </label> 
+                <label><?php _e('Direction :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#view MSPanel.Select value=dir width="120"}}
                     <option value="h"><?php _e('Horizontal', MSWP_TEXT_DOMAIN); ?></option>
                     <option value="v"><?php _e('Vertical', MSWP_TEXT_DOMAIN); ?></option>
                 {{/view}}
                 <span class="msp-form-space"></span>
-                <label><?php _e('Slide space :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=space}} px
+                <label><?php _e('Slide spacing :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=space}} px
             </div>
         </div>
-    {{/meta-box}} 
-    
+    {{/meta-box}}
+
 
     {{#meta-box title="<?php _e('Navigation', MSWP_TEXT_DOMAIN); ?>"}}
 
         <div class="msp-metabox-row">
             <h4><?php _e('Slideshow behavior and sorting slides', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 {{switch-box value=autoplay}}<label><?php _e('Autoplay (Slideshow)', MSWP_TEXT_DOMAIN); ?></label>
                 <span class="msp-form-space"></span>
                 {{switch-box value=loop}}<label><?php _e('Loop navigation', MSWP_TEXT_DOMAIN); ?> </label>
                 <span class="msp-form-space"></span>
-                {{switch-box value=endPause}}<label><?php _e('Pause at end slide', MSWP_TEXT_DOMAIN); ?></label>
+                {{switch-box value=endPause}}<label><?php _e('Pause at the final slide', MSWP_TEXT_DOMAIN); ?></label>
             </div>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 {{switch-box value=overPause}}<label><?php _e('Pause on hover', MSWP_TEXT_DOMAIN); ?></label>
                 <span class="msp-form-space"></span>
                 {{switch-box value=shuffle}}<label><?php _e('Random order', MSWP_TEXT_DOMAIN); ?></label>
                 <span class="msp-form-space"></span>
                 {{switch-box value=hideLayers}}<label><?php _e('Hide layers before changing slide', MSWP_TEXT_DOMAIN); ?></label>
             </div>
-            <div class="msp-metabox-indented"> 
-               {{switch-box value=instantShowLayers}}<label><?php _e('Show layers before slide transition complete', MSWP_TEXT_DOMAIN); ?></label>
+            <div class="msp-metabox-indented">
+               {{switch-box value=instantShowLayers}}<label><?php _e('Show layers before the slide transition is complete', MSWP_TEXT_DOMAIN); ?></label>
             </div>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
+               {{switch-box value=mobileBGVideo}}<label><?php _e('Show background video in mobile devices (Not recommended)', MSWP_TEXT_DOMAIN); ?></label>
+            </div>
+            <div class="msp-metabox-indented">
                 <label><?php _e('Start with slide :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=start min=1}}
             </div>
             <h4><?php _e('Slider deep linking options' , MSWP_TEXT_DOMAIN); ?></h4>
@@ -210,7 +238,7 @@
                         <option value="query"><?php _e('Query string style (&name=index)', MSWP_TEXT_DOMAIN); ?></option>
                     {{/dropdwon-List}}
                 </div>
-            {{/if}} 
+            {{/if}}
             <h4><?php _e('Layers parallax mode', MSWP_TEXT_DOMAIN); ?></h4>
             <div class="msp-metabox-indented">
                 <label><?php _e('Parallax mode : ', MSWP_TEXT_DOMAIN); ?> </label>
@@ -237,18 +265,23 @@
                 </div>
             {{/if}}
             <h4><?php _e('Slider navigation methods', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 {{switch-box value=swipe}}<label><?php _e('Touch swipe navigation', MSWP_TEXT_DOMAIN); ?></label>
                 <span class="msp-form-space"></span>
                 {{switch-box value=mouse}}<label><?php _e('Mouse swipe navigation', MSWP_TEXT_DOMAIN); ?></label>
                 <span class="msp-form-space"></span>
                 {{switch-box value=grabCursor}}<label><?php _e('Use grab mouse cursor', MSWP_TEXT_DOMAIN); ?></label>
             </div>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 {{switch-box value=wheel}}<label><?php _e('Mouse wheel navigation', MSWP_TEXT_DOMAIN); ?></label>
+                <span class="msp-form-space"></span>
+                {{switch-box value=keyboard}}<label><?php _e('Keyboard navigation', MSWP_TEXT_DOMAIN); ?></label>
+            </div>
+            <div class="msp-metabox-indented">
+                {{switch-box value=startOnAppear}}<label><?php _e('Start slider when appears in browser window.', MSWP_TEXT_DOMAIN); ?></label>
             </div>
             <h4><?php _e('Slide preloading', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 {{#view MSPanel.Select value=preloadMethod width="200" }}
                     <option value="nearby"><?php _e('Load nearby slides', MSWP_TEXT_DOMAIN); ?></option>
                     <option value="-1"><?php _e('Load slides in sequence', MSWP_TEXT_DOMAIN); ?></option>
@@ -260,22 +293,23 @@
                 {{/if}}
             </div>
         </div>
-    
-    {{/meta-box}} 
-    
+
+    {{/meta-box}}
+
     {{#meta-box title="<?php _e('Appearance', MSWP_TEXT_DOMAIN); ?>"}}
 
         <div class="msp-metabox-row">
             <h4><?php _e('Slider Skin', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 <label><?php _e('Skin :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=skin width=180}}
                     {{#each skin in sliderSkins}}
                         <option {{bind-attr value=skin.class}}>{{skin.label}}</option>
                     {{/each}}
-                    
-                    {{!-- 
+
+                    {{!--
                     <option value="ms-skin-default"><?php _e('Default', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="ms-skin-minimal"><?php _e('Minimal', MSWP_TEXT_DOMAIN); ?></option>
                     <option value="ms-skin-light-2"><?php _e('Light 2', MSWP_TEXT_DOMAIN); ?></option>
                     <option value="ms-skin-light-3"><?php _e('Light 3', MSWP_TEXT_DOMAIN); ?></option>
                     <option value="ms-skin-light-4"><?php _e('Light 4', MSWP_TEXT_DOMAIN); ?></option>
@@ -290,39 +324,39 @@
                     --}}
                 {{/dropdwon-List}}
             </div>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 <label><?php _e('Align center slider controls :', MSWP_TEXT_DOMAIN); ?> </label> {{switch-box value=centerControls}}
             </div>
             <h4><?php _e('Slider background settings', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
-                <label><?php _e('Background image :', MSWP_TEXT_DOMAIN); ?> </label> {{view MSPanel.ImgSelect value=bgImage thumb=bgImageThumb}} 
-                <span class="msp-form-space"></span> 
+            <div class="msp-metabox-indented">
+                <label><?php _e('Background image :', MSWP_TEXT_DOMAIN); ?> </label> {{view MSPanel.ImgSelect value=bgImage thumb=bgImageThumb}}
+                <span class="msp-form-space"></span>
                 <label><?php _e('Background color :', MSWP_TEXT_DOMAIN); ?> </label> {{color-picker value=bgColor}}
             </div>
             <h4><?php _e('Slider custom class name and style', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 <label><?php _e('Class name :', MSWP_TEXT_DOMAIN); ?> </label> {{input value=className}}
             </div>
             {{!--<div class="msp-metabox-indented">
                 <label><?php _e('Inline style :', MSWP_TEXT_DOMAIN); ?> </label> {{input value=inlineStyle size="50"}}
-            </div>--}} 
+            </div>--}}
            <div class="msp-metabox-indented">
-                <label><?php _e('Slider custom styles :', MSWP_TEXT_DOMAIN); ?> </label> 
+                <label><?php _e('Slider custom styles :', MSWP_TEXT_DOMAIN); ?> </label>
             </div>
             <div class="msp-metabox-indented">
                 {{#code-mirror width="880" height="250" mode="css" value=customStyle}}{{/code-mirror}}
             </div>
-            
+
         </div>
-    
-    {{/meta-box}} 
+
+    {{/meta-box}}
 </script>
 <!-- Flickr Plugin Settings -->
 <script type="text/x-handlebars" id="flickr">
  {{#meta-box title="<?php _e('Flickr Settings', MSWP_TEXT_DOMAIN); ?>"}}
         <div class="msp-metabox-row">
             <h4><?php _e('Enter your Flickr API key here', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 <label><?php _e('API key :', MSWP_TEXT_DOMAIN); ?> </label> {{input value=apiKey size="60"}}
             </div>
             <div class="msp-metabox-indented">
@@ -331,14 +365,14 @@
                  </span>
             </div>
             <h4><?php _e('Create slides from user images or photoset images', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 <label><?php _e('Create slides from :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=setType width=180}}
                     <option value="photos"><?php _e('User public photos', MSWP_TEXT_DOMAIN); ?></option>
                     <option value="photoset"><?php _e('Photos in a set', MSWP_TEXT_DOMAIN); ?></option>
                 {{/dropdwon-List}}
                     <div class="msp-form-space-med"></div>
-               
+
                 {{#if isPhotoset}}
                     <label><?php _e('Photoset Id :', MSWP_TEXT_DOMAIN); ?> </label> {{input value=setId }}
                 {{else}}
@@ -374,30 +408,40 @@
                 <div class="msp-form-space-med"></div>
                 <label><?php _e('Thumbnails size :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=thumbSize width=200}}
-                   <option value="q"> <?php _e('Large square 150x150', MSWP_TEXT_DOMAIN);?> </option> 
-                   <option value="s"> <?php _e('Small square 75x75', MSWP_TEXT_DOMAIN);?> </option> 
+                   <option value="q"> <?php _e('Large square 150x150', MSWP_TEXT_DOMAIN);?> </option>
+                   <option value="s"> <?php _e('Small square 75x75', MSWP_TEXT_DOMAIN);?> </option>
                    <option value="t"> <?php _e('100px on longest side', MSWP_TEXT_DOMAIN);?> </option>
                 {{/dropdwon-List}}
             </div>
 
         </div>
-    
-    {{/meta-box}} 
+
+    {{/meta-box}}
 </script>
 
 <!-- Facebook Slider Settings -->
 <script type="text/x-handlebars" id="facebook">
  {{#meta-box title="<?php _e('Facebook Settings', MSWP_TEXT_DOMAIN); ?>"}}
         <div class="msp-metabox-row">
+            <h4><?php _e('Enter the Facebook Access Token', MSWP_TEXT_DOMAIN); ?></h4>
+            <div class="msp-metabox-indented">
+                <label><?php _e('Access token :', MSWP_TEXT_DOMAIN); ?> </label> {{input value=fbtoken size=60 }}
+            </div>
+            <div class="msp-metabox-indented">
+                <span class="msp-tip"><?php _e('Don\'t have an access token?', MSWP_TEXT_DOMAIN); ?>
+                    <a href="http://support.averta.net/envato/get-the-facebook-access-token/" target="_blank"><?php _e('Check this page.', MSWP_TEXT_DOMAIN); ?></a>
+                </span>
+            </div>
+
             <h4><?php _e('Create slides from user images or album images', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 <label><?php _e('Create slides from :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=setType width=180}}
                     <option value="photostream"><?php _e('User public photos', MSWP_TEXT_DOMAIN); ?></option>
                     <option value="album"><?php _e('Photos in a album', MSWP_TEXT_DOMAIN); ?></option>
                 {{/dropdwon-List}}
                     <div class="msp-form-space-med"></div>
-               
+
                 {{#if isPhotostream}}
                     <label><?php _e('Username :', MSWP_TEXT_DOMAIN); ?> </label> {{input value=setId }}
                 {{else}}
@@ -408,7 +452,7 @@
             <div class="msp-metabox-indented">
                 {{#if isPhotostream}}
                 {{else}}
-                    <span class="msp-tip"><?php _e('Don\'t have you album id?', MSWP_TEXT_DOMAIN); ?>
+                    <span class="msp-tip"><?php _e('Don\'t have your album id?', MSWP_TEXT_DOMAIN); ?>
                         <a href="http://support.averta.net/envato/knowledgebase/find-facebook-album-id/" target="_blank"><?php _e('See here for more details.', MSWP_TEXT_DOMAIN); ?></a>
                     </span>
                 {{/if}}
@@ -441,8 +485,8 @@
             </div>
 
         </div>
-    
-    {{/meta-box}} 
+
+    {{/meta-box}}
 </script>
 
 <!-- Posts Settings -->
@@ -450,7 +494,7 @@
     {{#meta-box title="<?php _e('Posts Settings', MSWP_TEXT_DOMAIN); ?>"}}
         <div class="msp-metabox-row">
             <h4><?php _e('Create slides from below filter', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 <label><?php _e('Post type :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=postType width=200}}
                     {{#each ptype in wpData.types}}
@@ -459,7 +503,7 @@
                 {{/dropdwon-List}}
             </div>
 
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 {{#if postCatsList}}
                     <label><?php _e('Categories :', MSWP_TEXT_DOMAIN); ?> </label>
                     {{#multi-dropdwon-List value=postCats width=200}}
@@ -481,16 +525,19 @@
                 {{/if}}
             </div>
              <h4><?php _e('Enter the post IDs which you want to exclude or include', MSWP_TEXT_DOMAIN); ?></h4>
-             <div class="msp-metabox-indented"> 
-                <label><?php _e('Exclude posts :', MSWP_TEXT_DOMAIN); ?> </label> 
+             <div class="msp-metabox-indented">
+                <label><?php _e('Exclude posts :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{input value=postExcludeIds }}&nbsp;&nbsp;<?php _e('post IDs separated by comma (eg. 53,34,87,25)', MSWP_TEXT_DOMAIN); ?>
             </div>
-             <div class="msp-metabox-indented"> 
-                <label><?php _e('Include posts :', MSWP_TEXT_DOMAIN); ?> </label> 
+             <div class="msp-metabox-indented">
+                <label><?php _e('Include posts :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{input value=postIncludeIds }}&nbsp;&nbsp;<?php _e('post IDs separated by comma (eg. 53,34,87,25)', MSWP_TEXT_DOMAIN); ?>
             </div>
+            <div class="msp-metabox-indented">
+                <?php _e('Exclude posts wihtout image : ', MSWP_TEXT_DOMAIN); ?> </label> {{switch-box value=postExcludeNoImg}} <label>
+            </div>
             <h4><?php _e('Maximum number of posts to include in slider and length of excerpt', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                <label><?php _e('Posts number :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=postCount min="1" }}
                <div class="msp-form-space-med"></div>
                <label><?php _e('Excerpt length :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=postExcerptLen min="1" }}&nbsp;&nbsp;<?php _e('character(s)', MSWP_TEXT_DOMAIN); ?>
@@ -504,12 +551,12 @@
             </div>
             {{#if postLinkSlide}}
                 <div class="msp-metabox-indented">
-                   <label><?php _e('Slide link target : ', MSWP_TEXT_DOMAIN); ?> </label> {{view MSPanel.URLTarget  value=postLinkTarget }} 
+                   <label><?php _e('Slide link target : ', MSWP_TEXT_DOMAIN); ?> </label> {{view MSPanel.URLTarget  value=postLinkTarget }}
                 </div>
             {{/if}}
             <h4><?php _e('Order of slides', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
-                <label><?php _e('Order by :', MSWP_TEXT_DOMAIN); ?> </label> 
+            <div class="msp-metabox-indented">
+                <label><?php _e('Order by :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=postOrder width=150}}
                     <option value="date"> <?php _e('Date', MSWP_TEXT_DOMAIN);?> </option>
                     <option value="menu_order date"> <?php _e('Menu Order', MSWP_TEXT_DOMAIN);?> </option>
@@ -521,15 +568,15 @@
                     <option value="author"> <?php _e('Author', MSWP_TEXT_DOMAIN);?> </option>
                 {{/dropdwon-List}}
                 <div class="msp-form-space-med"></div>
-                <label><?php _e('Order direction :', MSWP_TEXT_DOMAIN); ?> </label> 
+                <label><?php _e('Order direction :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=postOrderDir width=150}}
                     <option value="DESC"> <?php _e('Descending', MSWP_TEXT_DOMAIN);?> </option>
                     <option value="ASC"> <?php _e('Ascending', MSWP_TEXT_DOMAIN);?> </option>
                 {{/dropdwon-List}}
             </div>
             <h4><?php _e('Use as background image of slide', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
-                <label><?php _e('Grab the image from :', MSWP_TEXT_DOMAIN); ?> </label> 
+            <div class="msp-metabox-indented">
+                <label><?php _e('Grab the image from :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=postImageType width=150}}
                     <option value="auto"> <?php _e('Auto Select', MSWP_TEXT_DOMAIN);?> </option>
                     <option value="featured"> <?php _e('Featured Image', MSWP_TEXT_DOMAIN);?> </option>
@@ -539,19 +586,19 @@
                 {{/dropdwon-List}}
             </div>
             {{#if useCustomBg}}
-                <div class="msp-metabox-indented"> 
+                <div class="msp-metabox-indented">
                     <label><?php _e('Background image :', MSWP_TEXT_DOMAIN); ?> </label>
-                    {{view MSPanel.ImgSelect value=postSlideBg thumb=postSlideBgthumb}} 
+                    {{view MSPanel.ImgSelect value=postSlideBg thumb=postSlideBgthumb}}
                 </div>
             {{/if}}
         </div>
-    {{/meta-box}} 
+    {{/meta-box}}
 
     {{#meta-box title="<?php _e('Posts Preview', MSWP_TEXT_DOMAIN); ?>"}}
         <div class="msp-posts-preview">
             {{{previewResults}}}
         </div>
-    {{/meta-box}} 
+    {{/meta-box}}
 </script>
 
 <!-- Woocommerce Settings -->
@@ -560,7 +607,7 @@
         <div class="msp-metabox-row">
 
             <h4><?php _e('Create slides from below filter', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 <label><?php _e('Categories :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#multi-dropdwon-List value=postCats width=200}}
                     <option value="" selected><?php _e('All Categories', MSWP_TEXT_DOMAIN); ?></option>
@@ -578,22 +625,22 @@
                 {{/multi-dropdwon-List}}
             </div>
             <div class="msp-metabox-indented">
-                {{switch-box value=wcOnlyInstock}} <label> <?php _e('Only display in-stock products.', MSWP_TEXT_DOMAIN);?></label> 
+                {{switch-box value=wcOnlyInstock}} <label> <?php _e('Only display in-stock products.', MSWP_TEXT_DOMAIN);?></label>
             </div>
             <div class="msp-metabox-indented">
                 {{switch-box value=wcOnlyFeatured}} <label> <?php _e('Only display featured products.', MSWP_TEXT_DOMAIN);?></label>
             </div>
             <div class="msp-metabox-indented">
-                {{switch-box value=wcOnlyOnsale}} <label> <?php _e('Only display on sale products.', MSWP_TEXT_DOMAIN);?></label>  
+                {{switch-box value=wcOnlyOnsale}} <label> <?php _e('Only display on sale products.', MSWP_TEXT_DOMAIN);?></label>
             </div>
 
              <h4><?php _e('Enter the product IDs which you want to exclude', MSWP_TEXT_DOMAIN); ?></h4>
-             <div class="msp-metabox-indented"> 
-                <label><?php _e('Exclude products :', MSWP_TEXT_DOMAIN); ?> </label> 
+             <div class="msp-metabox-indented">
+                <label><?php _e('Exclude products :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{input value=postExcludeIds }}&nbsp;&nbsp;<?php _e('product IDs separated by comma (eg. 53,34,87,25)', MSWP_TEXT_DOMAIN); ?>
             </div>
             <h4><?php _e('Maximum number of products to include in slider and length of excerpt', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                <label><?php _e('Products number :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=postCount min="1" }}
                <div class="msp-form-space-med"></div>
                <label><?php _e('Excerpt length :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=postExcerptLen min="1" }}&nbsp;&nbsp;<?php _e('character(s)', MSWP_TEXT_DOMAIN); ?>
@@ -607,12 +654,12 @@
             </div>
             {{#if postLinkSlide}}
                 <div class="msp-metabox-indented">
-                   <label><?php _e('Slide link target : ', MSWP_TEXT_DOMAIN); ?> </label> {{view MSPanel.URLTarget  value=postLinkTarget }} 
+                   <label><?php _e('Slide link target : ', MSWP_TEXT_DOMAIN); ?> </label> {{view MSPanel.URLTarget  value=postLinkTarget }}
                 </div>
             {{/if}}
             <h4><?php _e('Order of slides', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
-                <label><?php _e('Order by :', MSWP_TEXT_DOMAIN); ?> </label> 
+            <div class="msp-metabox-indented">
+                <label><?php _e('Order by :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=postOrder width=150}}
                     <option value="date"> <?php _e('Date', MSWP_TEXT_DOMAIN);?> </option>
                     <option value="menu_order date"> <?php _e('Menu Order', MSWP_TEXT_DOMAIN);?> </option>
@@ -628,15 +675,15 @@
                     <option value="price-desc"> <?php _e('Price: high to low', MSWP_TEXT_DOMAIN);?> </option>
                 {{/dropdwon-List}}
                 <div class="msp-form-space-med"></div>
-                <label><?php _e('Order direction :', MSWP_TEXT_DOMAIN); ?> </label> 
+                <label><?php _e('Order direction :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=postOrderDir width=150}}
                     <option value="DESC"> <?php _e('Descending', MSWP_TEXT_DOMAIN);?> </option>
                     <option value="ASC"> <?php _e('Ascending', MSWP_TEXT_DOMAIN);?> </option>
                 {{/dropdwon-List}}
             </div>
             <h4><?php _e('Use as background image of slide', MSWP_TEXT_DOMAIN); ?></h4>
-            <div class="msp-metabox-indented"> 
-                <label><?php _e('Grab the image from :', MSWP_TEXT_DOMAIN); ?> </label> 
+            <div class="msp-metabox-indented">
+                <label><?php _e('Grab the image from :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=postImageType width=150}}
                     <option value="auto"> <?php _e('Auto Select', MSWP_TEXT_DOMAIN);?> </option>
                     <option value="featured"> <?php _e('Featured Image', MSWP_TEXT_DOMAIN);?> </option>
@@ -646,19 +693,19 @@
                 {{/dropdwon-List}}
             </div>
             {{#if useCustomBg}}
-                <div class="msp-metabox-indented"> 
+                <div class="msp-metabox-indented">
                     <label><?php _e('Background image :', MSWP_TEXT_DOMAIN); ?> </label>
-                    {{view MSPanel.ImgSelect value=postSlideBg thumb=postSlideBgthumb}} 
+                    {{view MSPanel.ImgSelect value=postSlideBg thumb=postSlideBgthumb}}
                 </div>
             {{/if}}
         </div>
-    {{/meta-box}} 
+    {{/meta-box}}
 
     {{#meta-box title="<?php _e('Products Preview', MSWP_TEXT_DOMAIN); ?>"}}
         <div class="msp-posts-preview">
             {{{previewResults}}}
         </div>
-    {{/meta-box}} 
+    {{/meta-box}}
 </script>
 <!-- Slides Page -->
 <script type="text/x-handlebars" id="slides">
@@ -668,9 +715,9 @@
         <div class="msp-metabox-row">
          {{view MSPanel.SlideList}}
         </div>
-        {{/meta-box}} 
-        {{#if length}}
-            {{partial "slide-settings"}}  
+        {{/meta-box}}
+        {{#if currentSlide}}
+            {{partial "slide-settings"}}
         {{/if}}
     {{/if}}
     {{#if templateSlider}}
@@ -682,9 +729,9 @@
                 </div>
             </div>
          {{/meta-box}}
-        
+
         {{partial "slide-template-settings"}}
-        
+
     {{/if}}
 </script>
 <!-- tempalte slide settings -->
@@ -725,13 +772,23 @@
         </li>
     </ul>
 
-    {{/tabs-panel}} 
+    {{/tabs-panel}}
 
     {{render "layers" currentSlide.layers}}
 </script>
 <!-- Slide Settings Partial -->
 <script type="text/x-handlebars" id="slide-settings">
 
+    {{#if currentSlide.isOverlayLayers}}
+        {{#meta-box title="<?php _e('Overlay layers', MSWP_TEXT_DOMAIN); ?>"}}
+            <div class="msp-metabox-indented">
+                <p><?php _e('In this section you can add layers over the slider. They remain fixed while changing slides.', MSWP_TEXT_DOMAIN);?></p>
+            </div>
+            <div class="msp-metabox-indented">
+                 {{switch-box value=sliderSettings.enableOverlayLayers}} <label> <?php _e('Enable overlay layers', MSWP_TEXT_DOMAIN);?></label>
+            </div>
+        {{/meta-box}}
+    {{else}}
     {{#tabs-panel id="slide-settings"}}
     <div class="msp-metabox-handle">
 
@@ -752,10 +809,12 @@
         <li id="sl-val">{{partial 'slide-video-and-link'}}</li>
         <li id="sl-inf">{{partial 'slide-info'}}</li>
         <li id="sl-misc">{{partial 'slide-misc'}}</li>
-    </ul> 
+    </ul>
 
-    {{/tabs-panel}} 
+    {{/tabs-panel}}
 
+    <!-- end of check for overlay if -->
+    {{/if}}
     {{render "layers" currentSlide.layers}}
 </script>
 
@@ -807,12 +866,12 @@
         </div>
         <div class="msp-metabox-indented">
             <label><?php _e('Link id :', MSWP_TEXT_DOMAIN); ?> </label> {{input size=20 value=currentSlide.linkId}}
-             <span class="msp-form-space"></span> 
+             <span class="msp-form-space"></span>
             <label><?php _e('Link class :', MSWP_TEXT_DOMAIN); ?> </label> {{input size=20 value=currentSlide.linkClass}}
         </div>
         <div class="msp-metabox-indented">
             <label><?php _e('Link rel :', MSWP_TEXT_DOMAIN); ?> </label> {{input size=20 value=currentSlide.linkRel}}
-             <span class="msp-form-space"></span> 
+             <span class="msp-form-space"></span>
             <label><?php _e('Link title :', MSWP_TEXT_DOMAIN); ?> </label> {{input size=20 value=currentSlide.linkTitle}}
         </div>
         <h4><?php _e('Youtube or Vimeo video as slide', MSWP_TEXT_DOMAIN); ?></h4>
@@ -828,10 +887,13 @@
 </script>
 
 <!-- Slide Info -->
-<script type="text/x-handlebars" id="slide-info"> 
+<script type="text/x-handlebars" id="slide-info">
     <div class="msp-metabox-row">
         <div class="msp-metabox-indented">
-            <label><?php _e('This info will show beside of slider when slider reaches the slide or it can represent as tab in a tabs control. It is relative to selected slider template.', MSWP_TEXT_DOMAIN); ?></label>
+            <label><?php _e('Unique slide id :', MSWP_TEXT_DOMAIN); ?> </label> {{input size=60 value=currentSlide.msId}}
+        </div>
+        <div class="msp-metabox-indented">
+            <label><?php _e('The info. will appear next to the slider when it reaches that specific slide, or it can represent as a tab in tabs control. Please note that it is relative to the selected slider\'s template.', MSWP_TEXT_DOMAIN); ?></label>
         </div>
 
         {{#if MSPanel.dynamicTags}}
@@ -850,17 +912,20 @@
 <!-- Slide Misc -->
 <script type="text/x-handlebars" id="slide-misc">
     <div class="msp-metabox-row">
-        <h4><?php _e('Custom class name and id for slide element', MSWP_TEXT_DOMAIN); ?> </h4>
+        <h4><?php _e('Custom class name and ID for slide element', MSWP_TEXT_DOMAIN); ?> </h4>
         <div class="msp-metabox-indented">
             <label><?php _e('Class name :', MSWP_TEXT_DOMAIN); ?> </label> {{input size=30 value=currentSlide.cssClass}}
-             <span class="msp-form-space"></span> 
-            <label><?php _e('CSS id :', MSWP_TEXT_DOMAIN); ?> </label> {{input size=30 value=currentSlide.cssId}}
+             <span class="msp-form-space"></span>
+            <label><?php _e('CSS ID :', MSWP_TEXT_DOMAIN); ?> </label> {{input size=30 value=currentSlide.cssId}}
         </div>
         <h4><?php _e('Background color and slide background alt text ', MSWP_TEXT_DOMAIN); ?></h4>
         <div class="msp-metabox-indented">
             <label><?php _e('Background color :', MSWP_TEXT_DOMAIN); ?> </label> {{color-picker value=currentSlide.bgColor}}
-             <span class="msp-form-space"></span> 
+             <span class="msp-form-space"></span>
             <label><?php _e('Alt text :', MSWP_TEXT_DOMAIN); ?> </label> {{input size=30 value=currentSlide.bgAlt}}
+        </div>
+        <div class="msp-metabox-indented">
+            <label><?php _e('Background image title :', MSWP_TEXT_DOMAIN); ?> </label> {{input size=30 value=currentSlide.bgTitle}}
         </div>
         <h4><?php _e('Slide color and pattern overlay ', MSWP_TEXT_DOMAIN); ?></h4>
         <div class="msp-metabox-indented">
@@ -885,10 +950,35 @@
 
     {{view MSPanel.Timeline}}
 
-    {{/meta-box}} 
-    
+    {{/meta-box}}
+
     {{partial layerSettings}}
 </script>
+
+<!-- layer content common settings -->
+<script type="text/x-handlebars" id="layer-content-common">
+    <div class="msp-metabox-indented">
+        <label><?php _e('Layer type:', MSWP_TEXT_DOMAIN); ?> </label>
+        {{#dropdwon-List value=currentLayer.position}}
+            <option value="normal"><?php _e('Normal', MSWP_TEXT_DOMAIN); ?></option>
+            <option value="static"><?php _e('Static', MSWP_TEXT_DOMAIN); ?></option>
+            <option value="fixed"><?php _e('Fixed', MSWP_TEXT_DOMAIN); ?></option>
+        {{/dropdwon-List}}
+        <div class="msp-form-space"></div>
+        <label><?php _e('Unique layer id :', MSWP_TEXT_DOMAIN); ?> </label> {{input value=currentLayer.msId}}
+    </div>
+    {{#if currentLayer.slide.isOverlayLayers}}
+        <div class="msp-metabox-indented">
+            <p><?php _e('Enter slide(s) id separated by comma to show or hide the overlay layer over specific slide.', MSWP_TEXT_DOMAIN); ?></p>
+            {{#dropdwon-List value=currentLayer.overlayTargetSlidesAction width="200"}}
+                <option value="show"><?php _e('Show layer only in slide(s):', MSWP_TEXT_DOMAIN); ?></option>
+                <option value="hide"><?php _e('Hide layer in slide(s):', MSWP_TEXT_DOMAIN); ?></option>
+            {{/dropdwon-List}}
+            {{input value=currentLayer.overlayTargetSlides size="50"}}
+        </div>
+    {{/if}}
+</script>
+
 
 <!-- text layer settings -->
 <script type="text/x-handlebars" id="text-layer-settings">
@@ -908,6 +998,7 @@
     <ul class="tabs-content">
         <li id="layer-content">
             <div class="msp-metabox-row">
+                {{partial 'layer-content-common'}}
                  <div class="msp-metabox-indented">
                     <label><?php _e('Width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentLayer.width}} px
                     {{!--<span class="msp-form-space"></span>
@@ -940,9 +1031,9 @@
         <li id="layer-anim">{{partial 'layer-transition-settings'}}</li>
         <li id="layer-style">{{partial 'layer-style-settings'}}</li>
         <li id="layer-misc">{{partial 'layer-misc-settings'}}</li>
-    </ul> 
+    </ul>
 
-    {{/tabs-panel}} 
+    {{/tabs-panel}}
 </script>
 
 <!-- image layer settings -->
@@ -963,6 +1054,7 @@
     <ul class="tabs-content">
         <li id="layer-content">
             <div class="msp-metabox-row">
+                {{partial 'layer-content-common'}}
                 <h4><?php _e('Layer image and alt attribute', MSWP_TEXT_DOMAIN); ?></h4>
                 <div class="msp-metabox-indented">
                     <label><?php _e('Select image :', MSWP_TEXT_DOMAIN); ?> </label> {{view MSPanel.ImgSelect value=currentLayer.img thumb=currentLayer.imgThumb}}
@@ -986,9 +1078,9 @@
         <li id="layer-anim">{{partial 'layer-transition-settings'}}</li>
         <li id="layer-style">{{partial 'layer-style-settings'}}</li>
         <li id="layer-misc">{{partial 'layer-misc-settings'}}</li>
-    </ul> 
+    </ul>
 
-    {{/tabs-panel}} 
+    {{/tabs-panel}}
 </script>
 
 <!-- video layer settings -->
@@ -1009,6 +1101,7 @@
     <ul class="tabs-content">
         <li id="layer-content">
             <div class="msp-metabox-row">
+                {{partial 'layer-content-common'}}
                 <h4><?php _e('Youtube or Vimeo video embed source', MSWP_TEXT_DOMAIN); ?></h4>
                 <div class="msp-metabox-indented">
                     <label><?php _e('URL :', MSWP_TEXT_DOMAIN); ?> </label> {{input class="msp-path-input" value=currentLayer.video}}
@@ -1034,8 +1127,8 @@
         <li id="layer-anim">{{partial 'layer-transition-settings'}}</li>
         <li id="layer-style">{{partial 'layer-style-settings'}}</li>
         <li id="layer-misc">{{partial 'layer-misc-settings'}}</li>
-    </ul> 
-    {{/tabs-panel}} 
+    </ul>
+    {{/tabs-panel}}
 </script>
 
 <!-- hotspot layer settings -->
@@ -1056,6 +1149,7 @@
     <ul class="tabs-content">
         <li id="layer-content">
             <div class="msp-metabox-row">
+                {{partial 'layer-content-common'}}
                 <h4><?php _e('Hotspot tooltip alignment and max width', MSWP_TEXT_DOMAIN); ?></h4>
                 <div class="msp-metabox-indented">
                     <label><?php _e('Tooltip align : ', MSWP_TEXT_DOMAIN); ?> </label>
@@ -1069,7 +1163,7 @@
                     <label><?php _e('Tooltip max width : ', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentLayer.width min="0"}} px
                 </div>
                 <div class="msp-metabox-indented">
-                    <label><?php _e('Stay tooltip on mouse over it : ', MSWP_TEXT_DOMAIN); ?> </label> {{switch-box value=currentLayer.stayHover}} 
+                    <label><?php _e('Stay tooltip on mouse over it : ', MSWP_TEXT_DOMAIN); ?> </label> {{switch-box value=currentLayer.stayHover}}
                 </div>
                 <h4><?php _e('Insert your hotspot content here, for a better SEO result you can use heading tags for important contents.', MSWP_TEXT_DOMAIN); ?> </h4>
                  {{#if MSPanel.dynamicTags}}
@@ -1099,13 +1193,13 @@
         <li id="layer-anim">{{partial 'layer-transition-settings'}}</li>
         <li id="layer-style">{{partial 'layer-style-settings'}}</li>
         <li id="layer-misc">{{partial 'layer-misc-settings'}}</li>
-    </ul> 
-    {{/tabs-panel}} 
+    </ul>
+    {{/tabs-panel}}
 </script>
 
-<!-- 
+<!--
     button layer settings
-    @since 1.9.0 
+    @since 1.9.0
 -->
 <script type="text/x-handlebars" id="button-layer-settings">
     {{#tabs-panel}}
@@ -1124,9 +1218,10 @@
     <ul class="tabs-content">
         <li id="layer-content">
             <div class="msp-metabox-row">
+                {{partial 'layer-content-common'}}
                 <h4><?php _e('Button label and link', MSWP_TEXT_DOMAIN); ?></h4>
                 <div class="msp-metabox-indented">
-                    <label><?php _e('Label :', MSWP_TEXT_DOMAIN); ?> </label> {{input value=currentLayer.content}}                   
+                    <label><?php _e('Label :', MSWP_TEXT_DOMAIN); ?> </label> {{input value=currentLayer.content}}
                 </div>
                  <h4><?php _e('Link button or bind action', MSWP_TEXT_DOMAIN); ?></h4>
                 <div class="msp-metabox-indented">
@@ -1154,9 +1249,9 @@
         <li id="layer-anim">{{partial 'layer-transition-settings'}}</li>
         <li id="layer-style">{{partial 'layer-style-settings'}}</li>
         <li id="layer-misc">{{partial 'layer-misc-settings'}}</li>
-    </ul> 
+    </ul>
 
-    {{/tabs-panel}} 
+    {{/tabs-panel}}
 </script>
 
 <!-- layer transition tab -->
@@ -1166,27 +1261,40 @@
         <div class="msp-metabox-indented">
             <label><?php _e('Parallax effect level :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentLayer.parallax}} %
         </div>
-        <h4><?php _e('Layer transition in', MSWP_TEXT_DOMAIN); ?></h4>
-        <div class="msp-metabox-indented">
-            <label><?php _e('Transition effect :', MSWP_TEXT_DOMAIN); ?> </label><button class="msp-regular" {{action "openEffectEditor" "show"}}>Select...</button>
-            <span class="msp-form-space"></span>
-            <label><?php _e('Duration :', MSWP_TEXT_DOMAIN); ?> </lable> {{number-input value=currentLayer.showDuration step="0.2"}} s
-            <span class="msp-form-space"></span>
-            <label><?php _e('Delay :', MSWP_TEXT_DOMAIN); ?> </lable> {{number-input value=currentLayer.showDelay step="0.2"}} s
-        </div>
-        <h4><?php _e('Layer transition out', MSWP_TEXT_DOMAIN); ?></h4>
-        <div class="msp-metabox-indented">
-            {{switch-box value=currentLayer.useHide}} <label><label><?php _e('Enable transition out', MSWP_TEXT_DOMAIN); ?> </label>
-        </div>
-        {{#if currentLayer.useHide}}
+
+        {{#if staticLayer}}
+            <h4><?php _e('Layer transition in', MSWP_TEXT_DOMAIN); ?></h4>
             <div class="msp-metabox-indented">
-                <label><?php _e('Transition effect :', MSWP_TEXT_DOMAIN); ?> </label><button class="msp-regular" {{action "openEffectEditor" "hide"}}>Select...</button>
-                <span class="msp-form-space"></span>
-                <label><?php _e('Duration :', MSWP_TEXT_DOMAIN); ?> </lable> {{number-input value=currentLayer.hideDuration step="0.2"}} s
-                <span class="msp-form-space"></span>
-                <label><?php _e('Waiting :', MSWP_TEXT_DOMAIN); ?> </lable> {{number-input value=currentLayer.hideDelay step="0.2"}} s
+                <p><strong><?php _e('Static layer doesn\'t support transitions.', MSWP_TEXT_DOMAIN); ?></strong></p>
             </div>
+        {{else}}
+            <h4><?php _e('Wait for action trigger', MSWP_TEXT_DOMAIN); ?></h4>
+            <div class="msp-metabox-indented">
+                {{switch-box value=currentLayer.wait}} <label><label><?php _e('Do not start automatically and wait for an action trigger.', MSWP_TEXT_DOMAIN); ?> </label>
+            </div>
+            <h4><?php _e('Layer transition in', MSWP_TEXT_DOMAIN); ?></h4>
+            <div class="msp-metabox-indented">
+                <label><?php _e('Transition effect :', MSWP_TEXT_DOMAIN); ?> </label><button class="msp-regular" {{action "openEffectEditor" "show"}}>Select...</button>
+                <span class="msp-form-space"></span>
+                <label><?php _e('Duration :', MSWP_TEXT_DOMAIN); ?> </lable> {{number-input value=currentLayer.showDuration step="0.2"}} s
+                <span class="msp-form-space"></span>
+                <label><?php _e('Delay :', MSWP_TEXT_DOMAIN); ?> </lable> {{number-input value=currentLayer.showDelay step="0.2"}} s
+            </div>
+            <h4><?php _e('Layer transition out', MSWP_TEXT_DOMAIN); ?></h4>
+            <div class="msp-metabox-indented">
+                {{switch-box value=currentLayer.useHide}} <label><label><?php _e('Enable transition out', MSWP_TEXT_DOMAIN); ?> </label>
+            </div>
+            {{#if currentLayer.useHide}}
+                <div class="msp-metabox-indented">
+                    <label><?php _e('Transition effect :', MSWP_TEXT_DOMAIN); ?> </label><button class="msp-regular" {{action "openEffectEditor" "hide"}}>Select...</button>
+                    <span class="msp-form-space"></span>
+                    <label><?php _e('Duration :', MSWP_TEXT_DOMAIN); ?> </lable> {{number-input value=currentLayer.hideDuration step="0.2"}} s
+                    <span class="msp-form-space"></span>
+                    <label><?php _e('Waiting :', MSWP_TEXT_DOMAIN); ?> </lable> {{number-input value=currentLayer.hideDelay step="0.2"}} s
+                </div>
+            {{/if}}
         {{/if}}
+
     </div>
 </script>
 
@@ -1207,6 +1315,26 @@
             <span class="msp-form-space"></span>
             <label><?php _e('Height :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentLayer.height}} px
         </div>
+
+        {{#if maskOptions}}
+        <h4><?php _e('Layer mask settings', MSWP_TEXT_DOMAIN); ?></h4>
+        <div class="msp-metabox-indented">
+            <label><?php _e('Mask layer :', MSWP_TEXT_DOMAIN); ?> </label> {{switch-box value=currentLayer.masked}}
+            <span class="msp-form-space"></span>
+            {{#if currentLayer.masked}}
+            <label><?php _e('Custom mask size :', MSWP_TEXT_DOMAIN); ?> </label> {{switch-box value=currentLayer.maskCustomSize}}
+            {{/if}}
+        </div>
+        {{#if currentLayer.masked}}
+        {{#if currentLayer.maskCustomSize}}
+        <div class="msp-metabox-indented">
+            <label><?php _e('Mask width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentLayer.maskWidth}} px
+            <span class="msp-form-space"></span>
+            <label><?php _e('Mask height :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentLayer.maskHeight}} px
+        </div>
+        {{/if}}
+        {{/if}}
+        {{/if}}
 
         <h4><?php _e('Layer style settings', MSWP_TEXT_DOMAIN); ?></h4>
         <div class="msp-metabox-indented">
@@ -1279,7 +1407,7 @@
                     <span class="msp-form-space-med"></span>
                     <label><?php _e('Line height :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=lineHeight}} px
                     <span class="msp-form-space-med"></span>
-                    <label><?php _e('Text align :', MSWP_TEXT_DOMAIN); ?> </label> 
+                    <label><?php _e('Text align :', MSWP_TEXT_DOMAIN); ?> </label>
                     {{#dropdwon-List value=draftStyle.textAlign}}
                         <option value="left"><?php _e('Left', MSWP_TEXT_DOMAIN); ?></option>
                         <option value="center"><?php _e('Center', MSWP_TEXT_DOMAIN); ?></option>
@@ -1301,7 +1429,7 @@
                 <div class="msp-metabox-indented">
                     <label><?php _e('Border color :', MSWP_TEXT_DOMAIN); ?> </label> {{color-picker value=draftStyle.borderColor}}
                     <span class="msp-form-space-med"></span>
-                    <label><?php _e('Border style :', MSWP_TEXT_DOMAIN); ?> </label> 
+                    <label><?php _e('Border style :', MSWP_TEXT_DOMAIN); ?> </label>
                     {{#dropdwon-List value=draftStyle.borderStyle}}
                         <option value="solid"><?php _e('Solid', MSWP_TEXT_DOMAIN); ?></option>
                         <option value="none"><?php _e('None', MSWP_TEXT_DOMAIN); ?></option>
@@ -1336,9 +1464,9 @@
                 <div class="msp-metabox-indented">
                     {{#code-mirror tabs="style-tabs" tab="style-custom" width=720 height=120 value=draftStyle.custom}}{{/code-mirror}}
                 </div>
-            </li>   
-        </ul> 
-    {{/tabs-panel}} 
+            </li>
+        </ul>
+    {{/tabs-panel}}
 </script>
 
 <!-- effect properties in transition editor -->
@@ -1361,31 +1489,31 @@
                     <span class="msp-form-space-med"></span>
                     <label><?php _e('Ease function :', MSWP_TEXT_DOMAIN); ?> </label>
                     {{#dropdwon-List value=ease width=150}}
-                        <option value="linear"> linear</option>        
-                        <option value="easeInCubic"> easeInCubic</option>   
-                        <option value="easeOutCubic"> easeOutCubic</option>  
+                        <option value="linear"> linear</option>
+                        <option value="easeInCubic"> easeInCubic</option>
+                        <option value="easeOutCubic"> easeOutCubic</option>
                         <option value="easeInOutCubic"> easeInOutCubic</option>
-                        <option value="easeInCirc"> easeInCirc</option>    
-                        <option value="easeOutCirc"> easeOutCirc</option>   
-                        <option value="easeInOutCirc"> easeInOutCirc</option> 
-                        <option value="easeInExpo"> easeInExpo</option>    
-                        <option value="easeOutExpo"> easeOutExpo</option>   
-                        <option value="easeInOutExpo"> easeInOutExpo</option> 
-                        <option value="easeInQuad"> easeInQuad</option>    
-                        <option value="easeOutQuad"> easeOutQuad</option>   
-                        <option value="easeInOutQuad"> easeInOutQuad</option> 
-                        <option value="easeInQuart"> easeInQuart</option>   
-                        <option value="easeOutQuart"> easeOutQuart</option>  
+                        <option value="easeInCirc"> easeInCirc</option>
+                        <option value="easeOutCirc"> easeOutCirc</option>
+                        <option value="easeInOutCirc"> easeInOutCirc</option>
+                        <option value="easeInExpo"> easeInExpo</option>
+                        <option value="easeOutExpo"> easeOutExpo</option>
+                        <option value="easeInOutExpo"> easeInOutExpo</option>
+                        <option value="easeInQuad"> easeInQuad</option>
+                        <option value="easeOutQuad"> easeOutQuad</option>
+                        <option value="easeInOutQuad"> easeInOutQuad</option>
+                        <option value="easeInQuart"> easeInQuart</option>
+                        <option value="easeOutQuart"> easeOutQuart</option>
                         <option value="easeInOutQuart"> easeInOutQuart</option>
-                        <option value="easeInQuint"> easeInQuint</option>   
-                        <option value="easeOutQuint"> easeOutQuint</option>  
+                        <option value="easeInQuint"> easeInQuint</option>
+                        <option value="easeOutQuint"> easeOutQuint</option>
                         <option value="easeInOutQuint"> easeInOutQuint</option>
-                        <option value="easeInSine"> easeInSine</option>    
-                        <option value="easeOutSine"> easeOutSine</option>   
-                        <option value="easeInOutSine"> easeInOutSine</option> 
-                        <option value="easeInBack"> easeInBack</option>    
-                        <option value="easeOutBack"> easeOutBack</option>   
-                        <option value="easeInOutBack"> easeInOutBack</option> 
+                        <option value="easeInSine"> easeInSine</option>
+                        <option value="easeOutSine"> easeOutSine</option>
+                        <option value="easeInOutSine"> easeInOutSine</option>
+                        <option value="easeInBack"> easeInBack</option>
+                        <option value="easeOutBack"> easeOutBack</option>
+                        <option value="easeInOutBack"> easeInOutBack</option>
                     {{/dropdwon-List}}
                 </div>
                 <div class="msp-metabox-indented">
@@ -1430,7 +1558,7 @@
                 </div>
             </li>
         </ul>
-    {{/tabs-panel}} 
+    {{/tabs-panel}}
 </script>
 
 <!-- button parameters -->
@@ -1449,19 +1577,19 @@
                 <div class="msp-metabox-indented">
                     <label><?php _e('Button style :', MSWP_TEXT_DOMAIN); ?>
                      {{#dropdwon-List value=draftBtnStyle width=100}}
-                        <option value="ms-btn-box"><?php _e('Box', MSWP_TEXT_DOMAIN); ?></option>        
-                        <option value="ms-btn-round"><?php _e('Round', MSWP_TEXT_DOMAIN); ?></option>        
-                        <option value="ms-btn-circle"><?php _e('Circle', MSWP_TEXT_DOMAIN); ?></option>   
+                        <option value="ms-btn-box"><?php _e('Box', MSWP_TEXT_DOMAIN); ?></option>
+                        <option value="ms-btn-round"><?php _e('Round', MSWP_TEXT_DOMAIN); ?></option>
+                        <option value="ms-btn-circle"><?php _e('Circle', MSWP_TEXT_DOMAIN); ?></option>
                     {{/dropdwon-List}}
                     <div class="msp-form-space-med"></div>
                     <label><?php _e('Button style :', MSWP_TEXT_DOMAIN); ?>
                      {{#dropdwon-List value=draftBtnSize width=100}}
-                        <option value="ms-btn-n"><?php _e('Normal', MSWP_TEXT_DOMAIN); ?></option>        
-                        <option value="ms-btn-s"><?php _e('Small', MSWP_TEXT_DOMAIN); ?></option>        
-                        <option value="ms-btn-m"><?php _e('Medium', MSWP_TEXT_DOMAIN); ?></option>   
-                        <option value="ms-btn-l"><?php _e('Large', MSWP_TEXT_DOMAIN); ?></option>   
+                        <option value="ms-btn-n"><?php _e('Normal', MSWP_TEXT_DOMAIN); ?></option>
+                        <option value="ms-btn-s"><?php _e('Small', MSWP_TEXT_DOMAIN); ?></option>
+                        <option value="ms-btn-m"><?php _e('Medium', MSWP_TEXT_DOMAIN); ?></option>
+                        <option value="ms-btn-l"><?php _e('Large', MSWP_TEXT_DOMAIN); ?></option>
                     {{/dropdwon-List}}
-                </div>  
+                </div>
                 <div class="msp-metabox-indented">
                     <span><?php _e('You can add custom style in below box, please make sure to enter a valid CSS. Example: <em>text-transform:uppercase;', MSWP_TEXT_DOMAIN); ?></em> </span>
                 </div>
@@ -1484,16 +1612,16 @@
                 <div class="msp-metabox-indented">
                     {{#code-mirror tabs="button-tabs" tab="button-active" width=720 height=270 value=draftActive}}{{/code-mirror}}
                 </div>
-            </li>   
-        </ul> 
-    {{/tabs-panel}} 
+            </li>
+        </ul>
+    {{/tabs-panel}}
 </script>
 <!-- Slider Controls -->
 <script type="text/x-handlebars" id="controls">
 {{#if controllers.application.disableControls}}
      {{#meta-box title="Slider Controls"}}
         <div class="msp-metabox-row">
-            <div class="msp-metabox-indented"> 
+            <div class="msp-metabox-indented">
                 <?php _e('The selected tempalte for slider does not support custom controls.', MSWP_TEXT_DOMAIN); ?>
             </div>
         </div>
@@ -1505,19 +1633,19 @@
             <h4><?php _e('Here you can add or remove controls to slider', MSWP_TEXT_DOMAIN); ?></h4>
 
             <div class="msp-metabox-indented">
-                <label><?php _e('Add new control', MSWP_TEXT_DOMAIN); ?></label> 
+                <label><?php _e('Add new control', MSWP_TEXT_DOMAIN); ?></label>
                 {{#if noMore}}
                     <button class="msp-add-btn disabled"><span class="msp-ico msp-ico-whiteadd"></span></button>
                 {{else}}
                     <button {{action addControl}} class="msp-add-btn"><span class="msp-ico msp-ico-whiteadd"></span></button>
                 {{/if}}
-                
+
                 {{#dropdwon-List value=selectedControl width=200}}
                     {{#each control in availableControls}}
                         <option {{bind-attr value=control.value}}>{{control.label}}</option>
                     {{else}}
                         <option><?php _e('-- All controls are used --', MSWP_TEXT_DOMAIN); ?></option>
-                    {{/each}}       
+                    {{/each}}
                 {{/dropdwon-List}}
             </div>
         </div>
@@ -1533,9 +1661,9 @@
     {{/meta-box}}
 
     {{partial controlOptions}}
-{{/if}}    
+{{/if}}
 </script>
-    
+
 <script type="text/x-handlebars" id="arrows-options">
     {{#meta-box title="Arrows Control Options"}}
         <div class="msp-metabox-row">
@@ -1545,7 +1673,7 @@
                 {{switch-box value=currentControl.overVideo}} <label><?php _e('Show arrows over Youtube/Vimeo video player', MSWP_TEXT_DOMAIN); ?></label>
             </div>
             <div class="msp-metabox-indented">
-                <label><?php _e('Hide arrows under this window width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
+                <label><?php _e('Hide arrows for window width less than :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
             </div>
 
             {{!--<div class="msp-metabox-indented">
@@ -1567,13 +1695,13 @@
                 {{switch-box value=currentControl.overVideo}} <label><?php _e('Show line timer over Youtube/Vimeo video player', MSWP_TEXT_DOMAIN); ?></label>
             </div>
             <div class="msp-metabox-indented">
-                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?> 
+                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?>
                 {{#dropdwon-List value=currentControl.align width=100}}
-                    <option value="top"><?php _e('Top', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="bottom"><?php _e('Bottom', MSWP_TEXT_DOMAIN); ?></option>   
+                    <option value="top"><?php _e('Top', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="bottom"><?php _e('Bottom', MSWP_TEXT_DOMAIN); ?></option>
                 {{/dropdwon-List}}
                 <div class="msp-form-space-med"></div>
-                <label><?php _e('Hide line timer under this window width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
+                <label><?php _e('Hide line timer for window width less than :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
             </div>
             <div class="msp-metabox-indented">
                 <label><?php _e('Line timer color :', MSWP_TEXT_DOMAIN); ?> </label> {{color-picker value=currentControl.color}}
@@ -1596,12 +1724,12 @@
                 {{switch-box value=currentControl.inset}} <label><?php _e('Insert bullets inside slider', MSWP_TEXT_DOMAIN); ?></label>
             </div> --}}
             <div class="msp-metabox-indented">
-                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?> 
+                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?>
                 {{#dropdwon-List value=currentControl.align width=100}}
-                    <option value="top"><?php _e('Top', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="right"><?php _e('Right', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="left"><?php _e('Left', MSWP_TEXT_DOMAIN); ?></option>   
-                    <option value="bottom"><?php _e('Bottom', MSWP_TEXT_DOMAIN); ?></option>  
+                    <option value="top"><?php _e('Top', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="right"><?php _e('Right', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="left"><?php _e('Left', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="bottom"><?php _e('Bottom', MSWP_TEXT_DOMAIN); ?></option>
                 {{/dropdwon-List}}
                 <div class="msp-form-space-med"></div>
                 <label><?php _e('Bullets margin :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.margin min=null}} px
@@ -1609,7 +1737,7 @@
                 <label><?php _e('Space between bullets :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.space min=null}} px
             </div>
             <div class="msp-metabox-indented">
-                <label><?php _e('Hide bullets under this window width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
+                <label><?php _e('Hide bullets for window width less than :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
             </div>
         </div>
     {{/meta-box}}
@@ -1630,8 +1758,8 @@
             {{!--<div class="msp-metabox-indented">
                 <label><?php _e('Scrollbar direction :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=currentControl.dir width=100}}
-                    <option value="h"><?php _e('Horizontal', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="v"><?php _e('Vertical', MSWP_TEXT_DOMAIN); ?></option>   
+                    <option value="h"><?php _e('Horizontal', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="v"><?php _e('Vertical', MSWP_TEXT_DOMAIN); ?></option>
                 {{/dropdwon-List}}
                 <div class="msp-form-space-med"></div>
             </div>--}}
@@ -1639,15 +1767,15 @@
             <div class="msp-metabox-indented">
                <label><?php _e('Scrollbar handle color :', MSWP_TEXT_DOMAIN); ?> </label> {{color-picker value=currentControl.color}}
                <div class="msp-form-space-med"></div>
-               <label><?php _e('Hide scrollbar under this window width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
+               <label><?php _e('Hide scrollbar for window width less than :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
             </div>
             <div class="msp-metabox-indented">
-                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?> 
+                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?>
                 {{#dropdwon-List value=currentControl.align width=100}}
-                    <option value="top"><?php _e('Top', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="right"><?php _e('Right', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="left"><?php _e('Left', MSWP_TEXT_DOMAIN); ?></option>   
-                    <option value="bottom"><?php _e('Bottom', MSWP_TEXT_DOMAIN); ?></option>    
+                    <option value="top"><?php _e('Top', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="right"><?php _e('Right', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="left"><?php _e('Left', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="bottom"><?php _e('Bottom', MSWP_TEXT_DOMAIN); ?></option>
                 {{/dropdwon-List}}
                 <div class="msp-form-space-med"></div>
                 <label><?php _e('Scrollbar width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.width}} px
@@ -1667,16 +1795,16 @@
                 {{switch-box value=currentControl.overVideo}} <label><?php _e('Show circle timer over Youtube/Vimeo video player', MSWP_TEXT_DOMAIN); ?></label>
             </div>
              {{!--<div class="msp-metabox-indented">
-                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?> 
+                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?>
                 {{#dropdwon-List value=currentControl.align width=100}}
-                    <option value="tl"><?php _e('Top Left', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="tr"><?php _e('Top Right', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="bl"><?php _e('Bottom Left', MSWP_TEXT_DOMAIN); ?></option>   
-                    <option value="br"><?php _e('Bottom Right', MSWP_TEXT_DOMAIN); ?></option>   
+                    <option value="tl"><?php _e('Top Left', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="tr"><?php _e('Top Right', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="bl"><?php _e('Bottom Left', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="br"><?php _e('Bottom Right', MSWP_TEXT_DOMAIN); ?></option>
                 {{/dropdwon-List}}
             </div>--}}
             <div class="msp-metabox-indented">
-                <label><?php _e('Hide circle timer under this window width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
+                <label><?php _e('Hide circle timer for window width less than :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
             </div>
             <div class="msp-metabox-indented">
                 {{!--<label><?php _e('Circle timer margin :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.margin min=null}} px
@@ -1703,24 +1831,24 @@
                 {{switch-box value=currentControl.inset}} <label><?php _e('Insert slide info inside slider', MSWP_TEXT_DOMAIN); ?></label>
             </div>
             <div class="msp-metabox-indented">
-                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?> 
+                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?>
                 {{#dropdwon-List value=currentControl.align width=100}}
-                    <option value="top"><?php _e('Top', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="right"><?php _e('Right', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="left"><?php _e('Left', MSWP_TEXT_DOMAIN); ?></option>   
-                    <option value="bottom"><?php _e('Bottom', MSWP_TEXT_DOMAIN); ?></option>   
+                    <option value="top"><?php _e('Top', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="right"><?php _e('Right', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="left"><?php _e('Left', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="bottom"><?php _e('Bottom', MSWP_TEXT_DOMAIN); ?></option>
                 {{/dropdwon-List}}
                 <div class="msp-form-space-med"></div>
                 <label><?php _e('Slide info margin :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.margin min=null}} px
             </div>
-            <div class="msp-metabox-indented">              
+            <div class="msp-metabox-indented">
                 <label><?php _e('Slide info width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.width}} px
                 <div class="msp-form-space-med"></div>
                 <label><?php _e('Slide info height :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.height}} px
             </div>
         </div>
-            <div class="msp-metabox-indented">              
-                <label><?php _e('Hide slide info under this window width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
+            <div class="msp-metabox-indented">
+                <label><?php _e('Hide slide info for window width less than :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
             </div>
         </div>
     {{/meta-box}}
@@ -1736,38 +1864,52 @@
             </div>
             <div class="msp-metabox-indented">
                 {{switch-box value=currentControl.inset}} <label><?php _e('Insert thumblist/tabs inside slider', MSWP_TEXT_DOMAIN); ?></label>
-          <div class="msp-form-space-med"></div>
-                <?php _e('Thumb background fill mode :', MSWP_TEXT_DOMAIN); ?>
-                {{view MSPanel.Fillmode value=currentControl.fillMode}}                
+                <div class="msp-form-space-med"></div>
+                {{switch-box value=currentControl.arrows}} <label><?php _e('Insert navigation arrows', MSWP_TEXT_DOMAIN); ?></label>
             </div>
             <div class="msp-metabox-indented">
-                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?> 
+                {{switch-box value=currentControl.hoverChange}} <label><?php _e('Change slides on hovering over thumbs/tabs.', MSWP_TEXT_DOMAIN); ?></label>
+            </div>
+            <div class="msp-metabox-indented">
+                <?php _e('Align control :', MSWP_TEXT_DOMAIN); ?>
                 {{#dropdwon-List value=currentControl.align width=100}}
-                    <option value="top"><?php _e('Top', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="right"><?php _e('Right', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="left"><?php _e('Left', MSWP_TEXT_DOMAIN); ?></option>   
-                    <option value="bottom"><?php _e('Bottom', MSWP_TEXT_DOMAIN); ?></option>   
+                    <option value="top"><?php _e('Top', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="right"><?php _e('Right', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="left"><?php _e('Left', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="bottom"><?php _e('Bottom', MSWP_TEXT_DOMAIN); ?></option>
                 {{/dropdwon-List}}
                 <div class="msp-form-space-med"></div>
                 <label><?php _e('Thumblist/Tabs margin :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.margin min=null}} px
             </div>
             <div class="msp-metabox-indented">
-                <?php _e('Appearance :', MSWP_TEXT_DOMAIN); ?> 
+                <?php _e('Appearance :', MSWP_TEXT_DOMAIN); ?>
                 {{#dropdwon-List value=currentControl.type width=100}}
-                    <option value="thumbs"><?php _e('Thumblist', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="tabs"><?php _e('Tabs', MSWP_TEXT_DOMAIN); ?></option>        
+                    <option value="thumbs"><?php _e('Thumblist', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="tabs"><?php _e('Tabs', MSWP_TEXT_DOMAIN); ?></option>
                 {{/dropdwon-List}}
                 <div class="msp-form-space-med"></div>
-                <label><?php _e('Hide thumblist/tabs under this window width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
+                <label><?php _e('Hide thumblist/tabs for window width less than :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.hideUnder}} px
             </div>
 
             {{!--<div class="msp-metabox-indented">
                 <label><?php _e('Thumblist/Tabs direction :', MSWP_TEXT_DOMAIN); ?> </label>
                 {{#dropdwon-List value=currentControl.dir width=100}}
-                    <option value="h"><?php _e('Horizontal', MSWP_TEXT_DOMAIN); ?></option>        
-                    <option value="v"><?php _e('Vertical', MSWP_TEXT_DOMAIN); ?></option>   
+                    <option value="h"><?php _e('Horizontal', MSWP_TEXT_DOMAIN); ?></option>
+                    <option value="v"><?php _e('Vertical', MSWP_TEXT_DOMAIN); ?></option>
                 {{/dropdwon-List}}
             </div>--}}
+
+            {{#if isTab}}
+                <div class="msp-metabox-indented">
+                    {{switch-box value=currentControl.insertThumb}} <?php _e('Insert thumbnail inside tabs', MSWP_TEXT_DOMAIN); ?>
+                </div>
+            {{else}}
+                <div class="msp-metabox-indented">
+                    <?php _e('Thumb background fill mode :', MSWP_TEXT_DOMAIN); ?>
+                    {{view MSPanel.Fillmode value=currentControl.fillMode}}
+                 </div>
+            {{/if}}
+
             <div class="msp-metabox-indented">
                 <label><?php _e('Thumb/Tab width :', MSWP_TEXT_DOMAIN); ?> </label> {{number-input value=currentControl.width}} px
                 <div class="msp-form-space-med"></div>
@@ -1788,19 +1930,19 @@
             <h4><?php _e('Here you can add or remove callbacks to slider', MSWP_TEXT_DOMAIN); ?></h4>
 
             <div class="msp-metabox-indented">
-                <label><?php _e('Add new callback', MSWP_TEXT_DOMAIN); ?></label> 
+                <label><?php _e('Add new callback', MSWP_TEXT_DOMAIN); ?></label>
                 {{#if noMore}}
                     <button class="msp-add-btn disabled"><span class="msp-ico msp-ico-whiteadd"></span></button>
                 {{else}}
                     <button {{action addCallback}} class="msp-add-btn"><span class="msp-ico msp-ico-whiteadd"></span></button>
                 {{/if}}
-                
+
                 {{#dropdwon-List value=selectedCallback width=250}}
                     {{#each callback in availableCallbacks}}
                         <option {{bind-attr value=callback.value}}>{{callback.label}}</option>
                     {{else}}
                         <option><?php _e('-- All callbacks are added --', MSWP_TEXT_DOMAIN); ?></option>
-                    {{/each}}       
+                    {{/each}}
                 {{/dropdwon-List}}
             </div>
         </div>
@@ -1815,7 +1957,7 @@
                     <button {{action "removeCallback" callback}} class="msp-blue-btn msp-remove-btn-med"><?php _e('Remove', MSWP_TEXT_DOMAIN); ?></button>
                 </div>
             </div>
-        {{/each}} 
+        {{/each}}
     {{/meta-box}}
 </script>
 

@@ -138,17 +138,17 @@ class Axiom_List_Table {
 	 */
 	function set_pagination_args( $args ) {
 		$args = wp_parse_args( $args, array(
-			'total_items' => 0,
-			'total_pages' => 0,
-			'per_page' => 0,
+            'total_items' => 0,
+            'total_pages' => 0,
+            'per_page'    => 0
 		) );
 
-		if ( !$args['total_pages'] && $args['per_page'] > 0 )
+		if ( ! $args['total_pages'] && $args['per_page'] > 0 )
 			$args['total_pages'] = ceil( $args['total_items'] / $args['per_page'] );
 
 		// redirect if page number is invalid and headers are not already sent
 		if ( ! headers_sent() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) && $args['total_pages'] > 0 && $this->get_pagenum() > $args['total_pages'] ) {
-			wp_redirect( add_query_arg( 'paged', $args['total_pages'] ) );
+			wp_redirect( esc_url_raw( add_query_arg( 'paged', $args['total_pages'] ) ) );
 			exit;
 		}
 
@@ -213,6 +213,8 @@ class Axiom_List_Table {
 			echo '<input type="hidden" name="orderby" value="' . esc_attr( $_REQUEST['orderby'] ) . '" />';
 		if ( ! empty( $_REQUEST['order'] ) )
 			echo '<input type="hidden" name="order" value="' . esc_attr( $_REQUEST['order'] ) . '" />';
+		if ( ! empty( $_REQUEST['page'] ) )
+			echo '<input type="hidden" name="page" value="' . esc_attr( $_REQUEST['page'] ) . '" />';
 		if ( ! empty( $_REQUEST['post_mime_type'] ) )
 			echo '<input type="hidden" name="post_mime_type" value="' . esc_attr( $_REQUEST['post_mime_type'] ) . '" />';
 		if ( ! empty( $_REQUEST['detached'] ) )
@@ -772,6 +774,10 @@ class Axiom_List_Table {
 	 */
 	function display() {
 		extract( $this->_args );
+
+		echo '<form method="get" id="ms-search-form">';
+		$this->search_box( __( 'Search sliders', 'default' ), 'ms' );
+		echo '</form>';
 
 		$this->display_tablenav( 'top' );
 

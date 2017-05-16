@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  * @package   MasterSlider
  * @author    averta [averta.net]
  * @license   LICENSE.txt
@@ -14,8 +14,7 @@ if ( ! defined('ABSPATH') ) {
 }
 
 
-class Axiom_Plugin_Check_Update
-{
+class Axiom_Plugin_Check_Update {
     /**
      * The plugin current version
      * @var string
@@ -46,12 +45,24 @@ class Axiom_Plugin_Check_Update
      */
     public $request_name;
 
+    /**
+     * The item ID in marketplace
+     * @var string
+     */
+    public $plugin_id;
+
 
     /**
      * The item name while requesting to update api
      * @var string
      */
     public $plugin_file_path;
+
+    /**
+     * The item name while requesting to update api
+     * @var string
+     */
+    public $banners;
 
 
     /**
@@ -61,7 +72,7 @@ class Axiom_Plugin_Check_Update
      * @param string $plugin_slug
      * @param string $slug
      */
-    function __construct( $current_version, $update_path, $plugin_slug, $slug, $item_request_name = '', $plugin_file = '' ) {
+    function __construct( $current_version, $update_path, $plugin_slug, $slug, $item_request_name = '' ) {
         // Set the class public variables
         $this->current_version  = $current_version;
         $this->update_path      = $update_path;
@@ -70,15 +81,13 @@ class Axiom_Plugin_Check_Update
 
         $this->request_name     = empty( $item_request_name ) ? $this->slug : $item_request_name;
 
-        $this->plugin_file_path = $plugin_file;
-
-        // define the alternative API for updating checking
+        // define the alternative API for checking for updates
         add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'check_update') );
 
         // Define the alternative response for information checking
         add_filter( 'plugins_api', array( $this, 'check_info'), 10, 3 );
     }
-    
+
 
     /**
      * Add our self-hosted autoupdate plugin to the filter transient
@@ -87,27 +96,21 @@ class Axiom_Plugin_Check_Update
      * @return object $ transient
      */
     public function check_update( $transient ) {
-        
+
         if( apply_filters( 'masterslider_disable_auto_update', 0 ) )
             return $transient;
 
         // Get the remote version
         $remote_version = $this->get_remote_version();
 
-        // echo '<pre>';
-        // $isl = version_compare( $this->current_version, $remote_version, '<' );
-        // echo 'current is less than remote? : ' . $this->current_version .' < '. $remote_version;
-        // var_dump( $isl );
-        // echo '</pre>';
-
         // If a newer version is available, add the update info to update transient
         if ( version_compare( $this->current_version, $remote_version, '<' ) ) {
             $obj = new stdClass();
-            $obj->slug = $this->slug;
-            $obj->plugin = $this->plugin_slug;
+            $obj->slug      = $this->slug;
+            $obj->plugin    = $this->plugin_slug;
             $obj->new_version = $remote_version;
-            $obj->url = '';
-            $obj->package = '';
+            $obj->url       = '';
+            $obj->package   = '';
             $transient->response[ $this->plugin_slug ] = $obj;
         } elseif ( isset( $transient->response[ $this->plugin_slug ] ) ) {
             unset( $transient->response[ $this->plugin_slug ] );
@@ -123,16 +126,42 @@ class Axiom_Plugin_Check_Update
     public function get_remote_version() {
         global $wp_version;
 
+        $theme_data = wp_get_theme();
+        if( is_child_theme() ) {
+            $theme_data = wp_get_theme( $theme_data->template );
+        }
+
+        if ( ! function_exists( 'get_plugins' ) ) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+        $all_plugins = get_plugins();
+        if( ! isset( $all_plugins[ $this->plugin_slug ] ) || empty( $all_plugins[ $this->plugin_slug ] ) ){
+            return;
+        }
+
+        $this_plugin = $all_plugins[ $this->plugin_slug ];
+        if( ! is_array( $this_plugin ) ){
+            $this_plugin = array();
+        }
+        $this_plugin['ID']        = $this->plugin_id;
+        $this_plugin['Theme']     = $theme_data->Name;
+        $this_plugin['Slug']      = $this->slug;
+        $this_plugin['Activated'] = get_option( $this->slug . '_is_license_actived', 0);
+
         $request = wp_remote_post( $this->update_path, array(
-                'user-agent' => 'WordPress/'.$wp_version.'; '.get_bloginfo('url'),
-                'body' => array(
-                    'action' => 'version', 
-                    'log'    => $this->request_name,
-                    'live'   => 1
-                ) 
+                'user-agent' => 'WordPress/'.$wp_version.'; '. get_site_url(),
+                'timeout'    => ( ( defined('DOING_CRON') && DOING_CRON ) ? 30 : 3),
+                'body'       => array(
+                    'cat'       => 'version-check',
+                    'action'    => 'final',
+                    'type'      => 'plugin',
+                    'item-name' => $this->request_name,
+                    'item-info' => $this_plugin
+                )
             )
         );
-        if ( ! is_wp_error($request) || wp_remote_retrieve_response_code($request) === 200 ) {
+
+        if ( ! is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
             return $request['body'];
         }
         return false;
@@ -168,40 +197,39 @@ class Axiom_Plugin_Check_Update
      * @return bool|object
      */
     public function get_remote_information() {
+        global $wp_version;
 
         $request = wp_remote_post( $this->update_path, array(
+                'user-agent' => 'WordPress/'.$wp_version.'; '. get_site_url(),
                 'body' => array(
-                    'action' => 'info', 
-                    'log'    => $this->request_name 
-                ) 
+                    'cat'       => 'info',
+                    'action'    => 'details',
+                    'item-name' => $this->request_name
+                )
             )
         );
 
         if ( !is_wp_error( $request ) || wp_remote_retrieve_response_code( $request ) === 200 ) {
 
-            $plugin_info_data = empty( $this->plugin_file_path ) ? array() : get_plugin_data( $this->plugin_file_path );
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+            $all_plugins = get_plugins();
+            if( ! isset( $all_plugins[ $this->plugin_slug ] ) || empty( $all_plugins[ $this->plugin_slug ] ) ){
+                return;
+            }
+            $plugin_info_data = $all_plugins[ $this->plugin_slug ];
 
             $info = maybe_unserialize( $request['body'] );
-            $info->slug = $this->slug;
-            $info->plugin_name = isset( $plugin_info_data['Name'] )      ? $plugin_info_data['Name']      : '';
-            $info->author      = isset( $plugin_info_data['Author'] )    ? $plugin_info_data['Author']    : '';
-            $info->homepage    = isset( $plugin_info_data['PluginURI'] ) ? $plugin_info_data['PluginURI'] : '';
+            $info->slug             = $this->slug;
+            $info->plugin_name      = isset( $plugin_info_data['Name'] )      ? $plugin_info_data['Name']      : '';
+            $info->author           = isset( $plugin_info_data['Author'] )    ? $plugin_info_data['Author']    : '';
+            $info->homepage         = isset( $plugin_info_data['PluginURI'] ) ? $plugin_info_data['PluginURI'] : '';
+
+            $info->banners['low']   = isset( $this->banners['low']  ) ? $this->banners['low']  : '';
+            $info->banners['high']  = isset( $this->banners['high'] ) ? $this->banners['high'] : '';
 
             return $info;
         }
-        return false;
-    }
 
-    /**
-     * Return the status of the plugin licensing
-     * @return boolean $remote_license
-     */
-    public function get_remote_license() {
-
-        $request = wp_remote_post( $this->update_path, array( 'body' => array('action' => 'license') ) );
-        if ( !is_wp_error($request) || wp_remote_retrieve_response_code($request) === 200 ) {
-            return $request['body'];
-        }
         return false;
     }
 }

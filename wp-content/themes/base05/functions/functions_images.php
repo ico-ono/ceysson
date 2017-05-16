@@ -14,6 +14,20 @@ if (function_exists('add_theme_support')) {
 add_image_size( 'medium', 400);
 add_image_size( 'grande', 1600);
 
+
+/* ==========================================================================
+  Images quality
+   ========================================================================== */
+add_filter( 'jpeg_quality', create_function( '', 'return 100;' ) );
+// define the wp_editor_set_quality callback
+function filter_wp_editor_set_quality( $this_default_quality, $this_mime_type ) {
+    // make filter magic happen here...
+    return $this_default_quality;
+};
+
+// add the filter
+add_filter( 'wp_editor_set_quality', 'filter_wp_editor_set_quality', 10, 2 ); 
+
 /* ==========================================================================
    Images sizes (au moment de l'ajout des medias : ne marche que sur les nouveaux médias)
    ========================================================================== */
