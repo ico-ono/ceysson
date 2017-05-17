@@ -74,7 +74,7 @@ function my_new_gallery_function($atts) {
     $image_gallery_original_size = wp_get_attachment_image_src($image->ID, 'grande');
 		$image_gallery_original_size = $image_gallery_original_size[0];
 
-		$image_gallery_medium_size = wp_get_attachment_image_src($image->ID, 'medium');
+		$image_gallery_medium_size = wp_get_attachment_image_src($image->ID, 'grande');
 		$image_gallery_medium_size = $image_gallery_medium_size[0];
 
 		// $image_src2 = wp_get_attachment_thumb_url($image->ID);
@@ -86,7 +86,7 @@ function my_new_gallery_function($atts) {
 		// lien dans l'image
 		// $gallery .= "<div><img src='".$image_gallery_original_size."' /></div>";
 
-	}
+	} 
 	$gallery .= "</div>";
 	// $gallery .= "<div class='slider ".$few." regular-nav slick-slider'>";
 	// foreach ( $images as $image ) {
